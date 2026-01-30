@@ -5,6 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { Card, CardContent } from '@/components/ui/Card';
 import { CategorySubLink } from '@/components/CategorySubLink';
 import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
+import { ProductCountBadge, SubcategoryBadge } from '@/components/ui/Badge';
 import { Package, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
@@ -64,9 +65,7 @@ export default async function CategoriesPage() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute top-4 right-4">
-                    <span className="bg-white/90 backdrop-blur-sm text-foreground text-xs font-bold px-3 py-1.5 rounded-full">
-                      {category._count.products} Products
-                    </span>
+                    <ProductCountBadge count={category._count.products} />
                   </div>
                 </div>
 
@@ -83,15 +82,13 @@ export default async function CategoriesPage() {
                           <div className="flex flex-wrap gap-2">
                             {category.children.slice(0, 3).map((child: any) => (
                               <CategorySubLink key={child.id} href={`/category/${child.slug}`}>
-                                <span className="text-xs bg-slate-100 hover:bg-secondary hover:text-white text-foreground px-3 py-1.5 rounded-full transition-colors shadow-sm">
-                                  {child.name}
-                                </span>
+                                <SubcategoryBadge interactive>{child.name}</SubcategoryBadge>
                               </CategorySubLink>
                             ))}
                             {category.children.length > 3 && (
-                              <span className="text-xs bg-slate-100 text-muted px-3 py-1.5 rounded-full shadow-sm">
+                              <SubcategoryBadge>
                                 +{category.children.length - 3} more
-                              </span>
+                              </SubcategoryBadge>
                             )}
                           </div>
                         </div>

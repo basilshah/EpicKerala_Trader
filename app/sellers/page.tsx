@@ -3,6 +3,7 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import { Card, CardContent } from '@/components/ui/Card';
 import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
+import { VerifiedBadge } from '@/components/ui/Badge';
 import { BadgeCheck, MapPin, Package, Factory, Award } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -50,11 +51,7 @@ export default async function SellersPage() {
                   {/* Header Section */}
                   <div className="relative h-32 bg-gradient-to-br from-primary to-secondary p-6">
                     <div className="absolute top-4 right-4">
-                      {seller.isVerified && (
-                        <span className="bg-white text-secondary text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
-                          <BadgeCheck className="w-3 h-3" /> VERIFIED
-                        </span>
-                      )}
+                      {seller.isVerified && <VerifiedBadge />}
                     </div>
                     <div className="absolute -bottom-8 left-6">
                       <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-white">

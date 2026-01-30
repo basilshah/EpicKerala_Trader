@@ -4,7 +4,8 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
+import { ProductCard } from '@/components/cards/ProductCard';
+import { VerifiedBadge, Badge, CertificationBadge } from '@/components/ui/Badge';
 import { BadgeCheck, Factory, MapPin, Globe, Award, CheckCircle } from 'lucide-react';
 
 interface SellerPageProps {
@@ -46,14 +47,10 @@ export default async function SellerPage({ params }: SellerPageProps) {
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <h1 className="text-3xl font-bold text-primary">{seller.companyName}</h1>
-                {seller.isVerified && (
-                  <span className="bg-white text-secondary text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 border border-slate-200">
-                    <BadgeCheck className="w-3 h-3" /> Verified
-                  </span>
-                )}
-                <span className="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full border border-slate-200 capitalize">
-                  {seller.businessType || seller.type}
-                </span>
+                {seller.isVerified && <VerifiedBadge icon={<BadgeCheck className="w-3 h-3" />} />}
+                <Badge variant="default" className="capitalize">
+                  {seller.type}
+                </Badge>
               </div>
 
               <p className="text-muted-foreground text-lg mb-6 max-w-3xl">{seller.description}</p>
@@ -115,9 +112,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
                   <span className="block text-xs font-medium text-muted-foreground uppercase mb-1">
                     Business Type
                   </span>
-                  <span className="font-medium capitalize">
-                    {seller.businessType || seller.type}
-                  </span>
+                  <span className="font-medium capitalize">{seller.type}</span>
                 </div>
                 <div>
                   <span className="block text-xs font-medium text-muted-foreground uppercase mb-1">
@@ -134,12 +129,9 @@ export default async function SellerPage({ params }: SellerPageProps) {
                     </span>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {seller.certifications.split(',').map((cert, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-1 text-xs bg-amber-50 text-amber-900 px-3 py-1.5 rounded-full border border-amber-200"
-                        >
-                          <Award className="w-3 h-3" /> {cert.trim()}
-                        </div>
+                        <CertificationBadge key={i}>
+                          {cert.trim()}
+                        </CertificationBadge>
                       ))}
                     </div>
                   </div>
@@ -158,21 +150,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {seller.products.map((product) => (
-                <Link key={product.id} href={`/product/${product.slug}`}>
-                  <Card className="overflow-hidden hover:shadow-lg transition-all group cursor-pointer border border-slate-200">
-                    <div className="h-48 bg-slate-100 flex items-center justify-center relative overflow-hidden">
-                      <Factory className="w-12 h-12 text-slate-300" />
-                    </div>
-                    <CardContent className="p-6">
-                      <span className="text-xs text-secondary font-semibold mb-2 block">
-                        {product.category.name}
-                      </span>
-                      <h3 className="font-bold text-lg text-foreground mb-2">{product.name}</h3>
-                      {product.moq && <p className="text-sm text-muted mb-4">MOQ: {product.moq}</p>}
-                      <ViewDetailsLink text="View Details" />
-                    </CardContent>
-                  </Card>
-                </Link>
+                <ProductCard key={product.id} product={product} showSeller={false} />
               ))}
             </div>
 

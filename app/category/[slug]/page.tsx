@@ -5,6 +5,7 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { VerifiedBadge, Badge, CategoryBadge } from '@/components/ui/Badge';
 import { Package, BadgeCheck, MapPin, Factory } from 'lucide-react';
 
 interface CategoryPageProps {
@@ -214,22 +215,24 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
                     <Factory className="w-16 h-16 text-slate-300" />
                     {product.seller.isVerified && (
-                      <span className="absolute top-3 right-3 bg-white text-secondary text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md">
-                        <BadgeCheck className="w-3 h-3" /> VERIFIED
-                      </span>
+                      <div className="absolute top-3 right-3">
+                        <VerifiedBadge className="shadow-md" />
+                      </div>
                     )}
                     {product.seller.offersOEM && (
-                      <span className="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
-                        OEM Available
-                      </span>
+                      <div className="absolute top-3 left-3">
+                        <Badge variant="primary" className="shadow-md">
+                          OEM Available
+                        </Badge>
+                      </div>
                     )}
                   </div>
 
                   <CardContent className="p-5">
                     <div className="mb-2">
-                      <span className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium">
+                      <CategoryBadge>
                         {product.category.name}
-                      </span>
+                      </CategoryBadge>
                     </div>
 
                     <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">

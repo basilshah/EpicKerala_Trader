@@ -8,6 +8,13 @@ import { CategorySubLink } from '@/components/CategorySubLink';
 import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
 import { SearchBar } from '@/components/SearchBar';
 import {
+  ProductCountBadge,
+  SubcategoryBadge,
+  VerifiedBadge,
+  Badge,
+  CategoryBadge,
+} from '@/components/ui/Badge';
+import {
   Search,
   Building2,
   Package,
@@ -175,9 +182,7 @@ export default async function HomePage() {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 right-4">
-                      <span className="bg-white/90 backdrop-blur-sm text-foreground text-xs font-bold px-3 py-1.5 rounded-full">
-                        {category._count.products} Products
-                      </span>
+                      <ProductCountBadge count={category._count.products} />
                     </div>
                   </div>
 
@@ -194,15 +199,13 @@ export default async function HomePage() {
                             <div className="flex flex-wrap gap-2">
                               {category.children.slice(0, 3).map((child: any) => (
                                 <CategorySubLink key={child.id} href={`/category/${child.slug}`}>
-                                  <span className="text-xs bg-slate-100 hover:bg-secondary hover:text-white text-foreground px-3 py-1.5 rounded-full transition-colors shadow-sm">
-                                    {child.name}
-                                  </span>
+                                  <SubcategoryBadge interactive>{child.name}</SubcategoryBadge>
                                 </CategorySubLink>
                               ))}
                               {category.children.length > 3 && (
-                                <span className="text-xs bg-slate-100 text-muted px-3 py-1.5 rounded-full shadow-sm">
+                                <SubcategoryBadge>
                                   +{category.children.length - 3} more
-                                </span>
+                                </SubcategoryBadge>
                               )}
                             </div>
                           </div>
@@ -243,23 +246,26 @@ export default async function HomePage() {
                   <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
                     <Factory className="w-16 h-16 text-slate-300" />
                     {product.seller.isVerified && (
-                      <span className="absolute top-3 right-3 bg-white text-secondary text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md">
-                        <BadgeCheck className="w-3 h-3" /> VERIFIED
-                      </span>
+                      <div className="absolute top-3 right-3">
+                        <VerifiedBadge
+                          className="shadow-md"
+                          icon={<BadgeCheck className="w-3 h-3" />}
+                        />
+                      </div>
                     )}
                     {product.seller.offersOEM && (
-                      <span className="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
-                        OEM Available
-                      </span>
+                      <div className="absolute top-3 left-3">
+                        <Badge variant="primary" className="shadow-md">
+                          OEM Available
+                        </Badge>
+                      </div>
                     )}
                   </div>
 
                   <CardContent className="p-5">
                     {/* Category Badge */}
                     <div className="mb-2">
-                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                        {product.category.name}
-                      </span>
+                      <CategoryBadge>{product.category.name}</CategoryBadge>
                     </div>
 
                     {/* Product Name */}
@@ -346,11 +352,7 @@ export default async function HomePage() {
                   {/* Header Section */}
                   <div className="relative h-32 bg-gradient-to-br from-primary to-secondary p-6">
                     <div className="absolute top-4 right-4">
-                      {seller.isVerified && (
-                        <span className="bg-white text-secondary text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
-                          <BadgeCheck className="w-3 h-3" /> VERIFIED
-                        </span>
-                      )}
+                      {seller.isVerified && <VerifiedBadge />}
                     </div>
                     <div className="absolute -bottom-8 left-6">
                       <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-white">
