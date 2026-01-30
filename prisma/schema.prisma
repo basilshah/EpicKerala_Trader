@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  parentId    String?
+  parent      Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+  
+  @@index([slug])
+}
+
+model Seller {
+  id              String   @id @default(cuid())
+  companyName     String
+  slug            String   @unique
+  description     String?
+  type            String   // Manufacturer, Merchant Exporter
+  logoUrl         String?
+  
+  // Contact
+  email           String
+  phone           String?
+  website         String?
+  
+  // Location
+  address         String?
+  city            String?
+  state           String?
+  country         String   @default("India")
+  
+  // Trust Markers
+  establishedYear Int?
+  isVerified      Boolean  @default(false)
+  certifications  String?  // JSON string or comma separated
+  
+  // OEM/Private Label
+  offersOEM       Boolean  @default(false)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  products        Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  
+  // Relations
+  sellerId    String
+  seller      Seller   @relation(fields: [sellerId], references: [id])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  
+  // Specs
+  hsCode      String?
+  moq         String?  // Minimum Order Quantity (e.g. "500 kg")
+  origin      String   @default("India")
+  shelfLife   String?
+  
+  // Media
+  images      String?  // JSON array of URLs
+  
+  // Meta
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  rfqs        RFQ[]
+}
+
+model RFQ {
+  id              String   @id @default(cuid())
+  
+  // Buyer Info
+  buyerName       String
+  buyerCompany    String?
+  buyerEmail      String
+  buyerCountry    String?
+  
+  // Request Details
+  quantity        String?
+  message         String
+  
+  // Relations
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id])
+  
+  status          String   @default("PENDING") // PENDING, SENT, REPLIED
+  createdAt       DateTime @default(now())
+}
