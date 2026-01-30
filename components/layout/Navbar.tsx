@@ -8,9 +8,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
           <Ship className="w-6 h-6 text-white" strokeWidth={2.5} />
-          <span className="text-white font-bold text-lg tracking-wide uppercase">
-            EPIC KERALA
-          </span>
+          <span className="text-white font-bold text-lg tracking-wide uppercase">EPIC KERALA</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -18,19 +16,34 @@ export default function Navbar() {
           <Link href="/" className="text-[15px] font-medium hover:text-secondary transition-colors">
             Home
           </Link>
-          <Link href="/categories" className="text-[15px] font-medium hover:text-secondary transition-colors">
+          <Link
+            href="/categories"
+            className="text-[15px] font-medium hover:text-secondary transition-colors"
+          >
             Categories
           </Link>
-          <Link href="/products" className="text-[15px] font-medium hover:text-secondary transition-colors">
+          <Link
+            href="/products"
+            className="text-[15px] font-medium hover:text-secondary transition-colors"
+          >
             Products
           </Link>
-          <Link href="/sellers" className="text-[15px] font-medium hover:text-secondary transition-colors">
+          <Link
+            href="/sellers"
+            className="text-[15px] font-medium hover:text-secondary transition-colors"
+          >
             Exporters
           </Link>
-          <Link href="/about" className="text-[15px] font-medium hover:text-secondary transition-colors">
+          <Link
+            href="/about"
+            className="text-[15px] font-medium hover:text-secondary transition-colors"
+          >
             About Us
           </Link>
-          <Link href="/contact" className="text-[15px] font-medium hover:text-secondary transition-colors">
+          <Link
+            href="/contact"
+            className="text-[15px] font-medium hover:text-secondary transition-colors"
+          >
             Contact
           </Link>
         </nav>
@@ -38,12 +51,14 @@ export default function Navbar() {
         {/* Action Buttons */}
         <div className="hidden lg:flex items-center gap-3">
           <Link href="/register">
-            <button className="h-9 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded transition-colors">
+            <button className="h-9 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
               Register as Exporter
             </button>
           </Link>
-          <Link href="/signin" className="text-white text-sm font-medium hover:text-secondary transition-colors px-3">
-            Sign In
+          <Link href="/signin">
+            <button className="h-9 px-5 bg-white hover:bg-white/90 text-primary text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
+              Sign In
+            </button>
           </Link>
         </div>
 

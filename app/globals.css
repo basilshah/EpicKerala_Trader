@@ -1,23 +1,32 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-background: #f5f7fa; /* Light Gray White */
   --color-foreground: #1a1a2e; /* Text Dark */
-  
-  --color-primary: #343a83;    /* Deep Indigo Navy */
+
+  --color-primary: #343a83; /* Deep Indigo Navy */
   --color-primary-foreground: #ffffff;
-  
-  --color-secondary: #4daedc;  /* Bright Cyan Sky Blue */
+
+  --color-secondary: #4daedc; /* Bright Cyan Sky Blue */
   --color-secondary-foreground: #ffffff;
-  
-  --color-muted: #6b7280;      /* Text Muted */
+
+  --color-muted: #6b7280; /* Text Muted */
   --color-muted-foreground: #9ca3af;
-  
-  --color-card: #ffffff;       /* Pure White */
+
+  --color-card: #ffffff; /* Pure White */
   --color-card-foreground: #1a1a2e;
-  
+
   --color-border: #e5e7eb;
   --color-input: #e5e7eb;
+
+  --radius-sm: 0.375rem; /* 6px - small elements */
+  --radius-md: 0.5rem; /* 8px - default */
+  --radius-lg: 0.75rem; /* 12px - cards */
+  --radius-full: 9999px; /* full - badges, pills */
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 /* Base Styles */
@@ -42,4 +51,69 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+/* Global Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  transition: all 0.2s;
+}
+
+.badge-verified {
+  background-color: white;
+  color: var(--color-secondary);
+  box-shadow: var(--shadow-md);
+}
+
+.badge-primary {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.badge-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.badge-outline {
+  background-color: rgb(241 245 249);
+  color: var(--color-foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge-outline:hover {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+/* Global Card Styles */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Global Button Styles */
+.btn-rounded {
+  border-radius: var(--radius-full);
+  transition: all 0.2s;
+}
+
+.btn-shadow {
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-shadow:hover {
+  box-shadow: var(--shadow-md);
 }

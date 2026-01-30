@@ -11,24 +11,35 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
               <Ship className="w-6 h-6" strokeWidth={2.5} />
-              <span className="font-bold text-lg tracking-wide uppercase">
-                EPIC KERALA
-              </span>
+              <span className="font-bold text-lg tracking-wide uppercase">EPIC KERALA</span>
             </div>
             <p className="text-sm text-white/80 leading-relaxed">
-              Official export trade portal connecting global buyers with Kerala's finest manufacturers and exporters.
+              Official export trade portal connecting global buyers with Kerala's finest
+              manufacturers and exporters.
             </p>
             <div className="flex items-center gap-3 pt-2">
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-colors">
+              <a
+                href="#"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+              >
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-colors">
+              <a
+                href="#"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+              >
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-colors">
+              <a
+                href="#"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+              >
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-colors">
+              <a
+                href="#"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+              >
                 <Instagram className="w-4 h-4" />
               </a>
             </div>
@@ -38,11 +49,31 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-base mb-5">Quick Links</h3>
             <ul className="space-y-3 text-sm text-white/80">
-              <li><Link href="/" className="hover:text-secondary transition-colors">Home</Link></li>
-              <li><Link href="/categories" className="hover:text-secondary transition-colors">Categories</Link></li>
-              <li><Link href="/products" className="hover:text-secondary transition-colors">Products</Link></li>
-              <li><Link href="/sellers" className="hover:text-secondary transition-colors">Exporters</Link></li>
-              <li><Link href="/about" className="hover:text-secondary transition-colors">About</Link></li>
+              <li>
+                <Link href="/" className="hover:text-secondary transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/categories" className="hover:text-secondary transition-colors">
+                  Categories
+                </Link>
+              </li>
+              <li>
+                <Link href="/products" className="hover:text-secondary transition-colors">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/sellers" className="hover:text-secondary transition-colors">
+                  Exporters
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-secondary transition-colors">
+                  About
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -50,12 +81,54 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-base mb-5">Export Categories</h3>
             <ul className="space-y-3 text-sm text-white/80">
-              <li><Link href="/category/agriculture-food" className="hover:text-secondary transition-colors">Spices</Link></li>
-              <li><Link href="/category/textiles-apparel" className="hover:text-secondary transition-colors">Textiles</Link></li>
-              <li><Link href="/category/handicrafts-decor" className="hover:text-secondary transition-colors">Handicrafts</Link></li>
-              <li><Link href="/category/chemicals-allied" className="hover:text-secondary transition-colors">Chemicals</Link></li>
-              <li><Link href="/category/engineering-industrial" className="hover:text-secondary transition-colors">Industrial</Link></li>
-              <li><Link href="/category/leather-footwear" className="hover:text-secondary transition-colors">Leather</Link></li>
+              <li>
+                <Link
+                  href="/category/agriculture-food"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Spices
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/textiles-apparel"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Textiles
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/handicrafts-decor"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Handicrafts
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/chemicals-allied"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Chemicals
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/engineering-industrial"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Industrial
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/leather-footwear"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Leather
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -67,7 +140,10 @@ export default function Footer() {
               <li>Corporation Building</li>
               <li>Thiruvananthapuram, Kerala</li>
               <li className="pt-2">
-                <a href="mailto:info@epickerala.gov.in" className="hover:text-secondary transition-colors">
+                <a
+                  href="mailto:info@epickerala.gov.in"
+                  className="hover:text-secondary transition-colors"
+                >
                   info@epickerala.gov.in
                 </a>
               </li>
@@ -86,9 +162,15 @@ export default function Footer() {
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/70">
           <p>© 2025 EPIC Kerala. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-secondary transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-secondary transition-colors">Terms of Service</Link>
-            <Link href="/disclaimer" className="hover:text-secondary transition-colors">Disclaimer</Link>
+            <Link href="/privacy" className="hover:text-secondary transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-secondary transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/disclaimer" className="hover:text-secondary transition-colors">
+              Disclaimer
+            </Link>
           </div>
         </div>
       </div>
