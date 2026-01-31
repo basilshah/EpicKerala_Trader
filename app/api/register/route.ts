@@ -34,10 +34,7 @@ export async function POST(request: NextRequest) {
 
     for (const field of requiredFields) {
       if (!data[field]) {
-        return NextResponse.json(
-          { error: `${field} is required` },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: `${field} is required` }, { status: 400 });
       }
     }
 
@@ -106,9 +103,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Registration error:', error);
-    return NextResponse.json(
-      { error: 'Registration failed. Please try again.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Registration failed. Please try again.' }, { status: 500 });
   }
 }

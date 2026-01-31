@@ -30,6 +30,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  // Parse product images
+  let productImages: Array<{ url: string; filename: string }> = [];
+  if (product.images) {
+    try {
+      const images = JSON.parse(product.images);
+      if (Array.isArray(images)) {
+        productImages = images;
+      }
+    } catch (e) {
+      console.error('Failed to parse product images:', e);
+    }
+  }
+
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
       {/* Breadcrumbs */}
@@ -60,14 +73,38 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {/* Product Main Card */}
             <div className="bg-white rounded-lg border border-border overflow-hidden">
               <div className="h-64 md:h-80 bg-slate-100 flex items-center justify-center relative">
-                {/* Image Placeholder */}
-                <Factory className="w-20 h-20 text-slate-300" />
+                {/* Image Display */}
+                {productImages.length > 0 ? (
+                  <img
+                    src={productImages[0].url}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Factory className="w-20 h-20 text-slate-300" />
+                )}
                 {product.seller.isVerified && (
                   <div className="absolute top-4 right-4">
                     <VerifiedBadge className="shadow-md" />
                   </div>
                 )}
               </div>
+
+              {/* Additional Images Gallery */}
+              {productImages.length > 1 && (
+                <div className="p-4 border-b border-slate-200">
+                  <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+                    {productImages.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.url}
+                        alt={`${product.name} - ${index + 1}`}
+                        className="w-full h-20 object-cover rounded border-2 border-slate-200 hover:border-emerald-500 cursor-pointer transition-colors"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="p-6 md:p-8">
                 <div className="flex flex-wrap items-center gap-2 mb-4">

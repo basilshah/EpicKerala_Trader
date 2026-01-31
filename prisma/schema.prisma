@@ -46,6 +46,8 @@ model Seller {
   establishedYear Int?
   isVerified      Boolean  @default(false)
   certifications  String?  // JSON string or comma separated
+  certificationFiles String? // JSON array of file URLs
+  profileVideoUrl String?  // YouTube, Vimeo, or other video URL
   
   // OEM/Private Label
   offersOEM       Boolean  @default(false)

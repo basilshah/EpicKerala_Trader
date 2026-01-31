@@ -12,30 +12,41 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Loader2, CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react';
 
 // Complete schema for final submission
-const registerSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters').regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain uppercase, lowercase, and number'),
-  confirmPassword: z.string(),
-  countryCode: z.string(),
-  phone: z.string().min(10, 'Phone number must be at least 10 digits').regex(/^\d+$/, 'Phone must contain only numbers'),
-  companyName: z.string().min(2, 'Company name must be at least 2 characters'),
-  businessType: z.enum(['manufacturer', 'merchant-exporter']),
-  description: z.string().min(20, 'Description must be at least 20 characters'),
-  website: z.string().url('Invalid URL').optional().or(z.literal('')),
-  establishedYear: z.string().optional(),
-  address: z.string().min(5, 'Address must be at least 5 characters'),
-  city: z.string().min(2, 'City name is required'),
-  state: z.string().min(2, 'State name is required'),
-  country: z.string().min(2, 'Country name is required'),
-  pincode: z.string().min(5, 'Pincode must be at least 5 characters'),
-  certifications: z.string().optional(),
-  offersOEM: z.boolean(),
-  contactPersonName: z.string().min(2, 'Contact person name is required'),
-  contactPersonDesignation: z.string().min(2, 'Designation is required'),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ['confirmPassword'],
-});
+const registerSchema = z
+  .object({
+    email: z.string().email('Invalid email address'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        'Password must contain uppercase, lowercase, and number'
+      ),
+    confirmPassword: z.string(),
+    countryCode: z.string(),
+    phone: z
+      .string()
+      .min(10, 'Phone number must be at least 10 digits')
+      .regex(/^\d+$/, 'Phone must contain only numbers'),
+    companyName: z.string().min(2, 'Company name must be at least 2 characters'),
+    businessType: z.enum(['manufacturer', 'merchant-exporter']),
+    description: z.string().min(20, 'Description must be at least 20 characters'),
+    website: z.string().url('Invalid URL').optional().or(z.literal('')),
+    establishedYear: z.string().optional(),
+    address: z.string().min(5, 'Address must be at least 5 characters'),
+    city: z.string().min(2, 'City name is required'),
+    state: z.string().min(2, 'State name is required'),
+    country: z.string().min(2, 'Country name is required'),
+    pincode: z.string().min(5, 'Pincode must be at least 5 characters'),
+    certifications: z.string().optional(),
+    offersOEM: z.boolean(),
+    contactPersonName: z.string().min(2, 'Contact person name is required'),
+    contactPersonDesignation: z.string().min(2, 'Designation is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
@@ -117,19 +128,30 @@ export function RegisterForm() {
 
   const nextStep = async () => {
     let fieldsToValidate: (keyof RegisterFormData)[] = [];
-    
+
     switch (currentStep) {
       case 1:
         fieldsToValidate = ['email', 'password', 'confirmPassword', 'countryCode', 'phone'];
         break;
       case 2:
-        fieldsToValidate = ['companyName', 'businessType', 'description', 'website', 'establishedYear'];
+        fieldsToValidate = [
+          'companyName',
+          'businessType',
+          'description',
+          'website',
+          'establishedYear',
+        ];
         break;
       case 3:
         fieldsToValidate = ['address', 'city', 'state', 'country', 'pincode'];
         break;
       case 4:
-        fieldsToValidate = ['certifications', 'offersOEM', 'contactPersonName', 'contactPersonDesignation'];
+        fieldsToValidate = [
+          'certifications',
+          'offersOEM',
+          'contactPersonName',
+          'contactPersonDesignation',
+        ];
         break;
     }
 
@@ -146,12 +168,27 @@ export function RegisterForm() {
   const handleFinalSubmit = async () => {
     // Validate all fields before submission
     const allFields: (keyof RegisterFormData)[] = [
-      'email', 'password', 'confirmPassword', 'countryCode', 'phone',
-      'companyName', 'businessType', 'description', 'website', 'establishedYear',
-      'address', 'city', 'state', 'country', 'pincode',
-      'certifications', 'offersOEM', 'contactPersonName', 'contactPersonDesignation'
+      'email',
+      'password',
+      'confirmPassword',
+      'countryCode',
+      'phone',
+      'companyName',
+      'businessType',
+      'description',
+      'website',
+      'establishedYear',
+      'address',
+      'city',
+      'state',
+      'country',
+      'pincode',
+      'certifications',
+      'offersOEM',
+      'contactPersonName',
+      'contactPersonDesignation',
     ];
-    
+
     const isValid = await trigger(allFields);
     if (isValid) {
       // Manually call submit with form data
@@ -221,8 +258,12 @@ export function RegisterForm() {
         {currentStep === 1 && (
           <div className="space-y-4 animate-in fade-in duration-300">
             <div>
-              <h3 className="text-lg font-semibold text-foreground">Account & Contact Information</h3>
-              <p className="text-sm text-muted mt-1">Create your login credentials and provide contact details</p>
+              <h3 className="text-lg font-semibold text-foreground">
+                Account & Contact Information
+              </h3>
+              <p className="text-sm text-muted mt-1">
+                Create your login credentials and provide contact details
+              </p>
             </div>
 
             <div>
@@ -299,9 +340,7 @@ export function RegisterForm() {
                   className="flex-1"
                 />
               </div>
-              {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
-              )}
+              {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
             </div>
           </div>
         )}
@@ -319,7 +358,11 @@ export function RegisterForm() {
                 <Label htmlFor="companyName">
                   Company Name <span className="text-red-500">*</span>
                 </Label>
-                <Input id="companyName" {...register('companyName')} placeholder="Your Company Name" />
+                <Input
+                  id="companyName"
+                  {...register('companyName')}
+                  placeholder="Your Company Name"
+                />
                 {errors.companyName && (
                   <p className="text-red-500 text-sm mt-1">{errors.companyName.message}</p>
                 )}
@@ -414,25 +457,15 @@ export function RegisterForm() {
                 <Label htmlFor="city">
                   City <span className="text-red-500">*</span>
                 </Label>
-                <Input
-                  id="city"
-                  {...register('city')}
-                  placeholder="Kochi"
-                />
-                {errors.city && (
-                  <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>
-                )}
+                <Input id="city" {...register('city')} placeholder="Kochi" />
+                {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>}
               </div>
 
               <div>
                 <Label htmlFor="state">
                   State <span className="text-red-500">*</span>
                 </Label>
-                <Input
-                  id="state"
-                  {...register('state')}
-                  placeholder="Kerala"
-                />
+                <Input id="state" {...register('state')} placeholder="Kerala" />
                 {errors.state && (
                   <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>
                 )}
@@ -442,11 +475,7 @@ export function RegisterForm() {
                 <Label htmlFor="pincode">
                   Pincode <span className="text-red-500">*</span>
                 </Label>
-                <Input
-                  id="pincode"
-                  {...register('pincode')}
-                  placeholder="682001"
-                />
+                <Input id="pincode" {...register('pincode')} placeholder="682001" />
                 {errors.pincode && (
                   <p className="text-red-500 text-sm mt-1">{errors.pincode.message}</p>
                 )}
@@ -457,11 +486,7 @@ export function RegisterForm() {
               <Label htmlFor="country">
                 Country <span className="text-red-500">*</span>
               </Label>
-              <Input
-                id="country"
-                {...register('country')}
-                placeholder="India"
-              />
+              <Input id="country" {...register('country')} placeholder="India" />
               {errors.country && (
                 <p className="text-red-500 text-sm mt-1">{errors.country.message}</p>
               )}
@@ -474,7 +499,9 @@ export function RegisterForm() {
           <div className="space-y-4 animate-in fade-in duration-300">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
-              <p className="text-sm text-muted mt-1">Help buyers know more about your capabilities</p>
+              <p className="text-sm text-muted mt-1">
+                Help buyers know more about your capabilities
+              </p>
             </div>
 
             <div>
@@ -500,7 +527,7 @@ export function RegisterForm() {
 
             <div className="border-t border-slate-200 pt-4 mt-4">
               <h4 className="font-medium text-foreground mb-4">Contact Person Details</h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="contactPersonName">
@@ -526,7 +553,9 @@ export function RegisterForm() {
                     placeholder="Export Manager"
                   />
                   {errors.contactPersonDesignation && (
-                    <p className="text-red-500 text-sm mt-1">{errors.contactPersonDesignation.message}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.contactPersonDesignation.message}
+                    </p>
                   )}
                 </div>
               </div>

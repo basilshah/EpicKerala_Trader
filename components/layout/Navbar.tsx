@@ -1,7 +1,12 @@
+'use client';
+
 import Link from 'next/link';
-import { Ship, Menu, X } from 'lucide-react';
+import { Ship, Menu, X, LayoutDashboard } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   return (
     <header className="w-full h-[70px] bg-primary border-b border-primary/20 sticky top-0 z-50">
       <div className="container-custom h-full flex items-center justify-between">
@@ -50,16 +55,27 @@ export default function Navbar() {
 
         {/* Action Buttons */}
         <div className="hidden lg:flex items-center gap-3">
-          <Link href="/register">
-            <button className="h-9 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
-              Register as Exporter
-            </button>
-          </Link>
-          <Link href="/signin">
-            <button className="h-9 px-5 bg-white hover:bg-white/90 text-primary text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
-              Sign In
-            </button>
-          </Link>
+          {session ? (
+            <Link href="/dashboard">
+              <button className="h-9 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+                <LayoutDashboard className="w-4 h-4" />
+                Dashboard
+              </button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/register">
+                <button className="h-9 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
+                  Register as Exporter
+                </button>
+              </Link>
+              <Link href="/signin">
+                <button className="h-9 px-5 bg-white hover:bg-white/90 text-primary text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
+                  Sign In
+                </button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}

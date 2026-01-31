@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client'
-import 'dotenv/config'
+import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Start seeding ...')
+  console.log('Start seeding ...');
 
   // --- 1. Agriculture & Food Products ---
   const catAgri = await prisma.category.upsert({
@@ -24,7 +24,7 @@ async function main() {
         ],
       },
     },
-  })
+  });
 
   // --- 2. Textiles, Apparel & Fabrics ---
   const catTextile = await prisma.category.upsert({
@@ -42,7 +42,7 @@ async function main() {
         ],
       },
     },
-  })
+  });
 
   // --- 3. Handicrafts & Decor ---
   const catCraft = await prisma.category.upsert({
@@ -60,7 +60,7 @@ async function main() {
         ],
       },
     },
-  })
+  });
 
   // --- 4. Chemicals & Allied Products ---
   const catChem = await prisma.category.upsert({
@@ -78,7 +78,7 @@ async function main() {
         ],
       },
     },
-  })
+  });
 
   // --- 5. Engineering & Industrial ---
   const catEng = await prisma.category.upsert({
@@ -96,7 +96,7 @@ async function main() {
         ],
       },
     },
-  })
+  });
 
   // --- 6. Leather & Footwear ---
   const catLeather = await prisma.category.upsert({
@@ -113,8 +113,8 @@ async function main() {
         ],
       },
     },
-  })
-  
+  });
+
   // --- Create Dummy Sellers ---
   const seller1 = await prisma.seller.upsert({
     where: { slug: 'kerala-spices-ltd' },
@@ -132,7 +132,7 @@ async function main() {
       offersOEM: true,
       description: 'Leading manufacturer of premium Kerala spices exporting worldwide since 1998.',
     },
-  })
+  });
 
   const seller2 = await prisma.seller.upsert({
     where: { slug: 'fashion-trends-exports' },
@@ -149,54 +149,54 @@ async function main() {
       offersOEM: false,
       description: 'Curators of fine cotton and linen garments for international markets.',
     },
-  })
+  });
 
   // --- Create Dummy Products ---
-  
+
   // Need to fetch a subcategory ID primarily
-  const spiceSub = await prisma.category.findFirst({ where: { slug: 'spices-condiments' } })
-  
+  const spiceSub = await prisma.category.findFirst({ where: { slug: 'spices-condiments' } });
+
   if (spiceSub) {
-      await prisma.product.upsert({
-        where: { slug: 'premium-black-pepper' },
-        update: {},
-        create: {
-            name: 'Premium Malabar Black Pepper',
-            slug: 'premium-black-pepper',
-            sellerId: seller1.id,
-            categoryId: spiceSub.id,
-            hsCode: '090411',
-            moq: '500 kg',
-            shelfLife: '24 Months',
-            description: 'High grade bold black pepper sourced directly from Wayanad plantations.',
-        }
-      })
-      
-      await prisma.product.upsert({
-        where: { slug: 'organic-turmeric-powder' },
-        update: {},
-        create: {
-            name: 'Organic Turmeric Powder',
-            slug: 'organic-turmeric-powder',
-            sellerId: seller1.id,
-            categoryId: spiceSub.id,
-            hsCode: '091030',
-            moq: '200 kg',
-            shelfLife: '12 Months',
-            description: 'Rich curcumin content turmeric powder, steam sterilized.',
-        }
-      })
+    await prisma.product.upsert({
+      where: { slug: 'premium-black-pepper' },
+      update: {},
+      create: {
+        name: 'Premium Malabar Black Pepper',
+        slug: 'premium-black-pepper',
+        sellerId: seller1.id,
+        categoryId: spiceSub.id,
+        hsCode: '090411',
+        moq: '500 kg',
+        shelfLife: '24 Months',
+        description: 'High grade bold black pepper sourced directly from Wayanad plantations.',
+      },
+    });
+
+    await prisma.product.upsert({
+      where: { slug: 'organic-turmeric-powder' },
+      update: {},
+      create: {
+        name: 'Organic Turmeric Powder',
+        slug: 'organic-turmeric-powder',
+        sellerId: seller1.id,
+        categoryId: spiceSub.id,
+        hsCode: '091030',
+        moq: '200 kg',
+        shelfLife: '12 Months',
+        description: 'Rich curcumin content turmeric powder, steam sterilized.',
+      },
+    });
   }
- 
-  console.log('Seeding finished.')
+
+  console.log('Seeding finished.');
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

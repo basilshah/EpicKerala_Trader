@@ -45,12 +45,34 @@ export default async function ProductsPage() {
         {/* Products Grid */}
         {products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
+            {products.map((product) => {
+              // Parse product images
+              let firstImage = null;
+              if (product.images) {
+                try {
+                  const images = JSON.parse(product.images);
+                  if (Array.isArray(images) && images.length > 0) {
+                    firstImage = images[0].url;
+                  }
+                } catch (e) {
+                  console.error('Failed to parse product images:', e);
+                }
+              }
+              
+              return (
               <Link key={product.id} href={`/product/${product.slug}`}>
                 <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
                   {/* Product Image */}
                   <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
-                    <Factory className="w-16 h-16 text-slate-300" />
+                    {firstImage ? (
+                      <img
+                        src={firstImage}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Factory className="w-16 h-16 text-slate-300" />
+                    )}
                     {product.seller.isVerified && (
                       <div className="absolute top-3 right-3">
                         <VerifiedBadge className="shadow-md" />
@@ -118,7 +140,8 @@ export default async function ProductsPage() {
                   </CardContent>
                 </Card>
               </Link>
-            ))}
+            );
+            })}
           </div>
         ) : (
           <div className="text-center py-20">

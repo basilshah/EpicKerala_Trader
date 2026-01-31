@@ -15,8 +15,8 @@ export default function RegisterPage() {
               <h1 className="text-4xl font-bold text-primary">Register as Exporter</h1>
             </div>
             <p className="text-lg text-muted max-w-2xl mx-auto">
-              Join Kerala's premier export platform and connect with global buyers. Get verified
-              and showcase your products to international markets.
+              Join Kerala's premier export platform and connect with global buyers. Get verified and
+              showcase your products to international markets.
             </p>
           </div>
 
