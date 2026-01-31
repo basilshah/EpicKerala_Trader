@@ -38,7 +38,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     // Search products
     products = await prismaClient.product.findMany({
       where: {
-        OR: [{ name: { contains: query } }, { description: { contains: query } }],
+        AND: [
+          { verificationStatus: 'APPROVED' },
+          {
+            OR: [{ name: { contains: query } }, { description: { contains: query } }],
+          },
+        ],
       },
       include: {
         category: true,

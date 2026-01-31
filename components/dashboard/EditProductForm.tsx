@@ -40,6 +40,7 @@ interface Product {
   origin: string | null;
   shelfLife: string | null;
   images: string | null;
+  catalogs?: string | null;
   isPublic: boolean;
   category: {
     id: string;

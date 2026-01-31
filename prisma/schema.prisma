@@ -19,6 +19,16 @@ model Category {
   @@index([slug])
 }
 
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Hashed password
+  name      String
+  role      String   @default("admin") // admin, superadmin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Seller {
   id              String   @id @default(cuid())
   companyName     String
@@ -84,6 +94,11 @@ model Product {
   // Media
   images      String?  // JSON array of URLs
   catalogs    String?  // JSON array of catalog files (PDF/images)
+  
+  // Admin Verification
+  verificationStatus String @default("PENDING") // PENDING, APPROVED, REJECTED
+  rejectionReason    String? // Reason if rejected
+  verifiedAt         DateTime?
   
   // Meta
   isPublic    Boolean  @default(true)

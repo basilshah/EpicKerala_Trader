@@ -57,7 +57,10 @@ export default async function HomePage() {
   });
 
   const featuredProducts = await prismaClient.product.findMany({
-    where: { isPublic: true },
+    where: {
+      isPublic: true,
+      verificationStatus: 'APPROVED',
+    },
     take: 3,
     include: {
       seller: true,

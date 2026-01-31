@@ -1,10 +1,25 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 import 'dotenv/config';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('Start seeding ...');
+
+  // --- Create Admin User ---
+  const hashedPassword = await bcrypt.hash('admin123', 10);
+  await prisma.admin.upsert({
+    where: { email: 'admin@epickeral.com' },
+    update: {},
+    create: {
+      email: 'admin@epickeral.com',
+      password: hashedPassword,
+      name: 'Admin User',
+      role: 'admin',
+    },
+  });
+  console.log('✓ Admin user created (email: admin@epickeral.com, password: admin123)');
 
   // --- 1. Agriculture & Food Products ---
   const catAgri = await prisma.category.upsert({

@@ -32,7 +32,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         },
       },
       products: {
-        where: { isPublic: true },
+        where: {
+          isPublic: true,
+          verificationStatus: 'APPROVED',
+        },
         include: {
           seller: true,
           category: true,
@@ -54,6 +57,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           in: category.children.map((c: { id: string }) => c.id),
         },
         isPublic: true,
+        verificationStatus: 'APPROVED',
       },
       include: {
         seller: true,

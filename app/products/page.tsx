@@ -10,7 +10,10 @@ export const dynamic = 'force-dynamic';
 
 export default async function ProductsPage() {
   const products = await prismaClient.product.findMany({
-    where: { isPublic: true },
+    where: {
+      isPublic: true,
+      verificationStatus: 'APPROVED',
+    },
     include: {
       seller: true,
       category: true,
