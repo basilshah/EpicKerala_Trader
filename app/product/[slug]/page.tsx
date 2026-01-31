@@ -26,7 +26,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
     },
   });
 
-  if (!product) {
+  // Only show approved products to public
+  if (!product || product.verificationStatus !== 'APPROVED') {
     notFound();
   }
 

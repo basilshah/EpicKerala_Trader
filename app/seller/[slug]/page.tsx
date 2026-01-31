@@ -31,6 +31,9 @@ export default async function SellerPage({ params }: SellerPageProps) {
     where: { slug },
     include: {
       products: {
+        where: {
+          verificationStatus: 'APPROVED',
+        },
         include: {
           category: true,
         },

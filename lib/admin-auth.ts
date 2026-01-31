@@ -1,74 +1,34 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import prismaClient from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose';
 
-export const {
-  handlers: adminHandlers,
-  signIn: adminSignIn,
-  signOut: adminSignOut,
-  auth: adminAuth,
-} = NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: 'Admin Credentials',
-      credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'your-secret-key');
+
+export async function adminAuth() {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('admin-token');
+
+    if (!token) {
+      return null;
+    }
+
+    const verified = await jwtVerify(token.value, secret);
+    const payload = verified.payload;
+
+    if (payload.type !== 'admin') {
+      return null;
+    }
+
+    return {
+      user: {
+        id: payload.id as string,
+        email: payload.email as string,
+        name: payload.name as string,
+        role: payload.role as string,
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
-        const admin = await prismaClient.admin.findUnique({
-          where: {
-            email: credentials.email as string,
-          },
-        });
-
-        if (!admin) {
-          return null;
-        }
-
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password as string,
-          admin.password
-        );
-
-        if (!isPasswordValid) {
-          return null;
-        }
-
-        return {
-          id: admin.id,
-          email: admin.email,
-          name: admin.name,
-          role: admin.role,
-        };
-      },
-    }),
-  ],
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/admin/login',
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = (user as any).role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        (session.user as any).role = token.role;
-      }
-      return session;
-    },
-  },
-});
+    };
+  } catch (error) {
+    console.error('Admin auth error:', error);
+    return null;
+  }
+}

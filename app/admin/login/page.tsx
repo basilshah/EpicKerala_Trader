@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
 import { Container } from '@/components/ui/Container';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
@@ -24,20 +23,28 @@ export default function AdminLoginPage() {
     setError('');
 
     try {
-      const result = await signIn('credentials', {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-        callbackUrl: '/admin/dashboard',
+      // Call the admin login endpoint
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
 
-      if (result?.error) {
-        setError('Invalid email or password');
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'Invalid email or password');
         setIsLoading(false);
-      } else if (result?.ok) {
-        router.push('/admin/dashboard');
-        router.refresh();
+        return;
       }
+
+      // Redirect to admin dashboard
+      window.location.href = '/admin/dashboard';
     } catch (err) {
       setError('Something went wrong. Please try again.');
       setIsLoading(false);

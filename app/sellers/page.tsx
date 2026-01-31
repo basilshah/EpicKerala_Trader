@@ -12,7 +12,13 @@ export default async function SellersPage() {
   const sellers = await prismaClient.seller.findMany({
     include: {
       _count: {
-        select: { products: true },
+        select: { 
+          products: {
+            where: {
+              verificationStatus: 'APPROVED',
+            },
+          },
+        },
       },
     },
     orderBy: { isVerified: 'desc' },

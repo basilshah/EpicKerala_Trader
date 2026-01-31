@@ -59,7 +59,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       },
       include: {
         _count: {
-          select: { products: true },
+          select: {
+            products: {
+              where: {
+                verificationStatus: 'APPROVED',
+              },
+            },
+          },
         },
       },
       take: 6,
