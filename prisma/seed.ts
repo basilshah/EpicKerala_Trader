@@ -122,6 +122,7 @@ async function main() {
     create: {
       companyName: 'Kerala Spices Ltd',
       slug: 'kerala-spices-ltd',
+      password: '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', // password123
       type: 'Manufacturer',
       city: 'Cochin',
       state: 'Kerala',
@@ -139,6 +140,7 @@ async function main() {
     create: {
       companyName: 'Fashion Trends Exports',
       slug: 'fashion-trends-exports',
+      password: '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', // password123
       type: 'Merchant Exporter',
       city: 'Tirur',
       state: 'Kerala',

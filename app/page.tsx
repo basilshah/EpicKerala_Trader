@@ -247,10 +247,7 @@ export default async function HomePage() {
                     <Factory className="w-16 h-16 text-slate-300" />
                     {product.seller.isVerified && (
                       <div className="absolute top-3 right-3">
-                        <VerifiedBadge
-                          className="shadow-md"
-                          icon={<BadgeCheck className="w-3 h-3" />}
-                        />
+                        <VerifiedBadge className="shadow-md" />
                       </div>
                     )}
                     {product.seller.offersOEM && (

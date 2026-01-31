@@ -47,7 +47,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <h1 className="text-3xl font-bold text-primary">{seller.companyName}</h1>
-                {seller.isVerified && <VerifiedBadge icon={<BadgeCheck className="w-3 h-3" />} />}
+                {seller.isVerified && <VerifiedBadge />}
                 <Badge variant="default" className="capitalize">
                   {seller.type}
                 </Badge>

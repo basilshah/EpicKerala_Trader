@@ -27,8 +27,11 @@ model Seller {
   type            String   // Manufacturer, Merchant Exporter
   logoUrl         String?
   
+  // Authentication
+  password        String   // Hashed password
+  
   // Contact
-  email           String
+  email           String   @unique
   phone           String?
   website         String?
   
@@ -37,6 +40,7 @@ model Seller {
   city            String?
   state           String?
   country         String   @default("India")
+  pincode         String?
   
   // Trust Markers
   establishedYear Int?
@@ -45,6 +49,10 @@ model Seller {
   
   // OEM/Private Label
   offersOEM       Boolean  @default(false)
+  
+  // Contact Person
+  contactPersonName        String?
+  contactPersonDesignation String?
   
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

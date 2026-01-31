@@ -39,7 +39,11 @@ export async function GET(request: NextRequest) {
     const suggestions = [
       ...categories.map((cat) => ({ id: cat.id, name: cat.name, type: 'category' as const })),
       ...products.map((prod) => ({ id: prod.id, name: prod.name, type: 'product' as const })),
-      ...sellers.map((seller) => ({ id: seller.id, name: seller.companyName, type: 'seller' as const })),
+      ...sellers.map((seller) => ({
+        id: seller.id,
+        name: seller.companyName,
+        type: 'seller' as const,
+      })),
     ];
 
     return NextResponse.json(suggestions);
