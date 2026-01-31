@@ -87,7 +87,13 @@ export function CategoryBadge({
   );
 }
 
-export function CertificationBadge({ children, className }: { children: ReactNode; className?: string }) {
+export function CertificationBadge({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <Badge variant="warning" className={className} icon={<Award className="w-3 h-3" />}>
       {children}

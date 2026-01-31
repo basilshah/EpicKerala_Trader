@@ -9,11 +9,12 @@ import { SellerCard } from '@/components/cards/SellerCard';
 export const dynamic = 'force-dynamic';
 
 interface SearchPageProps {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const query = searchParams.q || '';
+  const { q } = await searchParams;
+  const query = q || '';
 
   let categories: any[] = [];
   let products: any[] = [];
@@ -37,7 +38,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     // Search products
     products = await prismaClient.product.findMany({
       where: {
-        OR: [{ name: { contains: query } }, { description: { contains: query } }],
+        OR: [
+          { name: { contains: query } },
+          { description: { contains: query } },
+        ],
       },
       include: {
         category: true,
@@ -49,7 +53,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     // Search sellers
     sellers = await prismaClient.seller.findMany({
       where: {
-        OR: [{ companyName: { contains: query } }, { description: { contains: query } }],
+        OR: [
+          { companyName: { contains: query } },
+          { description: { contains: query } },
+        ],
       },
       include: {
         _count: {

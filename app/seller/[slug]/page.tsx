@@ -129,9 +129,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
                     </span>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {seller.certifications.split(',').map((cert, i) => (
-                        <CertificationBadge key={i}>
-                          {cert.trim()}
-                        </CertificationBadge>
+                        <CertificationBadge key={i}>{cert.trim()}</CertificationBadge>
                       ))}
                     </div>
                   </div>

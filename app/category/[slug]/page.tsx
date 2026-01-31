@@ -230,9 +230,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
                   <CardContent className="p-5">
                     <div className="mb-2">
-                      <CategoryBadge>
-                        {product.category.name}
-                      </CategoryBadge>
+                      <CategoryBadge>{product.category.name}</CategoryBadge>
                     </div>
 
                     <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
