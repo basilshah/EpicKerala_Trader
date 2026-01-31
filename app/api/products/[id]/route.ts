@@ -11,10 +11,7 @@ function slugify(text: string): string {
     .trim();
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await auth();
 
@@ -89,6 +86,7 @@ export async function PUT(
         origin: data.origin || 'India',
         shelfLife: data.shelfLife || null,
         images: data.images || null,
+        catalogs: data.catalogs || null,
         isPublic: data.isPublic ?? true,
       },
     });

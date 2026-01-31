@@ -58,89 +58,89 @@ export default async function ProductsPage() {
                   console.error('Failed to parse product images:', e);
                 }
               }
-              
+
               return (
-              <Link key={product.id} href={`/product/${product.slug}`}>
-                <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
-                  {/* Product Image */}
-                  <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
-                    {firstImage ? (
-                      <img
-                        src={firstImage}
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <Factory className="w-16 h-16 text-slate-300" />
-                    )}
-                    {product.seller.isVerified && (
-                      <div className="absolute top-3 right-3">
-                        <VerifiedBadge className="shadow-md" />
-                      </div>
-                    )}
-                    {product.seller.offersOEM && (
-                      <div className="absolute top-3 left-3">
-                        <Badge variant="primary" className="shadow-md">
-                          OEM Available
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-
-                  <CardContent className="p-5">
-                    {/* Category Badge */}
-                    <div className="mb-2">
-                      <CategoryBadge>{product.category.name}</CategoryBadge>
+                <Link key={product.id} href={`/product/${product.slug}`}>
+                  <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
+                    {/* Product Image */}
+                    <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
+                      {firstImage ? (
+                        <img
+                          src={firstImage}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <Factory className="w-16 h-16 text-slate-300" />
+                      )}
+                      {product.seller.isVerified && (
+                        <div className="absolute top-3 right-3">
+                          <VerifiedBadge className="shadow-md" />
+                        </div>
+                      )}
+                      {product.seller.offersOEM && (
+                        <div className="absolute top-3 left-3">
+                          <Badge variant="primary" className="shadow-md">
+                            OEM Available
+                          </Badge>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Product Name */}
-                    <h3 className="font-bold text-lg text-primary mb-3 line-clamp-2">
-                      {product.name}
-                    </h3>
+                    <CardContent className="p-5">
+                      {/* Category Badge */}
+                      <div className="mb-2">
+                        <CategoryBadge>{product.category.name}</CategoryBadge>
+                      </div>
 
-                    {/* Seller Info */}
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2">
-                        {product.seller.isVerified && (
-                          <BadgeCheck className="w-4 h-4 text-secondary" />
-                        )}
-                        <span className="text-sm font-medium text-foreground">
-                          {product.seller.companyName}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 text-muted">
-                        <Factory className="w-3.5 h-3.5" />
-                        <span className="text-xs">{product.seller.type}</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-muted">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-sm">
-                          {product.seller.city}, {product.seller.state}
-                        </span>
-                      </div>
-                    </div>
+                      {/* Product Name */}
+                      <h3 className="font-bold text-lg text-primary mb-3 line-clamp-2">
+                        {product.name}
+                      </h3>
 
-                    {/* Product Details */}
-                    {(product.hsCode || product.moq) && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {product.hsCode && (
-                          <span className="text-xs text-muted border border-slate-200 px-2 py-1 rounded">
-                            HS: {product.hsCode}
+                      {/* Seller Info */}
+                      <div className="space-y-2 mb-4">
+                        <div className="flex items-center gap-2">
+                          {product.seller.isVerified && (
+                            <BadgeCheck className="w-4 h-4 text-secondary" />
+                          )}
+                          <span className="text-sm font-medium text-foreground">
+                            {product.seller.companyName}
                           </span>
-                        )}
-                        {product.moq && (
-                          <span className="text-xs text-muted border border-slate-200 px-2 py-1 rounded">
-                            MOQ: {product.moq}
+                        </div>
+                        <div className="flex items-center gap-2 text-muted">
+                          <Factory className="w-3.5 h-3.5" />
+                          <span className="text-xs">{product.seller.type}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-muted">
+                          <MapPin className="w-4 h-4" />
+                          <span className="text-sm">
+                            {product.seller.city}, {product.seller.state}
                           </span>
-                        )}
+                        </div>
                       </div>
-                    )}
 
-                    <ViewDetailsLink />
-                  </CardContent>
-                </Card>
-              </Link>
-            );
+                      {/* Product Details */}
+                      {(product.hsCode || product.moq) && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {product.hsCode && (
+                            <span className="text-xs text-muted border border-slate-200 px-2 py-1 rounded">
+                              HS: {product.hsCode}
+                            </span>
+                          )}
+                          {product.moq && (
+                            <span className="text-xs text-muted border border-slate-200 px-2 py-1 rounded">
+                              MOQ: {product.moq}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      <ViewDetailsLink />
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
             })}
           </div>
         ) : (

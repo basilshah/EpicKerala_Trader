@@ -6,7 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { ProductCard } from '@/components/cards/ProductCard';
 import { VerifiedBadge, Badge, CertificationBadge } from '@/components/ui/Badge';
-import { BadgeCheck, Factory, MapPin, Globe, Award, CheckCircle } from 'lucide-react';
+import {
+  BadgeCheck,
+  Factory,
+  MapPin,
+  Globe,
+  Award,
+  CheckCircle,
+  FileText,
+  Download,
+} from 'lucide-react';
 
 interface SellerPageProps {
   params: Promise<{ slug: string }>;
@@ -136,6 +145,34 @@ export default async function SellerPage({ params }: SellerPageProps) {
                 )}
               </CardContent>
             </Card>
+
+            {/* Catalogs Section */}
+            {seller.catalogs && JSON.parse(seller.catalogs).length > 0 && (
+              <Card className="border border-slate-200">
+                <CardHeader>
+                  <CardTitle className="text-lg">Company Catalogs</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {JSON.parse(seller.catalogs).map((catalog: any, index: number) => (
+                    <a
+                      key={index}
+                      href={catalog.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors group"
+                    >
+                      <div className="flex items-center gap-2">
+                        <FileText className="w-5 h-5 text-blue-600" />
+                        <span className="text-sm font-medium text-slate-700 group-hover:text-emerald-600">
+                          {catalog.filename}
+                        </span>
+                      </div>
+                      <Download className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+                    </a>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Main Content: Products */}

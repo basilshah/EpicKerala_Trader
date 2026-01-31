@@ -52,9 +52,9 @@ export function ProductCard({ product, showSeller = true }: ProductCardProps) {
         </div>
         <CardContent className="p-6">
           <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-1">{product.name}</h3>
-          {product.description && (
-            <p className="text-sm text-muted mb-3 line-clamp-2">{product.description}</p>
-          )}
+          <p className="text-sm text-muted mb-3 line-clamp-2 min-h-[2.5rem]">
+            {product.description || ''}
+          </p>
           {showSeller && product.seller && (
             <div className="flex items-center gap-2 text-xs text-muted mb-4">
               <Factory className="w-3.5 h-3.5" />

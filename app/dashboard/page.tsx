@@ -148,42 +148,44 @@ export default async function DashboardPage() {
                   console.error('Failed to parse product images:', e);
                 }
               }
-              
+
               return (
-              <div
-                key={product.id}
-                className="flex items-center justify-between p-4 border border-slate-200 rounded-lg hover:bg-slate-50"
-              >
-                <div className="flex items-center gap-3">
-                  {firstImage && (
-                    <img
-                      src={firstImage}
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                    />
-                  )}
-                  <div>
-                    <h3 className="font-medium text-slate-900">{product.name}</h3>
-                    <p className="text-sm text-slate-600 line-clamp-1">{product.description}</p>
+                <div
+                  key={product.id}
+                  className="flex items-center justify-between p-4 border border-slate-200 rounded-lg hover:bg-slate-50"
+                >
+                  <div className="flex items-center gap-3">
+                    {firstImage && (
+                      <img
+                        src={firstImage}
+                        alt={product.name}
+                        className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 className="font-medium text-slate-900">{product.name}</h3>
+                      <p className="text-sm text-slate-600 line-clamp-2 min-h-[2.5rem]">
+                        {product.description || ''}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {product.isPublic ? (
+                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
+                        Active
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">
+                        Draft
+                      </span>
+                    )}
+                    <Link href={`/dashboard/products/${product.id}/edit`}>
+                      <Button variant="outline" size="sm">
+                        Edit
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  {product.isPublic ? (
-                    <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
-                      Active
-                    </span>
-                  ) : (
-                    <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">
-                      Draft
-                    </span>
-                  )}
-                  <Link href={`/dashboard/products/${product.id}/edit`}>
-                    <Button variant="outline" size="sm">
-                      Edit
-                    </Button>
-                  </Link>
-                </div>
-              </div>
               );
             })}
           </div>

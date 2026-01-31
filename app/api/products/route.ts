@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
         origin: data.origin || 'India',
         shelfLife: data.shelfLife || null,
         images: data.images || null,
+        catalogs: data.catalogs || null,
         isPublic: data.isPublic ?? true,
       },
     });

@@ -20,12 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate file type - only images
-    const allowedTypes = [
-      'image/jpeg',
-      'image/jpg',
-      'image/png',
-      'image/webp',
-    ];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
@@ -37,10 +32,7 @@ export async function POST(request: NextRequest) {
     // Validate file size (10MB max for product images)
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      return NextResponse.json(
-        { error: 'File size must be less than 10MB' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'File size must be less than 10MB' }, { status: 400 });
     }
 
     // Create uploads directory if it doesn't exist
@@ -70,9 +62,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Image upload error:', error);
-    return NextResponse.json(
-      { error: 'Failed to upload image' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
   }
 }

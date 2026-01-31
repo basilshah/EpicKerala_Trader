@@ -9,7 +9,15 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
-import { Loader2, CheckCircle2, AlertCircle, Upload, X, Image as ImageIcon } from 'lucide-react';
+import {
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  Upload,
+  X,
+  Image as ImageIcon,
+  FileText,
+} from 'lucide-react';
 
 const productSchema = z.object({
   name: z.string().min(3, 'Product name must be at least 3 characters'),
@@ -48,6 +56,10 @@ export default function AddProductForm({
   const [subCategories, setSubCategories] = useState<Category[]>([]);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [productImages, setProductImages] = useState<Array<{ url: string; filename: string }>>([]);
+  const [uploadingCatalog, setUploadingCatalog] = useState(false);
+  const [productCatalogs, setProductCatalogs] = useState<
+    Array<{ url: string; filename: string; type: string }>
+  >([]);
 
   const {
     register,
@@ -67,11 +79,9 @@ export default function AddProductForm({
   useEffect(() => {
     if (selectedMainCategory) {
       // Filter subcategories based on selected main category
-      const subs = allCategories.filter(
-        (cat) => cat.parentId === selectedMainCategory
-      );
+      const subs = allCategories.filter((cat) => cat.parentId === selectedMainCategory);
       setSubCategories(subs);
-      
+
       // If there are no subcategories, use the main category itself
       if (subs.length === 0) {
         setValue('categoryId', selectedMainCategory);
@@ -120,6 +130,44 @@ export default function AddProductForm({
     setProductImages(productImages.filter((_, i) => i !== index));
   };
 
+  const handleCatalogUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingCatalog(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload/catalog', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to upload catalog');
+      }
+
+      setProductCatalogs([
+        ...productCatalogs,
+        { url: result.url, filename: result.filename, type: result.type },
+      ]);
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload catalog');
+    } finally {
+      setUploadingCatalog(false);
+      event.target.value = '';
+    }
+  };
+
+  const removeCatalog = (index: number) => {
+    setProductCatalogs(productCatalogs.filter((_, i) => i !== index));
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     setIsLoading(true);
     setError('');
@@ -134,6 +182,7 @@ export default function AddProductForm({
           ...data,
           sellerId,
           images: JSON.stringify(productImages),
+          catalogs: JSON.stringify(productCatalogs),
         }),
       });
 
@@ -230,6 +279,61 @@ export default function AddProductForm({
         </div>
       </div>
 
+      <div>
+        <Label>Product Catalogs</Label>
+        <div className="mt-2 space-y-3">
+          {/* Upload Button */}
+          <div>
+            <label
+              htmlFor="catalogUpload"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg cursor-pointer transition-colors border border-blue-300"
+            >
+              <Upload className="w-4 h-4" />
+              {uploadingCatalog ? 'Uploading...' : 'Upload Catalog'}
+            </label>
+            <input
+              id="catalogUpload"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.webp"
+              onChange={handleCatalogUpload}
+              disabled={uploadingCatalog}
+              className="hidden"
+            />
+            <p className="text-xs text-slate-500 mt-1">
+              PDF or images (max 10MB). Product specs, brochures, data sheets, etc.
+            </p>
+          </div>
+
+          {/* Catalog Files List */}
+          {productCatalogs.length > 0 && (
+            <div className="space-y-2">
+              {productCatalogs.map((catalog, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg"
+                >
+                  <div className="flex items-center gap-2">
+                    {catalog.type === 'application/pdf' ? (
+                      <FileText className="w-5 h-5 text-red-500" />
+                    ) : (
+                      <ImageIcon className="w-5 h-5 text-blue-500" />
+                    )}
+                    <span className="text-sm text-slate-700">{catalog.filename}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeCatalog(index)}
+                    className="p-1 text-red-600 hover:bg-red-50 rounded"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Label htmlFor="mainCategory">Main Category</Label>
@@ -265,8 +369,8 @@ export default function AddProductForm({
               {!selectedMainCategory
                 ? 'Select main category first'
                 : subCategories.length === 0
-                ? 'No subcategories'
-                : 'Select subcategory'}
+                  ? 'No subcategories'
+                  : 'Select subcategory'}
             </option>
             {subCategories.map((category) => (
               <option key={category.id} value={category.id}>

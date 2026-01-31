@@ -48,6 +48,7 @@ model Seller {
   certifications  String?  // JSON string or comma separated
   certificationFiles String? // JSON array of file URLs
   profileVideoUrl String?  // YouTube, Vimeo, or other video URL
+  catalogs        String?  // JSON array of catalog files (PDF/images)
   
   // OEM/Private Label
   offersOEM       Boolean  @default(false)
@@ -82,6 +83,7 @@ model Product {
   
   // Media
   images      String?  // JSON array of URLs
+  catalogs    String?  // JSON array of catalog files (PDF/images)
   
   // Meta
   isPublic    Boolean  @default(true)

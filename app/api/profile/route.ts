@@ -38,6 +38,7 @@ export async function PUT(request: NextRequest) {
         establishedYear: data.establishedYear || null,
         certifications: data.certifications || null,
         certificationFiles: data.certificationFiles || null,
+        catalogs: data.catalogs || null,
         offersOEM: data.offersOEM,
         contactPersonName: data.contactPersonName,
         contactPersonDesignation: data.contactPersonDesignation,

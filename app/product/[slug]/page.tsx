@@ -43,6 +43,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
     }
   }
 
+  // Parse product catalogs
+  let productCatalogs: Array<{ url: string; filename: string; type: string }> = [];
+  if (product.catalogs) {
+    try {
+      const catalogs = JSON.parse(product.catalogs);
+      if (Array.isArray(catalogs)) {
+        productCatalogs = catalogs;
+      }
+    } catch (e) {
+      console.error('Failed to parse product catalogs:', e);
+    }
+  }
+
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
       {/* Breadcrumbs */}
@@ -160,6 +173,43 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </div>
                   </div>
                 </div>
+
+                {/* Product Catalogs */}
+                {productCatalogs.length > 0 && (
+                  <div className="bg-blue-50 rounded-lg p-6 border border-blue-100 mt-6">
+                    <h3 className="text-lg font-semibold text-primary mb-4">
+                      Product Catalogs & Specifications
+                    </h3>
+                    <div className="space-y-2">
+                      {productCatalogs.map((catalog, index) => (
+                        <a
+                          key={index}
+                          href={catalog.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between p-3 bg-white hover:bg-blue-50 border border-blue-200 rounded-lg transition-colors group"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-blue-100 rounded">
+                              <Factory className="w-5 h-5 text-blue-600" />
+                            </div>
+                            <div>
+                              <span className="text-sm font-medium text-slate-700 group-hover:text-emerald-600 block">
+                                {catalog.filename}
+                              </span>
+                              <span className="text-xs text-slate-500">
+                                {catalog.type === 'application/pdf' ? 'PDF Document' : 'Image File'}
+                              </span>
+                            </div>
+                          </div>
+                          <Button variant="outline" size="sm" className="gap-2">
+                            Download
+                          </Button>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

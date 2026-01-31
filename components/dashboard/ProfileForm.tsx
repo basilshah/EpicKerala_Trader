@@ -9,7 +9,15 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
-import { Loader2, CheckCircle2, AlertCircle, Upload, X, FileText, Image as ImageIcon } from 'lucide-react';
+import {
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  Upload,
+  X,
+  FileText,
+  Image as ImageIcon,
+} from 'lucide-react';
 
 const profileSchema = z.object({
   companyName: z.string().min(2, 'Company name must be at least 2 characters'),
@@ -42,8 +50,12 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [uploadingFile, setUploadingFile] = useState(false);
-  const [certificationFiles, setCertificationFiles] = useState<Array<{ url: string; filename: string }>>(
-    seller.certificationFiles ? JSON.parse(seller.certificationFiles) : []
+  const [certificationFiles, setCertificationFiles] = useState<
+    Array<{ url: string; filename: string }>
+  >(seller.certificationFiles ? JSON.parse(seller.certificationFiles) : []);
+  const [uploadingCatalog, setUploadingCatalog] = useState(false);
+  const [catalogs, setCatalogs] = useState<Array<{ url: string; filename: string; type: string }>>(
+    seller.catalogs ? JSON.parse(seller.catalogs) : []
   );
 
   const {
@@ -94,7 +106,10 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
         throw new Error(result.error || 'Failed to upload file');
       }
 
-      setCertificationFiles([...certificationFiles, { url: result.url, filename: result.filename }]);
+      setCertificationFiles([
+        ...certificationFiles,
+        { url: result.url, filename: result.filename },
+      ]);
       setSuccess('File uploaded successfully!');
       setTimeout(() => setSuccess(''), 3000);
     } catch (err: any) {
@@ -109,6 +124,43 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
     setCertificationFiles(certificationFiles.filter((_, i) => i !== index));
   };
 
+  const handleCatalogUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingCatalog(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload/catalog', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to upload catalog');
+      }
+
+      setCatalogs([...catalogs, { url: result.url, filename: result.filename, type: result.type }]);
+      setSuccess('Catalog uploaded successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload catalog');
+    } finally {
+      setUploadingCatalog(false);
+      event.target.value = '';
+    }
+  };
+
+  const removeCatalog = (index: number) => {
+    setCatalogs(catalogs.filter((_, i) => i !== index));
+  };
+
   const onSubmit = async (data: ProfileFormData) => {
     setIsLoading(true);
     setError('');
@@ -120,7 +172,12 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          certificationFiles: JSON.stringify(certificationFiles),
+          catalogs: JSON.stringify(catalogs),
+          profileVideoUrl: data.profileVideoUrl || null,
+        }),
       });
 
       const result = await response.json();
@@ -251,6 +308,68 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
                   <button
                     type="button"
                     onClick={() => removeFile(index)}
+                    className="p-1 text-red-600 hover:bg-red-50 rounded"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <Label>Company Catalogs</Label>
+        <div className="mt-2 space-y-3">
+          {/* Upload Button */}
+          <div>
+            <label
+              htmlFor="catalogUpload"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded-lg cursor-pointer transition-colors border border-emerald-300"
+            >
+              <Upload className="w-4 h-4" />
+              {uploadingCatalog ? 'Uploading...' : 'Upload Catalog'}
+            </label>
+            <input
+              id="catalogUpload"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.webp"
+              onChange={handleCatalogUpload}
+              disabled={uploadingCatalog}
+              className="hidden"
+            />
+            <p className="text-xs text-slate-500 mt-1">
+              PDF or images (max 10MB). Product catalogs, brochures, price lists, etc.
+            </p>
+          </div>
+
+          {/* Uploaded Catalogs List */}
+          {catalogs.length > 0 && (
+            <div className="space-y-2">
+              {catalogs.map((catalog, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-3 bg-emerald-50 border border-emerald-200 rounded-lg"
+                >
+                  <div className="flex items-center gap-2">
+                    {catalog.type === 'application/pdf' ? (
+                      <FileText className="w-5 h-5 text-red-500" />
+                    ) : (
+                      <ImageIcon className="w-5 h-5 text-blue-500" />
+                    )}
+                    <a
+                      href={catalog.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-slate-700 hover:text-emerald-600 hover:underline"
+                    >
+                      {catalog.filename}
+                    </a>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeCatalog(index)}
                     className="p-1 text-red-600 hover:bg-red-50 rounded"
                   >
                     <X className="w-4 h-4" />

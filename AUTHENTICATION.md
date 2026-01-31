@@ -7,30 +7,35 @@ This application uses **NextAuth.js v5** for authentication with credentials-bas
 ### Features Implemented
 
 ✅ **Sign In Page** (`/signin`)
+
 - Email and password login
 - Form validation with Zod
 - Error handling with user feedback
 - Automatic redirect to dashboard after login
 
 ✅ **Registration** (`/register`)
+
 - Multi-step registration form (4 steps)
 - Email + password authentication
 - Password hashing with bcryptjs
 - Unique email validation
 
 ✅ **Exporter Dashboard** (`/dashboard`)
+
 - Protected route (requires authentication)
 - Overview stats (total products, active listings, etc.)
 - Quick actions (Add Product, Edit Profile, View Public Profile)
 - Recent products list
 
 ✅ **Profile Management** (`/dashboard/profile`)
+
 - Edit company information
 - Update contact details
 - Manage certifications and OEM offerings
 - Real-time validation
 
 ✅ **Product Management**
+
 - List all products (`/dashboard/products`)
 - Add new products (`/dashboard/products/add`)
 - Category selection
@@ -40,6 +45,7 @@ This application uses **NextAuth.js v5** for authentication with credentials-bas
 ## Routes
 
 ### Public Routes
+
 - `/` - Home page
 - `/signin` - Sign in page
 - `/register` - Registration page
@@ -48,6 +54,7 @@ This application uses **NextAuth.js v5** for authentication with credentials-bas
 - `/categories` - Browse categories
 
 ### Protected Routes (Authentication Required)
+
 - `/dashboard` - Exporter dashboard
 - `/dashboard/profile` - Profile management
 - `/dashboard/products` - Product list
@@ -56,21 +63,26 @@ This application uses **NextAuth.js v5** for authentication with credentials-bas
 ## API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/[...nextauth]` - NextAuth API routes
 - `POST /api/register` - New exporter registration
 
 ### Protected APIs (Require Authentication)
+
 - `PUT /api/profile` - Update exporter profile
 - `POST /api/products` - Create new product
 
 ## Testing the Authentication
 
 ### Test Account
+
 Use the seeded data to test:
+
 - **Email:** test@example.com
 - **Password:** password123
 
 ### Registration Flow
+
 1. Go to `/register`
 2. Fill out all 4 steps:
    - Step 1: Account & Contact Info
@@ -81,6 +93,7 @@ Use the seeded data to test:
 4. Automatically redirected to sign-in page
 
 ### Sign In Flow
+
 1. Go to `/signin`
 2. Enter email and password
 3. Click "Sign In"
@@ -138,6 +151,7 @@ NEXTAUTH_SECRET="your-secret-key-here"
 ```
 
 Generate a secret:
+
 ```bash
 openssl rand -base64 32
 ```
