@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Package, ShoppingBag, TrendingUp } from 'lucide-react';
+import { Package, ShoppingBag, TrendingUp, User, Eye, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
@@ -77,29 +77,6 @@ export default function SellerDashboardClient({
 
   return (
     <>
-      {/* Quick Actions */}
-      <div className="bg-white rounded-lg shadow-md p-6 border border-slate-200 mb-8">
-        <h2 className="text-xl font-bold text-slate-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link href="/dashboard/products/add">
-            <Button className="w-full" variant="outline">
-              <Package className="w-4 h-4 mr-2" />
-              Add New Product
-            </Button>
-          </Link>
-          <Link href="/dashboard/profile">
-            <Button className="w-full" variant="outline">
-              Edit Profile
-            </Button>
-          </Link>
-          <Link href={`/seller/${sellerSlug}`}>
-            <Button className="w-full" variant="outline">
-              View Public Profile
-            </Button>
-          </Link>
-        </div>
-      </div>
-
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {stats.map((stat) => {
@@ -117,7 +94,6 @@ export default function SellerDashboardClient({
                 <div className={`${stat.iconBg} p-3 rounded-lg`}>
                   <Icon className="w-6 h-6 text-white" />
                 </div>
-                {isSelected && <div className={`w-3 h-3 rounded-full ${stat.color}`}></div>}
               </div>
               <p className="text-2xl font-bold text-slate-900 mb-1">{stat.value}</p>
               <p className="text-sm text-slate-600">{stat.label}</p>

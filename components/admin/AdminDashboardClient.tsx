@@ -124,7 +124,6 @@ export default function AdminDashboardClient({
                   <div className={`${stat.color} p-3 rounded-lg`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  {isSelected && <div className={`w-3 h-3 rounded-full ${stat.color}`}></div>}
                 </div>
                 <p className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</p>
                 <p className="text-sm text-slate-600">{stat.label}</p>
