@@ -35,15 +35,15 @@ export default function DashboardNav() {
   ];
 
   return (
-    <div className="bg-white border-b border-slate-200">
+    <div className="bg-white border-b border-slate-200 shadow-sm">
       <Container>
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-6">
-            <Link href="/">
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center">
               <img
                 src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
                 alt="Epic Kerala"
-                className="h-8 cursor-pointer"
+                className="h-10 cursor-pointer"
               />
             </Link>
             <nav className="hidden md:flex items-center gap-2">

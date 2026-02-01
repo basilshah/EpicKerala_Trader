@@ -33,7 +33,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   const session = await auth();
-  
+
   // Fetch data
   const categories = await prismaClient.category.findMany({
     where: { parentId: null },

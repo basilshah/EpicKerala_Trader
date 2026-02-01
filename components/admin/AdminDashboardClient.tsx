@@ -161,9 +161,7 @@ export default function AdminDashboardClient({
                         <p className="text-sm text-slate-600 mt-1">
                           {product.seller.companyName} • {product.category.name}
                         </p>
-                        <p className="text-xs text-slate-500 mt-1">
-                          Submitted {product.createdAt}
-                        </p>
+                        <p className="text-xs text-slate-500 mt-1">Submitted {product.createdAt}</p>
                       </div>
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-medium">
                         Pending
@@ -199,9 +197,7 @@ export default function AdminDashboardClient({
                         <p className="text-sm text-slate-600 mt-1">
                           {product.seller.companyName} • {product.category.name}
                         </p>
-                        <p className="text-xs text-slate-500 mt-1">
-                          Submitted {product.createdAt}
-                        </p>
+                        <p className="text-xs text-slate-500 mt-1">Submitted {product.createdAt}</p>
                       </div>
                       <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
                         Approved
@@ -241,9 +237,7 @@ export default function AdminDashboardClient({
                           </p>
                         )}
                       </div>
-                      <span className="text-xs text-slate-500">
-                        {rfq.createdAt}
-                      </span>
+                      <span className="text-xs text-slate-500">{rfq.createdAt}</span>
                     </div>
                     <div className="mb-2">
                       <p className="text-sm font-medium text-slate-700">

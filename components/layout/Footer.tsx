@@ -9,9 +9,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Column 1: About */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
-              <Ship className="w-6 h-6" strokeWidth={2.5} />
-              <span className="font-bold text-lg tracking-wide uppercase">EPIC</span>
+            <div className="flex items-center">
+              <img
+                src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
+                alt="Epic Kerala"
+                className="h-8"
+              />
             </div>
             <p className="text-sm text-white/80 leading-relaxed">
               Official export trade portal connecting global buyers with Kerala's finest

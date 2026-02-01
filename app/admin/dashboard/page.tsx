@@ -60,19 +60,31 @@ export default async function AdminDashboard() {
   });
 
   // Format dates to avoid hydration issues
-  const formattedPendingProducts = allPendingProducts.map(p => ({
+  const formattedPendingProducts = allPendingProducts.map((p) => ({
     ...p,
-    createdAt: p.createdAt.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+    createdAt: p.createdAt.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    }),
   }));
 
-  const formattedApprovedProducts = allApprovedProducts.map(p => ({
+  const formattedApprovedProducts = allApprovedProducts.map((p) => ({
     ...p,
-    createdAt: p.createdAt.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+    createdAt: p.createdAt.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    }),
   }));
 
-  const formattedRFQs = allRFQs.map(r => ({
+  const formattedRFQs = allRFQs.map((r) => ({
     ...r,
-    createdAt: r.createdAt.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+    createdAt: r.createdAt.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    }),
   }));
 
   return (
