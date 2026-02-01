@@ -33,9 +33,12 @@ export default function DashboardNav() {
       <Container>
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-6">
-            <Link href="/dashboard" className="text-xl font-bold text-emerald-600">
-              Epic Kerala
-            </Link>
+            <Link href="/dashboard" className="text-xl font-bold text-emerald-600"></Link>
+            <img
+              src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
+              alt="Epic Kerala"
+              className="h-8"
+            />
             <nav className="hidden md:flex items-center gap-1">
               {navItems.map((item) => {
                 const Icon = item.icon;

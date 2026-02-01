@@ -1,4 +1,4 @@
-# Epic Kerala - Exporter Authentication & Dashboard
+# EPIC - Exporter Authentication & Dashboard
 
 ## Authentication System
 

@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
               <Ship className="w-6 h-6" strokeWidth={2.5} />
-              <span className="font-bold text-lg tracking-wide uppercase">EPIC KERALA</span>
+              <span className="font-bold text-lg tracking-wide uppercase">EPIC</span>
             </div>
             <p className="text-sm text-white/80 leading-relaxed">
               Official export trade portal connecting global buyers with Kerala's finest
@@ -160,7 +160,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10 bg-primary/80">
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/70">
-          <p>© 2025 EPIC Kerala. All rights reserved.</p>
+          <p>© 2025 EPIC. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-secondary transition-colors">
               Privacy Policy

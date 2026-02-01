@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Epic Kerala - B2B Export Directory',
+  title: 'EPIC - B2B Export Directory',
   description: 'Connect with verified manufacturers and exporters from Kerala.',
 };
 

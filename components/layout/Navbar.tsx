@@ -13,7 +13,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
           <Ship className="w-6 h-6 text-white" strokeWidth={2.5} />
-          <span className="text-white font-bold text-lg tracking-wide uppercase">EPIC KERALA</span>
+          <span className="text-white font-bold text-lg tracking-wide uppercase">EPIC</span>
         </Link>
 
         {/* Desktop Navigation */}

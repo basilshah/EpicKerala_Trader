@@ -398,7 +398,8 @@ export default function AddProductForm({
               className="hidden"
             />
             <p className="text-xs text-slate-500 mt-1">
-              PDF or images (max 10MB). Quality certificates, test reports, organic certifications, etc.
+              PDF or images (max 10MB). Quality certificates, test reports, organic certifications,
+              etc.
             </p>
           </div>
 
