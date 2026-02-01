@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, X } from 'lucide-react';
+import { Search, X, Loader2 } from 'lucide-react';
 
 interface SearchBarProps {
   initialQuery?: string;
@@ -127,7 +127,15 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
             placeholder="Search products, categories, or exporters..."
             className="w-full h-12 px-5 pr-10 rounded-l-md text-foreground bg-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary border-0"
           />
-          {query && (
+          {isLoading ? (
+            <button
+              type="button"
+              onClick={clearSearch}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+            >
+              <Loader2 className="w-4 h-4 animate-spin" />
+            </button>
+          ) : query ? (
             <button
               type="button"
               onClick={clearSearch}
@@ -135,7 +143,7 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
             >
               <X className="w-4 h-4" />
             </button>
-          )}
+          ) : null}
         </div>
         <button
           type="submit"
@@ -149,31 +157,27 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
       {/* Suggestions Dropdown */}
       {isFocused && showSuggestions && suggestions.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-slate-200 max-h-96 overflow-y-auto z-50">
-          {isLoading ? (
-            <div className="p-4 text-center text-muted">Loading...</div>
-          ) : (
-            <ul className="py-2">
-              {suggestions.map((suggestion) => (
-                <li key={`${suggestion.type}-${suggestion.id}`}>
-                  <button
-                    type="button"
-                    onClick={() => handleSuggestionClick(suggestion)}
-                    className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Search className="w-4 h-4 text-muted" />
-                      <span className="text-foreground group-hover:text-primary font-medium">
-                        {suggestion.name}
-                      </span>
-                    </div>
-                    <span className="text-xs text-muted bg-slate-100 px-2 py-1 rounded-full">
-                      {getTypeLabel(suggestion.type)}
+          <ul className="py-2">
+            {suggestions.map((suggestion) => (
+              <li key={`${suggestion.type}-${suggestion.id}`}>
+                <button
+                  type="button"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <Search className="w-4 h-4 text-muted" />
+                    <span className="text-foreground group-hover:text-primary font-medium">
+                      {suggestion.name}
                     </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
+                  </div>
+                  <span className="text-xs text-muted bg-slate-100 px-2 py-1 rounded-full">
+                    {getTypeLabel(suggestion.type)}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
