@@ -4,6 +4,8 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import ProfileForm from '@/components/dashboard/ProfileForm';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProfilePage() {
   const session = await auth();
 

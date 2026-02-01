@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Plus, Package } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductsPage() {
   const session = await auth();
 

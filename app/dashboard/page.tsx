@@ -4,6 +4,8 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import SellerDashboardClient from '@/components/dashboard/SellerDashboardClient';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const session = await auth();
 

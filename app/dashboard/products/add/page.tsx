@@ -4,6 +4,8 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import AddProductForm from '@/components/dashboard/AddProductForm';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AddProductPage() {
   const session = await auth();
 

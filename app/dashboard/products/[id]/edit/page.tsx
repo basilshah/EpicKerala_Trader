@@ -4,6 +4,8 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import EditProductForm from '@/components/dashboard/EditProductForm';
 
+export const dynamic = 'force-dynamic';
+
 interface EditProductPageProps {
   params: Promise<{
     id: string;

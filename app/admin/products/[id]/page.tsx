@@ -8,6 +8,8 @@ import ProductVerificationForm from '@/components/admin/ProductVerificationForm'
 import { Factory, FileText, Download } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 interface AdminProductPageProps {
   params: Promise<{ id: string }>;
 }
