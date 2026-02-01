@@ -41,12 +41,30 @@ export default async function HomePage() {
     include: {
       children: {
         orderBy: { name: 'asc' },
+        include: {
+          _count: {
+            select: { products: true },
+          },
+        },
       },
       _count: {
         select: { products: true },
       },
     },
     take: 6,
+  });
+
+  // Calculate total products including subcategories
+  const categoriesWithTotalCount = categories.map((category: any) => {
+    const mainCategoryProducts = category._count.products;
+    const subCategoryProducts = category.children.reduce(
+      (sum: number, child: any) => sum + (child._count?.products || 0),
+      0
+    );
+    return {
+      ...category,
+      totalProducts: mainCategoryProducts + subCategoryProducts,
+    };
   });
 
   const featuredSellers = await prismaClient.seller.findMany({
@@ -74,7 +92,7 @@ export default async function HomePage() {
   return (
     <div className="bg-background">
       {/* SECTION 2: HERO */}
-      <section className="relative w-full h-[500px] overflow-hidden">
+      <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/hero_bg.png"
           alt="International Seaport"
@@ -86,22 +104,22 @@ export default async function HomePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/50 to-transparent" />
 
-        <div className="relative container-custom h-full flex items-center">
+        <div className="relative container-custom h-full flex items-center px-4">
           <div className="max-w-2xl">
-            <p className="text-secondary text-sm font-semibold uppercase tracking-wider mb-3">
+            <p className="text-secondary text-xs md:text-sm font-semibold uppercase tracking-wider mb-2 md:mb-3">
               Official Trade Portal
             </p>
-            <h1 className="text-5xl font-bold text-white leading-tight mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 md:mb-4">
               Discover Kerala's Finest Export Products
             </h1>
-            <p className="text-xl text-white/90 mb-8">
+            <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8">
               Connect directly with verified manufacturers and exporters. Quality assured, globally
               delivered.
             </p>
 
             {/* Search Bar */}
             <SearchBar />
-            <p className="text-sm text-white/70">
+            <p className="text-xs md:text-sm text-white/70 mt-2 md:mt-0">
               Popular:{' '}
               <span className="text-white font-medium">
                 Spices, Seafood, Coir Products, Handloom Textiles
@@ -112,61 +130,63 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 3: STATISTICS BAR */}
-      <section className="w-full bg-primary py-8">
+      <section className="w-full bg-primary py-6 md:py-8">
         <Container>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             <div className="text-center">
-              <div className="flex justify-center mb-2">
-                <Building2 className="w-10 h-10 text-white" />
+              <div className="flex justify-center mb-1 md:mb-2">
+                <Building2 className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <p className="text-3xl font-bold text-white mb-1">750+</p>
-              <p className="text-sm text-white/80">Verified Exporters</p>
-              <div className="mt-2 h-0.5 w-16 bg-secondary mx-auto" />
+              <p className="text-2xl md:text-3xl font-bold text-white mb-1">750+</p>
+              <p className="text-xs md:text-sm text-white/80">Verified Exporters</p>
+              <div className="mt-1 md:mt-2 h-0.5 w-12 md:w-16 bg-secondary mx-auto" />
             </div>
             <div className="text-center">
-              <div className="flex justify-center mb-2">
-                <Package className="w-10 h-10 text-white" />
+              <div className="flex justify-center mb-1 md:mb-2">
+                <Package className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <p className="text-3xl font-bold text-white mb-1">3500+</p>
-              <p className="text-sm text-white/80">Products Listed</p>
-              <div className="mt-2 h-0.5 w-16 bg-secondary mx-auto" />
+              <p className="text-2xl md:text-3xl font-bold text-white mb-1">3500+</p>
+              <p className="text-xs md:text-sm text-white/80">Products Listed</p>
+              <div className="mt-1 md:mt-2 h-0.5 w-12 md:w-16 bg-secondary mx-auto" />
             </div>
             <div className="text-center">
-              <div className="flex justify-center mb-2">
-                <Grid3x3 className="w-10 h-10 text-white" />
+              <div className="flex justify-center mb-1 md:mb-2">
+                <Grid3x3 className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <p className="text-3xl font-bold text-white mb-1">25+</p>
-              <p className="text-sm text-white/80">Export Categories</p>
-              <div className="mt-2 h-0.5 w-16 bg-secondary mx-auto" />
+              <p className="text-2xl md:text-3xl font-bold text-white mb-1">25+</p>
+              <p className="text-xs md:text-sm text-white/80">Export Categories</p>
+              <div className="mt-1 md:mt-2 h-0.5 w-12 md:w-16 bg-secondary mx-auto" />
             </div>
             <div className="text-center">
-              <div className="flex justify-center mb-2">
-                <Globe className="w-10 h-10 text-white" />
+              <div className="flex justify-center mb-1 md:mb-2">
+                <Globe className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <p className="text-3xl font-bold text-white mb-1">65+</p>
-              <p className="text-sm text-white/80">Countries Served</p>
-              <div className="mt-2 h-0.5 w-16 bg-secondary mx-auto" />
+              <p className="text-2xl md:text-3xl font-bold text-white mb-1">65+</p>
+              <p className="text-xs md:text-sm text-white/80">Countries Served</p>
+              <div className="mt-1 md:mt-2 h-0.5 w-12 md:w-16 bg-secondary mx-auto" />
             </div>
           </div>
         </Container>
       </section>
 
       {/* SECTION 4: BROWSE CATEGORIES */}
-      <section className="py-20 bg-background">
+      <section className="py-12 md:py-16 lg:py-20 bg-background">
         <Container>
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-4xl font-bold text-primary mb-3">Browse Export Categories</h2>
-            <p className="text-lg text-muted">
+          <div className="text-center max-w-2xl mx-auto mb-8 md:mb-12 px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">
+              Browse Export Categories
+            </h2>
+            <p className="text-base md:text-lg text-muted">
               Explore Kerala's diverse range of premium export products
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((category: any, index: number) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
+            {categoriesWithTotalCount.map((category: any, index: number) => (
               <Link key={category.id} href={`/category/${category.slug}`}>
                 <Card className="overflow-hidden hover:shadow-lg transition-all group flex flex-col cursor-pointer border border-slate-200">
                   {/* Category Image */}
-                  <div className="relative h-[200px] bg-slate-100 overflow-hidden">
+                  <div className="relative h-[180px] md:h-[200px] bg-slate-100 overflow-hidden">
                     {index === 0 ? (
                       <Image
                         src="/cat_spices_1769688487625.png"
@@ -183,26 +203,28 @@ export default async function HomePage() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-                        <Package className="w-20 h-20 text-slate-300" />
+                        <Package className="w-16 md:w-20 h-16 md:h-20 text-slate-300" />
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute top-4 right-4">
-                      <ProductCountBadge count={category._count.products} />
+                    <div className="absolute top-3 md:top-4 right-3 md:right-4">
+                      <ProductCountBadge count={category.totalProducts} />
                     </div>
                   </div>
 
-                  <CardContent className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-2xl font-bold text-primary mb-3">{category.name}</h3>
+                  <CardContent className="p-4 md:p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl md:text-2xl font-bold text-primary mb-2 md:mb-3">
+                      {category.name}
+                    </h3>
 
-                    <div className="flex-grow mb-4">
-                      <div className="min-h-[90px]">
+                    <div className="flex-grow mb-3 md:mb-4">
+                      <div className="min-h-[70px] md:min-h-[90px]">
                         {category.children.length > 0 && (
-                          <div className="mb-4">
-                            <h4 className="text-sm font-semibold text-foreground mb-2">
+                          <div className="mb-3 md:mb-4">
+                            <h4 className="text-xs md:text-sm font-semibold text-foreground mb-2">
                               Sub-categories:
                             </h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-1.5 md:gap-2">
                               {category.children.slice(0, 3).map((child: any) => (
                                 <CategorySubLink key={child.id} href={`/category/${child.slug}`}>
                                   <SubcategoryBadge interactive>{child.name}</SubcategoryBadge>
@@ -229,11 +251,13 @@ export default async function HomePage() {
       </section>
 
       {/* SECTION 5: FEATURED PRODUCTS */}
-      <section className="w-full bg-white py-20">
+      <section className="w-full bg-white py-12 md:py-16 lg:py-20">
         <Container>
           {/* Section Header */}
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary">Featured Products</h2>
+          <div className="flex items-center justify-between mb-8 md:mb-12 px-4">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">
+              Featured Products
+            </h2>
             <Link
               href="/products"
               className="hidden md:inline-flex items-center gap-2 text-secondary font-medium hover:gap-3 transition-all"
@@ -244,7 +268,7 @@ export default async function HomePage() {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
             {featuredProducts.map((product) => {
               // Parse product images
               let firstImage = null;

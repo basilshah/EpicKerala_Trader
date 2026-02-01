@@ -79,7 +79,7 @@ export default function SellerDashboardClient({
   return (
     <>
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
         {stats.map((stat) => {
           const Icon = stat.icon;
           const isSelected = selectedTab === stat.id;
@@ -87,19 +87,21 @@ export default function SellerDashboardClient({
             <div
               key={stat.label}
               onClick={() => setSelectedTab(stat.id)}
-              className={`${colorPalette.card.bg} rounded-lg ${colorPalette.card.shadow} p-6 border ${colorPalette.card.border} cursor-pointer transition-all ${
+              className={`${colorPalette.card.bg} rounded-lg ${colorPalette.card.shadow} p-4 md:p-6 border ${colorPalette.card.border} cursor-pointer transition-all ${
                 isSelected
                   ? `ring-2 ${stat.borderColor} ${colorPalette.card.shadowSelected}`
                   : colorPalette.card.shadowHover
               }`}
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`${stat.iconBg} p-3 rounded-lg`}>
-                  <Icon className="w-6 h-6 text-white" />
+              <div className="flex items-center justify-between mb-3 md:mb-4">
+                <div className={`${stat.iconBg} p-2.5 md:p-3 rounded-lg`}>
+                  <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
               </div>
-              <p className={`text-2xl font-bold ${colorPalette.text.primary} mb-1`}>{stat.value}</p>
-              <p className={`text-sm ${colorPalette.text.secondary}`}>{stat.label}</p>
+              <p className={`text-xl md:text-2xl font-bold ${colorPalette.text.primary} mb-1`}>
+                {stat.value}
+              </p>
+              <p className={`text-xs md:text-sm ${colorPalette.text.secondary}`}>{stat.label}</p>
             </div>
           );
         })}
@@ -107,22 +109,22 @@ export default function SellerDashboardClient({
 
       {/* Content based on selected tab */}
       {selectedTab === 'products' && (
-        <div className="bg-white rounded-lg shadow-md p-6 border border-slate-200">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-slate-900">All Products</h2>
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6 border border-slate-200">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+            <h2 className="text-lg md:text-xl font-bold text-slate-900">All Products</h2>
             <Link href="/dashboard/products">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="w-full sm:w-auto">
                 Manage Products
               </Button>
             </Link>
           </div>
 
           {allProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <Package className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <p className="text-slate-600 mb-4">No products yet</p>
+            <div className="text-center py-8 md:py-12">
+              <Package className="w-10 h-10 md:w-12 md:h-12 text-slate-300 mx-auto mb-3" />
+              <p className="text-sm md:text-base text-slate-600 mb-4">No products yet</p>
               <Link href="/dashboard/products/add">
-                <Button>Add Your First Product</Button>
+                <Button className="w-full sm:w-auto">Add Your First Product</Button>
               </Link>
             </div>
           ) : (
@@ -144,9 +146,9 @@ export default function SellerDashboardClient({
                 return (
                   <div
                     key={product.id}
-                    className="flex items-center justify-between p-4 border border-slate-200 rounded-lg hover:bg-slate-50"
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 md:p-4 border border-slate-200 rounded-lg hover:bg-slate-50 gap-3"
                   >
-                    <div className="flex items-center gap-3 flex-1">
+                    <div className="flex items-center gap-3 flex-1 w-full sm:w-auto">
                       {firstImage && (
                         <img
                           src={firstImage}

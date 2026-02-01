@@ -220,36 +220,51 @@ export function RegisterForm() {
 
       {/* Progress Steps Indicator */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="relative flex items-center justify-between">
           {STEPS.map((step, index) => (
-            <div key={step.id} className="flex items-center flex-1">
-              <div className="flex flex-col items-center flex-1">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-semibold transition-colors ${
-                    currentStep >= step.id
-                      ? 'bg-secondary border-secondary text-white'
-                      : 'bg-white border-slate-300 text-slate-400'
-                  }`}
-                >
-                  {step.id}
-                </div>
-                <span
-                  className={`text-xs mt-2 font-medium text-center ${
-                    currentStep >= step.id ? 'text-secondary' : 'text-muted'
-                  }`}
-                >
-                  {step.title}
-                </span>
+            <div key={step.id} className="flex flex-col items-center relative z-10">
+              <div
+                className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 font-semibold transition-colors bg-white ${
+                  currentStep >= step.id
+                    ? 'border-secondary text-secondary'
+                    : 'border-slate-300 text-slate-400'
+                }`}
+              >
+                {currentStep >= step.id ? (
+                  <div className="w-full h-full rounded-full bg-secondary flex items-center justify-center text-white">
+                    {step.id}
+                  </div>
+                ) : (
+                  step.id
+                )}
               </div>
-              {index < STEPS.length - 1 && (
-                <div
-                  className={`h-0.5 flex-1 -mt-8 transition-colors ${
-                    currentStep > step.id ? 'bg-secondary' : 'bg-slate-200'
-                  }`}
-                />
-              )}
+              <span
+                className={`hidden md:block text-xs mt-2 font-medium text-center whitespace-nowrap ${
+                  currentStep >= step.id ? 'text-secondary' : 'text-muted'
+                }`}
+              >
+                {step.title}
+              </span>
             </div>
           ))}
+
+          {/* Connecting Lines */}
+          <div
+            className="absolute left-0 right-0 top-4 md:top-5 flex items-center -z-0"
+            style={{ paddingLeft: '16px', paddingRight: '16px' }}
+          >
+            <div className="flex-1 flex items-center justify-between">
+              {[1, 2, 3].map((lineIndex) => (
+                <div
+                  key={lineIndex}
+                  className={`h-0.5 transition-colors ${
+                    currentStep > lineIndex ? 'bg-secondary' : 'bg-slate-200'
+                  }`}
+                  style={{ width: 'calc((100% - 0px) / 3)' }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

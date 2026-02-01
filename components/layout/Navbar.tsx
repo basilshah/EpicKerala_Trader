@@ -5,10 +5,12 @@ import { Ship, Menu, X, LayoutDashboard } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { colorPalette } from '@/lib/colors';
+import { useState } from 'react';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="w-full h-[70px] bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
@@ -24,82 +26,94 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-2 text-slate-700">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/' 
-                ? colorPalette.nav.active.text 
+              pathname === '/'
+                ? colorPalette.nav.active.text
                 : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
             }`}
           >
             Home
             {pathname === '/' && (
-              <span className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}></span>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+              ></span>
             )}
           </Link>
           <Link
             href="/categories"
             className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
               pathname === '/categories' || pathname?.startsWith('/category/')
-                ? colorPalette.nav.active.text 
+                ? colorPalette.nav.active.text
                 : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
             }`}
           >
             Categories
             {(pathname === '/categories' || pathname?.startsWith('/category/')) && (
-              <span className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}></span>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+              ></span>
             )}
           </Link>
           <Link
             href="/products"
             className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
               pathname === '/products' || pathname?.startsWith('/product/')
-                ? colorPalette.nav.active.text 
+                ? colorPalette.nav.active.text
                 : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
             }`}
           >
             Products
             {(pathname === '/products' || pathname?.startsWith('/product/')) && (
-              <span className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}></span>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+              ></span>
             )}
           </Link>
           <Link
             href="/sellers"
             className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
               pathname === '/sellers' || pathname?.startsWith('/seller/')
-                ? colorPalette.nav.active.text 
+                ? colorPalette.nav.active.text
                 : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
             }`}
           >
             Exporters
             {(pathname === '/sellers' || pathname?.startsWith('/seller/')) && (
-              <span className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}></span>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+              ></span>
             )}
           </Link>
           <Link
             href="/about"
             className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
               pathname === '/about'
-                ? colorPalette.nav.active.text 
+                ? colorPalette.nav.active.text
                 : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
             }`}
           >
             About Us
             {pathname === '/about' && (
-              <span className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}></span>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+              ></span>
             )}
           </Link>
           <Link
             href="/contact"
             className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
               pathname === '/contact'
-                ? colorPalette.nav.active.text 
+                ? colorPalette.nav.active.text
                 : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
             }`}
           >
             Contact
             {pathname === '/contact' && (
-              <span className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}></span>
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+              ></span>
             )}
           </Link>
         </nav>
@@ -130,10 +144,116 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="lg:hidden p-2 text-white">
-          <Menu className="h-6 w-6" />
+        <button
+          className="lg:hidden p-2 text-slate-700"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white border-t border-slate-200">
+          <div className="container-custom py-4 space-y-3">
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === '/'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              Home
+            </Link>
+            <Link
+              href="/categories"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === '/categories' || pathname?.startsWith('/category/')
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              Categories
+            </Link>
+            <Link
+              href="/products"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === '/products' || pathname?.startsWith('/product/')
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              Products
+            </Link>
+            <Link
+              href="/sellers"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === '/sellers' || pathname?.startsWith('/seller/')
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              Exporters
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === '/about'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              About Us
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === '/contact'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+            >
+              Contact
+            </Link>
+
+            {/* Mobile Action Buttons */}
+            <div className="pt-3 border-t border-slate-200">
+              {session ? (
+                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                  <button className="w-full h-10 px-5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+                    <button className="w-full h-10 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-lg transition-all">
+                      Register as Exporter
+                    </button>
+                  </Link>
+                  <Link
+                    href="/signin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block mt-3"
+                  >
+                    <button className="w-full h-10 px-5 bg-white hover:bg-slate-50 text-primary text-sm font-semibold rounded-lg transition-all border border-primary">
+                      Sign In
+                    </button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
