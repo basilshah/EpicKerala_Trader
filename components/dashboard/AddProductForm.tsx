@@ -60,6 +60,10 @@ export default function AddProductForm({
   const [productCatalogs, setProductCatalogs] = useState<
     Array<{ url: string; filename: string; type: string }>
   >([]);
+  const [uploadingCertificate, setUploadingCertificate] = useState(false);
+  const [productCertificates, setProductCertificates] = useState<
+    Array<{ url: string; filename: string; type: string }>
+  >([]);
 
   const {
     register,
@@ -168,6 +172,44 @@ export default function AddProductForm({
     setProductCatalogs(productCatalogs.filter((_, i) => i !== index));
   };
 
+  const handleCertificateUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingCertificate(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload/certification', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to upload certificate');
+      }
+
+      setProductCertificates([
+        ...productCertificates,
+        { url: result.url, filename: result.filename, type: result.type },
+      ]);
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload certificate');
+    } finally {
+      setUploadingCertificate(false);
+      event.target.value = '';
+    }
+  };
+
+  const removeCertificate = (index: number) => {
+    setProductCertificates(productCertificates.filter((_, i) => i !== index));
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     setIsLoading(true);
     setError('');
@@ -183,6 +225,7 @@ export default function AddProductForm({
           sellerId,
           images: JSON.stringify(productImages),
           catalogs: JSON.stringify(productCatalogs),
+          certificationFiles: JSON.stringify(productCertificates),
         }),
       });
 
@@ -323,6 +366,61 @@ export default function AddProductForm({
                   <button
                     type="button"
                     onClick={() => removeCatalog(index)}
+                    className="p-1 text-red-600 hover:bg-red-50 rounded"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <Label>Product Certifications</Label>
+        <div className="mt-2 space-y-3">
+          {/* Upload Button */}
+          <div>
+            <label
+              htmlFor="certificateUpload"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg cursor-pointer transition-colors border border-purple-300"
+            >
+              <Upload className="w-4 h-4" />
+              {uploadingCertificate ? 'Uploading...' : 'Upload Certificate'}
+            </label>
+            <input
+              id="certificateUpload"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.webp"
+              onChange={handleCertificateUpload}
+              disabled={uploadingCertificate}
+              className="hidden"
+            />
+            <p className="text-xs text-slate-500 mt-1">
+              PDF or images (max 10MB). Quality certificates, test reports, organic certifications, etc.
+            </p>
+          </div>
+
+          {/* Certificate Files List */}
+          {productCertificates.length > 0 && (
+            <div className="space-y-2">
+              {productCertificates.map((cert, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-3 bg-purple-50 border border-purple-200 rounded-lg"
+                >
+                  <div className="flex items-center gap-2">
+                    {cert.type === 'application/pdf' ? (
+                      <FileText className="w-5 h-5 text-red-500" />
+                    ) : (
+                      <ImageIcon className="w-5 h-5 text-purple-500" />
+                    )}
+                    <span className="text-sm text-slate-700">{cert.filename}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeCertificate(index)}
                     className="p-1 text-red-600 hover:bg-red-50 rounded"
                   >
                     <X className="w-4 h-4" />

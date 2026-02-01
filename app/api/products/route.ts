@@ -64,6 +64,7 @@ export async function POST(request: NextRequest) {
         shelfLife: data.shelfLife || null,
         images: data.images || null,
         catalogs: data.catalogs || null,
+        certificationFiles: data.certificationFiles || null,
         isPublic: data.isPublic ?? true,
       },
     });

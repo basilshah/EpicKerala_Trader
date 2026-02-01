@@ -1,17 +1,17 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/Card';
 import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
-import { VerifiedBadge } from '@/components/ui/Badge';
-import { Package, Factory } from 'lucide-react';
+import { VerifiedBadge, Badge, CategoryBadge } from '@/components/ui/Badge';
+import { Factory, MapPin, BadgeCheck } from 'lucide-react';
 
 interface Product {
   id: string;
   name: string;
   slug: string;
   description?: string | null;
-  imageUrl?: string | null;
+  images?: string | null;
   moq?: string | null;
+  hsCode?: string | null;
   category?: {
     name: string;
   };
@@ -19,6 +19,9 @@ interface Product {
     companyName: string;
     isVerified: boolean;
     type?: string;
+    offersOEM?: boolean;
+    city?: string | null;
+    state?: string | null;
   };
 }
 
@@ -28,52 +31,97 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, showSeller = true }: ProductCardProps) {
+  // Parse product images
+  let firstImage = null;
+  if (product.images) {
+    try {
+      const images = JSON.parse(product.images);
+      if (Array.isArray(images) && images.length > 0) {
+        firstImage = images[0].url;
+      }
+    } catch (e) {
+      console.error('Failed to parse product images:', e);
+    }
+  }
+
   return (
     <Link href={`/product/${product.slug}`}>
-      <Card className="overflow-hidden hover:shadow-lg transition-all group cursor-pointer border border-slate-200">
-        <div className="relative h-[200px] bg-slate-100">
-          {product.imageUrl ? (
-            <Image
-              src={product.imageUrl}
+      <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
+        {/* Product Image */}
+        <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
+          {firstImage ? (
+            <img
+              src={firstImage}
               alt={product.name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-              <Package className="w-16 h-16 text-slate-300" />
-            </div>
+            <Factory className="w-16 h-16 text-slate-300" />
           )}
           {product.seller?.isVerified && (
-            <div className="absolute top-4 left-4">
-              <VerifiedBadge className="shadow-sm" />
+            <div className="absolute top-3 right-3">
+              <VerifiedBadge className="shadow-md" />
+            </div>
+          )}
+          {product.seller?.offersOEM && (
+            <div className="absolute top-3 left-3">
+              <Badge variant="primary" className="shadow-md">
+                OEM Available
+              </Badge>
             </div>
           )}
         </div>
-        <CardContent className="p-6">
-          <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-1">{product.name}</h3>
-          <p className="text-sm text-muted mb-3 line-clamp-2 min-h-[2.5rem]">
-            {product.description || ''}
-          </p>
+
+        <CardContent className="p-5">
+          {/* Category Badge */}
+          <div className="mb-2 min-h-[28px] flex items-start">
+            {product.category && <CategoryBadge>{product.category.name}</CategoryBadge>}
+          </div>
+
+          {/* Product Name */}
+          <h3 className="font-bold text-lg text-primary mb-3 line-clamp-2">{product.name}</h3>
+
+          {/* Seller Info */}
           {showSeller && product.seller && (
-            <div className="flex items-center gap-2 text-xs text-muted mb-4">
-              <Factory className="w-3.5 h-3.5" />
-              <span className="line-clamp-1">{product.seller.companyName}</span>
-              {product.seller.type && (
-                <>
-                  <span>•</span>
-                  <span className="capitalize">{product.seller.type}</span>
-                </>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center gap-2">
+                {product.seller.isVerified && <BadgeCheck className="w-4 h-4 text-secondary" />}
+                <span className="text-sm font-medium text-foreground">
+                  {product.seller.companyName}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-muted">
+                <Factory className="w-3.5 h-3.5" />
+                <span className="text-xs">{product.seller.type}</span>
+              </div>
+              {product.seller.city && product.seller.state && (
+                <div className="flex items-center gap-1 text-muted">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm">
+                    {product.seller.city}, {product.seller.state}
+                  </span>
+                </div>
               )}
             </div>
           )}
-          {product.category && (
-            <span className="text-xs text-secondary font-semibold mb-2 block">
-              {product.category.name}
-            </span>
+
+          {/* Product Details Pills */}
+          {(product.hsCode || product.moq) && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {product.hsCode && (
+                <span className="text-xs font-normal text-muted border border-slate-200 px-2 py-1 rounded">
+                  HS: {product.hsCode}
+                </span>
+              )}
+              {product.moq && (
+                <span className="text-xs font-normal text-muted border border-slate-200 px-2 py-1 rounded">
+                  MOQ: {product.moq}
+                </span>
+              )}
+            </div>
           )}
-          {product.moq && <p className="text-sm text-muted mb-4">MOQ: {product.moq}</p>}
-          <ViewDetailsLink text="View Details" />
+
+          <ViewDetailsLink />
         </CardContent>
       </Card>
     </Link>

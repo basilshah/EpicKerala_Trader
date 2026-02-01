@@ -94,6 +94,7 @@ model Product {
   // Media
   images      String?  // JSON array of URLs
   catalogs    String?  // JSON array of catalog files (PDF/images)
+  certificationFiles String? // JSON array of certification files (PDF/images)
   
   // Admin Verification
   verificationStatus String @default("PENDING") // PENDING, APPROVED, REJECTED
