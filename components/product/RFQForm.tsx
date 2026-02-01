@@ -13,7 +13,7 @@ import { Loader2, CheckCircle, Send } from 'lucide-react';
 
 const rfqSchema = z.object({
   buyerName: z.string().min(2, 'Name must be at least 2 characters'),
-  buyerEmail: z.string().email('Please enter a valid email address'),
+  buyerEmail: z.email('Please enter a valid email address'),
   buyerCompany: z.string().optional(),
   buyerCountry: z.string().optional(),
   quantity: z.string().optional(),
@@ -21,14 +21,14 @@ const rfqSchema = z.object({
     .string()
     .min(20, 'Message must be at least 20 characters')
     .max(2000, 'Message must not exceed 2000 characters'),
-  website: z.string().optional().default(''), // Honeypot
+  website: z.string().optional(), // Honeypot
 });
 
 type RFQFormData = z.infer<typeof rfqSchema>;
 
 export default function RFQForm({ productId }: { productId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitState, setSubmitState] = useState<{ success: boolean; message?: string }>({
+  const [submitState, setSubmitState] = useState<{ success?: boolean; message?: string }>({
     success: false,
   });
 
