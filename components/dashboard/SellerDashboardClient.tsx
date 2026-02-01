@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Package, ShoppingBag, TrendingUp, User, Eye, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { colorPalette } from '@/lib/colors';
 
 interface Product {
   id: string;
@@ -51,27 +52,27 @@ export default function SellerDashboardClient({
       label: 'Total Products',
       value: totalProducts,
       icon: Package,
-      color: 'bg-blue-100 text-blue-700',
-      iconBg: 'bg-blue-500',
-      borderColor: 'border-blue-500',
+      color: `${colorPalette.stats.primary.bg} ${colorPalette.stats.primary.text}`,
+      iconBg: colorPalette.stats.primary.iconBg,
+      borderColor: colorPalette.stats.primary.border,
     },
     {
       id: 'listings' as const,
       label: 'Active Listings',
       value: activeListings,
       icon: ShoppingBag,
-      iconBg: 'bg-emerald-500',
-      color: 'bg-emerald-100 text-emerald-700',
-      borderColor: 'border-emerald-500',
+      iconBg: colorPalette.stats.success.iconBg,
+      color: `${colorPalette.stats.success.bg} ${colorPalette.stats.success.text}`,
+      borderColor: colorPalette.stats.success.border,
     },
     {
       id: 'rfqs' as const,
       label: 'RFQ Received',
       value: totalRFQs,
       icon: TrendingUp,
-      iconBg: 'bg-orange-500',
-      color: 'bg-orange-100 text-orange-700',
-      borderColor: 'border-orange-500',
+      iconBg: colorPalette.stats.warning.iconBg,
+      color: `${colorPalette.stats.warning.bg} ${colorPalette.stats.warning.text}`,
+      borderColor: colorPalette.stats.warning.border,
     },
   ];
 
@@ -86,8 +87,10 @@ export default function SellerDashboardClient({
             <div
               key={stat.label}
               onClick={() => setSelectedTab(stat.id)}
-              className={`bg-white rounded-lg shadow-md p-6 border border-slate-200 cursor-pointer transition-all ${
-                isSelected ? `ring-2 ${stat.borderColor} shadow-lg` : 'hover:shadow-lg'
+              className={`${colorPalette.card.bg} rounded-lg ${colorPalette.card.shadow} p-6 border ${colorPalette.card.border} cursor-pointer transition-all ${
+                isSelected
+                  ? `ring-2 ${stat.borderColor} ${colorPalette.card.shadowSelected}`
+                  : colorPalette.card.shadowHover
               }`}
             >
               <div className="flex items-center justify-between mb-4">
@@ -95,8 +98,8 @@ export default function SellerDashboardClient({
                   <Icon className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-slate-900 mb-1">{stat.value}</p>
-              <p className="text-sm text-slate-600">{stat.label}</p>
+              <p className={`text-2xl font-bold ${colorPalette.text.primary} mb-1`}>{stat.value}</p>
+              <p className={`text-sm ${colorPalette.text.secondary}`}>{stat.label}</p>
             </div>
           );
         })}

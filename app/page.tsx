@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { CategorySubLink } from '@/components/CategorySubLink';
 import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
 import { SearchBar } from '@/components/SearchBar';
+import { auth } from '@/lib/auth';
 import {
   ProductCountBadge,
   SubcategoryBadge,
@@ -31,6 +32,8 @@ import {
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
+  const session = await auth();
+  
   // Fetch data
   const categories = await prismaClient.category.findMany({
     where: { parentId: null },
@@ -428,27 +431,29 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* SECTION 7: CTA BANNER */}
-      <section className="relative w-full h-[300px] overflow-hidden">
-        <div className="absolute inset-0 bg-primary/90" />
-        <Container className="relative h-full flex flex-col items-center justify-center text-center text-white">
-          <h2 className="text-4xl font-bold mb-3">Ready to Source Premium Kerala Products?</h2>
-          <p className="text-lg text-white/90 mb-8">
-            Register as a buyer to connect directly with verified exporters
-          </p>
-          <div className="flex gap-4">
-            <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white">
-              Register Now
-            </Button>
-            <Button
-              size="lg"
-              className="bg-white hover:bg-white/90 text-primary shadow-sm hover:shadow-md"
-            >
-              Contact Us
-            </Button>
-          </div>
-        </Container>
-      </section>
+      {/* SECTION 7: CTA BANNER - Hidden for signed-in sellers */}
+      {!session?.user && (
+        <section className="relative w-full h-[300px] overflow-hidden">
+          <div className="absolute inset-0 bg-primary/90" />
+          <Container className="relative h-full flex flex-col items-center justify-center text-center text-white">
+            <h2 className="text-4xl font-bold mb-3">Ready to Source Premium Kerala Products?</h2>
+            <p className="text-lg text-white/90 mb-8">
+              Register as a buyer to connect directly with verified exporters
+            </p>
+            <div className="flex gap-4">
+              <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white">
+                Register Now
+              </Button>
+              <Button
+                size="lg"
+                className="bg-white hover:bg-white/90 text-primary shadow-sm hover:shadow-md"
+              >
+                Contact Us
+              </Button>
+            </div>
+          </Container>
+        </section>
+      )}
     </div>
   );
 }

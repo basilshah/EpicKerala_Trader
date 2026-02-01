@@ -4,13 +4,19 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
-import { LayoutDashboard, Package, User, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, User, LogOut, Home } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { colorPalette } from '@/lib/colors';
 
 export default function DashboardNav() {
   const pathname = usePathname();
 
   const navItems = [
+    {
+      label: 'Home',
+      href: '/',
+      icon: Home,
+    },
     {
       label: 'Dashboard',
       href: '/dashboard',
@@ -33,12 +39,13 @@ export default function DashboardNav() {
       <Container>
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-6">
-            <Link href="/dashboard" className="text-xl font-bold text-emerald-600"></Link>
-            <img
-              src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
-              alt="Epic Kerala"
-              className="h-8"
-            />
+            <Link href="/">
+              <img
+                src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
+                alt="Epic Kerala"
+                className="h-8 cursor-pointer"
+              />
+            </Link>
             <nav className="hidden md:flex items-center gap-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -52,7 +59,9 @@ export default function DashboardNav() {
                     key={item.href}
                     href={item.href}
                     className={`group relative flex items-center gap-2 px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
-                      isActive ? 'text-blue-600' : 'text-slate-600 hover:text-slate-900'
+                      isActive
+                        ? colorPalette.nav.active.text
+                        : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
                     }`}
                   >
                     <Icon
@@ -60,7 +69,9 @@ export default function DashboardNav() {
                     />
                     {item.label}
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></span>
+                      <span
+                        className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
+                      ></span>
                     )}
                   </Link>
                 );
@@ -72,7 +83,7 @@ export default function DashboardNav() {
             variant="outline"
             size="sm"
             onClick={() => signOut({ callbackUrl: '/signin' })}
-            className="hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-all duration-300 group"
+            className={`${colorPalette.nav.signOut.hover.bg} ${colorPalette.nav.signOut.hover.border} ${colorPalette.nav.signOut.hover.text} transition-all duration-300 group`}
           >
             <LogOut className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
             Sign Out

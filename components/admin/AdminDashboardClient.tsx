@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Link from 'next/link';
 import { Package, CheckCircle, Clock, Users, TrendingUp } from 'lucide-react';
+import { colorPalette } from '@/lib/colors';
 
 interface Product {
   id: string;
   name: string;
-  createdAt: Date;
+  createdAt: string; // Changed to string to avoid hydration issues
   verificationStatus: string;
   seller: {
     companyName: string;
@@ -26,7 +27,7 @@ interface RFQ {
   buyerCountry: string | null;
   quantity: string | null;
   message: string;
-  createdAt: Date;
+  createdAt: string; // Changed to string to avoid hydration issues
   product: {
     name: string;
     seller: {
@@ -75,32 +76,32 @@ export default function AdminDashboardClient({
       label: 'Pending Products',
       value: pendingProducts,
       icon: Clock,
-      color: 'bg-yellow-100 text-yellow-700',
-      borderColor: 'border-yellow-500',
+      color: `${colorPalette.stats.yellow.bg} ${colorPalette.stats.yellow.text}`,
+      borderColor: colorPalette.stats.yellow.border,
     },
     {
       id: 'approved' as const,
       label: 'Approved Products',
       value: approvedProducts,
       icon: CheckCircle,
-      color: 'bg-emerald-100 text-emerald-700',
-      borderColor: 'border-emerald-500',
+      color: `${colorPalette.stats.success.bg} ${colorPalette.stats.success.text}`,
+      borderColor: colorPalette.stats.success.border,
     },
     {
       id: 'rfqs' as const,
       label: 'Total RFQs',
       value: totalRFQs,
       icon: TrendingUp,
-      color: 'bg-orange-100 text-orange-700',
-      borderColor: 'border-orange-500',
+      color: `${colorPalette.stats.warning.bg} ${colorPalette.stats.warning.text}`,
+      borderColor: colorPalette.stats.warning.border,
     },
     {
       id: 'sellers' as const,
       label: 'Total Sellers',
       value: totalSellers,
       icon: Users,
-      color: 'bg-blue-100 text-blue-700',
-      borderColor: 'border-blue-500',
+      color: `${colorPalette.stats.secondary.bg} ${colorPalette.stats.secondary.text}`,
+      borderColor: colorPalette.stats.secondary.border,
     },
   ];
 
@@ -116,7 +117,9 @@ export default function AdminDashboardClient({
               key={stat.label}
               onClick={() => setSelectedTab(stat.id)}
               className={`cursor-pointer transition-all ${
-                isSelected ? `ring-2 ${stat.borderColor} shadow-lg` : 'hover:shadow-lg'
+                isSelected
+                  ? `ring-2 ${stat.borderColor} ${colorPalette.card.shadowSelected}`
+                  : colorPalette.card.shadowHover
               }`}
             >
               <CardContent className="p-6">
@@ -125,8 +128,10 @@ export default function AdminDashboardClient({
                     <Icon className="w-6 h-6" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</p>
-                <p className="text-sm text-slate-600">{stat.label}</p>
+                <p className={`text-3xl font-bold ${colorPalette.text.primary} mb-1`}>
+                  {stat.value}
+                </p>
+                <p className={`text-sm ${colorPalette.text.secondary}`}>{stat.label}</p>
               </CardContent>
             </Card>
           );
@@ -157,7 +162,7 @@ export default function AdminDashboardClient({
                           {product.seller.companyName} • {product.category.name}
                         </p>
                         <p className="text-xs text-slate-500 mt-1">
-                          Submitted {new Date(product.createdAt).toLocaleDateString()}
+                          Submitted {product.createdAt}
                         </p>
                       </div>
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-medium">
@@ -195,7 +200,7 @@ export default function AdminDashboardClient({
                           {product.seller.companyName} • {product.category.name}
                         </p>
                         <p className="text-xs text-slate-500 mt-1">
-                          Submitted {new Date(product.createdAt).toLocaleDateString()}
+                          Submitted {product.createdAt}
                         </p>
                       </div>
                       <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
@@ -237,7 +242,7 @@ export default function AdminDashboardClient({
                         )}
                       </div>
                       <span className="text-xs text-slate-500">
-                        {new Date(rfq.createdAt).toLocaleDateString()}
+                        {rfq.createdAt}
                       </span>
                     </div>
                     <div className="mb-2">
