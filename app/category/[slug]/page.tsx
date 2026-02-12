@@ -5,8 +5,8 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { VerifiedBadge, Badge, CategoryBadge } from '@/components/ui/Badge';
-import { Package, BadgeCheck, MapPin, Factory } from 'lucide-react';
+import { ProductCard } from '@/components/cards/ProductCard';
+import { Package } from 'lucide-react';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -69,7 +69,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="bg-background min-h-screen pb-20">
-
       <Container className="mt-12">
         {/* Category Header with Image */}
         <Card className="mb-10 overflow-hidden">
@@ -188,97 +187,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* Products Grid */}
         {allProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {allProducts.map((product) => {
-              // Parse product images
-              let firstImage = null;
-              if (product.images) {
-                try {
-                  const images = JSON.parse(product.images);
-                  if (Array.isArray(images) && images.length > 0) {
-                    firstImage = images[0].url;
-                  }
-                } catch (e) {
-                  console.error('Failed to parse product images:', e);
-                }
-              }
-
-              return (
-                <Link key={product.id} href={`/product/${product.slug}`}>
-                  <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
-                    {/* Product Image */}
-                    <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
-                      {firstImage ? (
-                        <img
-                          src={firstImage}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      ) : (
-                        <Factory className="w-16 h-16 text-slate-300" />
-                      )}
-                      {product.seller.isVerified && (
-                        <div className="absolute top-3 right-3">
-                          <VerifiedBadge className="shadow-md" />
-                        </div>
-                      )}
-                      {product.seller.offersOEM && (
-                        <div className="absolute top-3 left-3">
-                          <Badge variant="primary" className="shadow-md">
-                            OEM Available
-                          </Badge>
-                        </div>
-                      )}
-                    </div>
-
-                    <CardContent className="p-5">
-                      <div className="mb-2">
-                        <CategoryBadge>{product.category.name}</CategoryBadge>
-                      </div>
-
-                      <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                        {product.name}
-                      </h3>
-
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2 min-h-[2.5rem]">
-                        {product.description || ''}
-                      </p>
-
-                      <div className="pt-3 border-t border-border">
-                        <p className="text-sm font-medium text-foreground mb-1 flex items-center gap-1">
-                          {product.seller.companyName}
-                          {product.seller.isVerified && (
-                            <BadgeCheck className="w-3 h-3 text-secondary" />
-                          )}
-                        </p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
-                          <Factory className="w-3 h-3" /> {product.seller.type}
-                        </p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1 mb-3">
-                          <MapPin className="w-3 h-3" /> {product.seller.city},{' '}
-                          {product.seller.state}
-                        </p>
-
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">MOQ: {product.moq || 'Negotiable'}</span>
-                          {product.hsCode && (
-                            <span className="text-xs font-mono bg-slate-100 px-2 py-1 rounded">
-                              HS: {product.hsCode}
-                            </span>
-                          )}
-                        </div>
-
-                        <Button
-                          variant="outline"
-                          className="w-full mt-4 text-secondary border-secondary hover:bg-secondary hover:text-white"
-                        >
-                          View Details
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
+            {allProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
         ) : (
           <div className="text-center py-16 bg-white rounded-lg border border-dashed">

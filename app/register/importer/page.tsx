@@ -32,7 +32,7 @@ export default function ImporterRegisterPage() {
             </CardHeader>
             <CardContent className="p-4 md:p-6">
               <ImporterRegisterForm />
-              
+
               <div className="mt-6 text-center text-sm text-muted-foreground">
                 Are you an exporter?{' '}
                 <Link href="/register" className="text-primary hover:underline font-medium">

@@ -36,7 +36,7 @@ export function ImporterRegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
-  
+
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 

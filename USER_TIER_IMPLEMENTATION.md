@@ -13,21 +13,18 @@ This document explains the 4-user-type system implemented in EpicKeral_v2:
    - Cannot submit RFQs (they receive them)
 
 2. **IMPORTERS (Buyers)** - Users who browse and purchase products
-   
+
    **Three tiers of importers:**
-   
    - **GUEST** (Not signed in)
      - Can browse product and seller listings
      - **Cannot** view product details
      - **Cannot** view seller/exporter details
      - **Cannot** submit RFQs
-   
    - **FREE** (Signed in with free account)
      - Can view product details
      - Can view seller/exporter details
      - Can submit RFQs
      - Full access to the platform
-   
    - **PREMIUM** (Paid subscription)
      - All FREE features
      - Can be extended with additional benefits like:
@@ -49,19 +46,19 @@ model Importer {
   name            String
   email           String   @unique
   password        String   // Hashed password
-  
+
   // Subscription
   subscriptionTier String  @default("FREE") // FREE, PREMIUM
-  
+
   // Company Info (optional)
   companyName     String?
   country         String?
   phone           String?
-  
+
   // Meta
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  
+
   rfqs            RFQ[]
 }
 ```
@@ -81,6 +78,7 @@ model RFQ {
 ### 2. Authentication (`lib/auth.ts`)
 
 Updated NextAuth configuration to handle both user types:
+
 - Checks for Importer first, then Seller
 - Adds `userType` field ('IMPORTER' or 'EXPORTER')
 - Includes `subscriptionTier` for importers
@@ -89,6 +87,7 @@ Updated NextAuth configuration to handle both user types:
 ### 3. TypeScript Types (`types/next-auth.d.ts`)
 
 Extended NextAuth types to include:
+
 - `userType`: 'IMPORTER' | 'EXPORTER'
 - `subscriptionTier`: 'FREE' | 'PREMIUM' (for importers)
 - Added to `User`, `Session`, and `JWT` interfaces
@@ -122,12 +121,14 @@ isExporter(session): boolean
 Created two separate registration flows:
 
 #### Exporter Registration
+
 - **Page:** `app/register/page.tsx`
 - **Component:** `components/RegisterForm.tsx`
 - **API:** `app/api/register/route.ts`
 - Full company registration with verification
 
 #### Importer Registration
+
 - **Page:** `app/register/importer/page.tsx`
 - **Component:** `components/ImporterRegisterForm.tsx`
 - **API:** `app/api/register/importer/route.ts`
@@ -137,6 +138,7 @@ Created two separate registration flows:
 ### 6. Sign-In Prompt Component (`components/SignInPrompt.tsx`)
 
 Created a reusable component for guests:
+
 - Displays friendly message
 - Sign-in button
 - Registration button (links to importer registration)
@@ -147,11 +149,13 @@ Created a reusable component for guests:
 Updated the following pages to check authentication:
 
 #### Product Details Page (`app/product/[slug]/page.tsx`)
+
 - Checks if user can view product details
 - Shows sign-in prompt if not authenticated
 - Redirects back to product after sign-in
 
 #### Seller Details Page (`app/seller/[slug]/page.tsx`)
+
 - Checks if user can view seller details
 - Shows sign-in prompt if not authenticated
 - Redirects back to seller page after sign-in
@@ -167,6 +171,7 @@ npx prisma migrate dev --name add_importer_model
 ```
 
 This will:
+
 - Create the `Importer` table
 - Add `importerId` to the `RFQ` table
 - Update the database schema
@@ -220,17 +225,19 @@ This will:
 To upgrade an importer to PREMIUM tier:
 
 **Via Database:**
+
 ```sql
-UPDATE "Importer" 
-SET "subscriptionTier" = 'PREMIUM' 
+UPDATE "Importer"
+SET "subscriptionTier" = 'PREMIUM'
 WHERE "email" = 'importer@example.com';
 ```
 
 **Via Prisma Client:**
+
 ```typescript
 await prisma.importer.update({
   where: { email: 'importer@example.com' },
-  data: { subscriptionTier: 'PREMIUM' }
+  data: { subscriptionTier: 'PREMIUM' },
 });
 ```
 
@@ -279,16 +286,16 @@ export default async function MyPage() {
   const session = await auth();
   const hasAccess = canViewProductDetails(session);
   const userType = getUserType(session);
-  
+
   if (!hasAccess) {
     return <SignInPrompt returnUrl="/my-page" />;
   }
-  
+
   // Show different content based on user type
   if (userType === 'EXPORTER') {
     return <ExporterView />;
   }
-  
+
   return <ImporterView />;
 }
 ```
@@ -304,19 +311,19 @@ export default function MyClientComponent() {
   const { data: session } = useSession();
   const userType = getUserType(session);
   const tier = getImporterTier(session);
-  
+
   if (userType === 'GUEST') {
     return <div>Please sign in</div>;
   }
-  
+
   if (userType === 'EXPORTER') {
     return <ExporterDashboard />;
   }
-  
+
   if (tier === 'PREMIUM') {
     return <PremiumImporterDashboard />;
   }
-  
+
   return <FreeImporterDashboard />;
 }
 ```
@@ -348,14 +355,11 @@ import { canSubmitRFQ } from '@/lib/access-control';
 
 export async function POST(request: Request) {
   const session = await auth();
-  
+
   if (!canSubmitRFQ(session)) {
-    return Response.json(
-      { error: 'Authentication required' },
-      { status: 401 }
-    );
+    return Response.json({ error: 'Authentication required' }, { status: 401 });
   }
-  
+
   // Process request
 }
 ```
@@ -383,6 +387,7 @@ export async function POST(request: Request) {
 ## User Flow Examples
 
 ### Importer Journey
+
 1. Guest visits product listing page ✅ (Can view)
 2. Guest clicks on product ❌ (Sign-in prompt)
 3. Guest clicks "Create Account" → Goes to `/register/importer`
@@ -392,6 +397,7 @@ export async function POST(request: Request) {
 7. Can submit RFQs to exporters
 
 ### Exporter Journey
+
 1. Company visits `/register`
 2. Fills detailed company registration
 3. Submits for verification
@@ -403,6 +409,7 @@ export async function POST(request: Request) {
 ## Support
 
 For questions or issues with the implementation, refer to:
+
 - NextAuth.js documentation: https://next-auth.js.org
 - Prisma documentation: https://www.prisma.io/docs
 - Access control patterns: https://nextjs.org/docs/app/building-your-application/authentication

@@ -119,9 +119,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
               ) : (
                 <div className="bg-slate-100 border border-slate-200 rounded-lg p-4 text-center">
                   <Lock className="w-6 h-6 text-slate-400 mx-auto mb-2" />
-                  <p className="text-sm text-slate-600 mb-2">
-                    Sign in to view contact details
-                  </p>
+                  <p className="text-sm text-slate-600 mb-2">Sign in to view contact details</p>
                   <Link href={`/signin?callbackUrl=/seller/${slug}`}>
                     <Button size="sm" className="bg-secondary hover:bg-secondary/90 text-white">
                       Sign In

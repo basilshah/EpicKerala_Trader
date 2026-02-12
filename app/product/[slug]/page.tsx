@@ -7,6 +7,7 @@ import RFQForm from '@/components/product/RFQForm';
 import { VerifiedBadge } from '@/components/ui/Badge';
 import { BadgeCheck, Factory, Box, Tag, Globe, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { ProductImageCarousel } from '@/components/product/ProductImageCarousel';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -59,66 +60,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="bg-background min-h-screen pb-20">
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-border py-4">
-        <Container>
-          <div className="text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href="/categories" className="hover:text-primary">
-              Categories
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href={`/category/${product.category.slug}`} className="hover:text-primary">
-              {product.category.name}
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-primary font-medium truncate">{product.name}</span>
-          </div>
-        </Container>
-      </div>
-
       <Container className="mt-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Product Info */}
           <div className="lg:col-span-2 space-y-8">
             {/* Product Main Card */}
             <div className="bg-white rounded-lg border border-border overflow-hidden">
-              <div className="h-64 md:h-80 bg-accent flex items-center justify-center relative">
-                {/* Image Display */}
-                {productImages.length > 0 ? (
-                  <img
-                    src={productImages[0].url}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <Factory className="w-20 h-20 text-primary/20" />
-                )}
+              <div className="p-4 md:p-6 relative">
+                <ProductImageCarousel
+                  images={productImages}
+                  productName={product.name}
+                  fallbackIcon={<Factory className="w-20 h-20 text-primary/20" />}
+                />
                 {product.seller.isVerified && (
-                  <div className="absolute top-4 right-4">
+                  <div className="absolute top-8 right-8 z-10">
                     <VerifiedBadge className="shadow-md" />
                   </div>
                 )}
               </div>
-
-              {/* Additional Images Gallery */}
-              {productImages.length > 1 && (
-                <div className="p-4 border-b border-border">
-                  <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
-                    {productImages.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image.url}
-                        alt={`${product.name} - ${index + 1}`}
-                        className="w-full h-20 object-cover rounded border-2 border-border hover:border-secondary cursor-pointer transition-colors"
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
 
               <div className="p-6 md:p-8">
                 <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -132,9 +91,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                 <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6">{product.name}</h1>
 
-                <div className="prose max-w-none text-muted mb-8">
+                <div className="mb-8">
                   <h3 className="text-lg font-semibold text-primary mb-2">Description</h3>
-                  <p>{product.description}</p>
+                  <p className="text-foreground leading-relaxed">{product.description}</p>
                 </div>
 
                 <div className="bg-accent rounded-lg p-6 border border-border">
@@ -216,7 +175,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* Right Column: RFQ & Seller Info
-                         */}
+           */}
           <div className="space-y-6">
             {/* RFQ Form */}
             <RFQForm productId={product.id} />
@@ -243,7 +202,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                 </div>
 
-                <div className="text-sm text-muted mb-4 line-clamp-3">
+                <div className="text-sm text-muted-foreground mb-4 line-clamp-3">
                   {product.seller.description}
                 </div>
 

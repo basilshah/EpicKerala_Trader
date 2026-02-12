@@ -30,10 +30,13 @@ export default function RegisterPage() {
             </CardHeader>
             <CardContent className="p-4 md:p-6">
               <RegisterForm />
-              
+
               <div className="mt-6 text-center text-sm text-muted-foreground">
                 Looking to buy products?{' '}
-                <Link href="/register/importer" className="text-primary hover:underline font-medium">
+                <Link
+                  href="/register/importer"
+                  className="text-primary hover:underline font-medium"
+                >
                   Register as Importer/Buyer
                 </Link>
               </div>

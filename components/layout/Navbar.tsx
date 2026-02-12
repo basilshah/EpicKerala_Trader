@@ -78,7 +78,7 @@ export default function Navbar() {
                   Sign In
                 </Button>
               </Link>
-              <Link href="/register/exporter">
+              <Link href="/register">
                 <Button className="font-semibold bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all px-6">
                   Register as Exporter
                 </Button>
