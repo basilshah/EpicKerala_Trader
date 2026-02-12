@@ -16,6 +16,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
+        // First, try to find as Importer
+        const importer = await prismaClient.importer.findUnique({
+          where: {
+            email: credentials.email as string,
+          },
+        });
+
+        if (importer) {
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password as string,
+            importer.password
+          );
+
+          if (!isPasswordValid) {
+            return null;
+          }
+
+          return {
+            id: importer.id,
+            email: importer.email,
+            name: importer.name,
+            userType: 'IMPORTER',
+            subscriptionTier: importer.subscriptionTier,
+          };
+        }
+
+        // If not found, try as Seller (Exporter)
         const seller = await prismaClient.seller.findUnique({
           where: {
             email: credentials.email as string,
@@ -40,6 +67,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: seller.email,
           name: seller.companyName,
           slug: seller.slug,
+          userType: 'EXPORTER',
+          subscriptionTier: 'N/A',
         };
       },
     }),
@@ -55,6 +84,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.slug = (user as any).slug;
+        token.userType = (user as any).userType;
+        token.subscriptionTier = (user as any).subscriptionTier;
       }
       return token;
     },
@@ -62,6 +93,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user) {
         (session.user as any).id = token.id as string;
         (session.user as any).slug = token.slug as string;
+        (session.user as any).userType = token.userType as string;
+        (session.user as any).subscriptionTier = token.subscriptionTier as string;
       }
       return session;
     },

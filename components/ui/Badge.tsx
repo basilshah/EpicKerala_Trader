@@ -4,7 +4,7 @@ import { BadgeCheck, Award } from 'lucide-react';
 
 interface BadgeProps {
   children: ReactNode;
-  variant?: 'default' | 'secondary' | 'primary' | 'success' | 'warning' | 'muted';
+  variant?: 'default' | 'secondary' | 'primary' | 'success' | 'warning' | 'muted' | 'outline';
   className?: string;
   icon?: ReactNode;
 }
@@ -15,7 +15,8 @@ const variantStyles = {
   primary: 'bg-primary text-white border-primary',
   success: 'bg-white text-secondary border-slate-200', // For verified badges
   warning: 'bg-amber-50 text-amber-900 border-amber-200',
-  muted: 'bg-slate-100 text-muted border-slate-200',
+  muted: 'bg-slate-100 text-muted-foreground border-slate-200',
+  outline: 'border border-slate-200 text-foreground bg-transparent',
 };
 
 export function Badge({ children, variant = 'default', className, icon }: BadgeProps) {

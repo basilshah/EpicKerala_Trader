@@ -1,143 +1,87 @@
 'use client';
 
 import Link from 'next/link';
-import { Ship, Menu, X, LayoutDashboard } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { Menu, X, LayoutDashboard, LogOut, User } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { colorPalette } from '@/lib/colors';
 import { useState } from 'react';
+import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/Separator';
+import Logo from '@/components/layout/Logo';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'Categories', href: '/categories' },
+    { name: 'Products', href: '/products' },
+    { name: 'Exporters', href: '/sellers' },
+    { name: 'About', href: '/about' },
+  ];
+
   return (
-    <header className="w-full h-[70px] bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <header className="w-full h-20 bg-white/95 backdrop-blur-md border-b border-border/60 sticky top-0 z-50">
       <div className="container-custom h-full flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <img
-            src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
-            alt="Epic Kerala"
-            className="h-10 cursor-pointer"
-          />
-        </Link>
+        {/* Logo Section */}
+        <Logo size="sm" className="text-primary transition-transform hover:scale-105" />
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-2 text-slate-700">
-          <Link
-            href="/"
-            className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/'
-                ? colorPalette.nav.active.text
-                : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
-            }`}
-          >
-            Home
-            {pathname === '/' && (
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
-              ></span>
-            )}
-          </Link>
-          <Link
-            href="/categories"
-            className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/categories' || pathname?.startsWith('/category/')
-                ? colorPalette.nav.active.text
-                : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
-            }`}
-          >
-            Categories
-            {(pathname === '/categories' || pathname?.startsWith('/category/')) && (
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
-              ></span>
-            )}
-          </Link>
-          <Link
-            href="/products"
-            className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/products' || pathname?.startsWith('/product/')
-                ? colorPalette.nav.active.text
-                : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
-            }`}
-          >
-            Products
-            {(pathname === '/products' || pathname?.startsWith('/product/')) && (
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
-              ></span>
-            )}
-          </Link>
-          <Link
-            href="/sellers"
-            className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/sellers' || pathname?.startsWith('/seller/')
-                ? colorPalette.nav.active.text
-                : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
-            }`}
-          >
-            Exporters
-            {(pathname === '/sellers' || pathname?.startsWith('/seller/')) && (
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
-              ></span>
-            )}
-          </Link>
-          <Link
-            href="/about"
-            className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/about'
-                ? colorPalette.nav.active.text
-                : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
-            }`}
-          >
-            About Us
-            {pathname === '/about' && (
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
-              ></span>
-            )}
-          </Link>
-          <Link
-            href="/contact"
-            className={`relative text-[15px] font-medium transition-colors px-4 py-2 ${
-              pathname === '/contact'
-                ? colorPalette.nav.active.text
-                : `${colorPalette.nav.inactive.text} ${colorPalette.nav.inactive.hover}`
-            }`}
-          >
-            Contact
-            {pathname === '/contact' && (
-              <span
-                className={`absolute bottom-0 left-0 right-0 h-0.5 ${colorPalette.nav.active.underline} rounded-full`}
-              ></span>
-            )}
-          </Link>
+        <nav className="hidden lg:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={cn(
+                'relative text-[15px] font-medium transition-all px-4 py-2 rounded-full hover:bg-muted/50',
+                pathname === link.href ||
+                  (link.href !== '/' && pathname?.startsWith(link.href.replace(/s$/, ''))) // Handle singular/plural rough match
+                  ? 'text-primary font-semibold'
+                  : 'text-muted-foreground hover:text-primary'
+              )}
+            >
+              {link.name}
+            </Link>
+          ))}
         </nav>
 
         {/* Action Buttons */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-4">
           {session ? (
-            <Link href="/dashboard">
-              <button className="h-9 px-5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md flex items-center gap-2">
-                <LayoutDashboard className="w-4 h-4" />
-                Dashboard
-              </button>
-            </Link>
+            <>
+              <Link href="/dashboard">
+                <Button variant="ghost" className="gap-2 font-medium">
+                  <LayoutDashboard className="w-4 h-4" />
+                  Dashboard
+                </Button>
+              </Link>
+              <Separator orientation="vertical" className="h-8" />
+              <Button
+                variant="outline"
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="gap-2 border-slate-200 text-muted-foreground hover:text-red-500 hover:border-red-100 hover:bg-red-50"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button>
+            </>
           ) : (
             <>
-              <Link href="/register">
-                <button className="h-9 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
-                  Register as Exporter
-                </button>
-              </Link>
               <Link href="/signin">
-                <button className="h-9 px-5 bg-white hover:bg-white/90 text-primary text-sm font-semibold rounded-full transition-all shadow-sm hover:shadow-md">
+                <Button
+                  variant="ghost"
+                  className="font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary"
+                >
                   Sign In
-                </button>
+                </Button>
+              </Link>
+              <Link href="/register/exporter">
+                <Button className="font-semibold bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all px-6">
+                  Register as Exporter
+                </Button>
               </Link>
             </>
           )}
@@ -145,7 +89,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="lg:hidden p-2 text-slate-700"
+          className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-md transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -154,99 +98,62 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200">
-          <div className="container-custom py-4 space-y-3">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                pathname === '/'
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              Home
-            </Link>
-            <Link
-              href="/categories"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                pathname === '/categories' || pathname?.startsWith('/category/')
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              Categories
-            </Link>
-            <Link
-              href="/products"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                pathname === '/products' || pathname?.startsWith('/product/')
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              Products
-            </Link>
-            <Link
-              href="/sellers"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                pathname === '/sellers' || pathname?.startsWith('/seller/')
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              Exporters
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                pathname === '/about'
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              About Us
-            </Link>
-            <Link
-              href="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                pathname === '/contact'
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              Contact
-            </Link>
+        <div className="absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-xl lg:hidden animate-in slide-in-from-top-2">
+          <div className="container-custom py-6 space-y-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  'block px-4 py-3 text-base font-medium rounded-lg transition-colors',
+                  pathname === link.href
+                    ? 'bg-primary/5 text-primary'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-primary'
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
 
-            {/* Mobile Action Buttons */}
-            <div className="pt-3 border-t border-slate-200">
+            <Separator className="my-4 opacity-50" />
+
+            {/* Mobile Actions */}
+            <div className="space-y-3 px-2">
               {session ? (
-                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full h-10 px-5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
-                    <LayoutDashboard className="w-4 h-4" />
-                    Dashboard
-                  </button>
-                </Link>
+                <>
+                  <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                    <Button className="w-full justify-start gap-2" variant="default">
+                      <LayoutDashboard className="w-4 h-4" />
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signOut({ callbackUrl: '/' });
+                    }}
+                    className="w-full justify-start gap-2 text-red-600 border-red-100 hover:bg-red-50"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
+                </>
               ) : (
                 <>
                   <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                    <button className="w-full h-10 px-5 bg-secondary hover:bg-secondary/90 text-white text-sm font-semibold rounded-lg transition-all">
+                    <Button className="w-full justify-center text-base py-6 bg-primary font-semibold">
                       Register as Exporter
-                    </button>
+                    </Button>
                   </Link>
-                  <Link
-                    href="/signin"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block mt-3"
-                  >
-                    <button className="w-full h-10 px-5 bg-white hover:bg-slate-50 text-primary text-sm font-semibold rounded-lg transition-all border border-primary">
+                  <Link href="/signin" onClick={() => setMobileMenuOpen(false)}>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-center text-base py-6 border-slate-200"
+                    >
                       Sign In
-                    </button>
+                    </Button>
                   </Link>
                 </>
               )}

@@ -16,6 +16,9 @@ import {
   FileText,
   Download,
 } from 'lucide-react';
+import { auth } from '@/lib/auth';
+import { canViewContactDetails } from '@/lib/access-control';
+import { Lock } from 'lucide-react';
 
 interface SellerPageProps {
   params: Promise<{ slug: string }>;
@@ -25,6 +28,10 @@ export const dynamic = 'force-dynamic';
 
 export default async function SellerPage({ params }: SellerPageProps) {
   const { slug } = await params;
+
+  // Check authentication for contact details
+  const session = await auth();
+  const canSeeContact = canViewContactDetails(session);
 
   // Fetch Seller with Products
   const seller = await prismaClient.seller.findUnique({
@@ -88,23 +95,39 @@ export default async function SellerPage({ params }: SellerPageProps) {
             </div>
 
             <div className="w-full md:w-auto flex flex-col gap-3">
-              <Button
-                size="lg"
-                className="w-full md:w-auto bg-secondary hover:bg-secondary/90 text-white"
-              >
-                Contact Supplier
-              </Button>
-              {seller.website && (
-                <a
-                  href={seller.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full md:w-auto"
-                >
-                  <Button variant="outline" className="w-full gap-2 border-slate-200">
-                    Visit Website <Globe className="w-4 h-4" />
+              {canSeeContact ? (
+                <>
+                  <Button
+                    size="lg"
+                    className="w-full md:w-auto bg-secondary hover:bg-secondary/90 text-white"
+                  >
+                    Contact Supplier
                   </Button>
-                </a>
+                  {seller.website && (
+                    <a
+                      href={seller.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full md:w-auto"
+                    >
+                      <Button variant="outline" className="w-full gap-2 border-slate-200">
+                        Visit Website <Globe className="w-4 h-4" />
+                      </Button>
+                    </a>
+                  )}
+                </>
+              ) : (
+                <div className="bg-slate-100 border border-slate-200 rounded-lg p-4 text-center">
+                  <Lock className="w-6 h-6 text-slate-400 mx-auto mb-2" />
+                  <p className="text-sm text-slate-600 mb-2">
+                    Sign in to view contact details
+                  </p>
+                  <Link href={`/signin?callbackUrl=/seller/${slug}`}>
+                    <Button size="sm" className="bg-secondary hover:bg-secondary/90 text-white">
+                      Sign In
+                    </Button>
+                  </Link>
+                </div>
               )}
             </div>
           </div>

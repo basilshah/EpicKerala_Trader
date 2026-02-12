@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-20">
+    <div className="bg-background min-h-screen pb-20">
       {/* Breadcrumbs */}
       <div className="bg-white border-b border-border py-4">
         <Container>
@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="lg:col-span-2 space-y-8">
             {/* Product Main Card */}
             <div className="bg-white rounded-lg border border-border overflow-hidden">
-              <div className="h-64 md:h-80 bg-slate-100 flex items-center justify-center relative">
+              <div className="h-64 md:h-80 bg-accent flex items-center justify-center relative">
                 {/* Image Display */}
                 {productImages.length > 0 ? (
                   <img
@@ -95,7 +95,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <Factory className="w-20 h-20 text-slate-300" />
+                  <Factory className="w-20 h-20 text-primary/20" />
                 )}
                 {product.seller.isVerified && (
                   <div className="absolute top-4 right-4">
@@ -106,14 +106,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               {/* Additional Images Gallery */}
               {productImages.length > 1 && (
-                <div className="p-4 border-b border-slate-200">
+                <div className="p-4 border-b border-border">
                   <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
                     {productImages.map((image, index) => (
                       <img
                         key={index}
                         src={image.url}
                         alt={`${product.name} - ${index + 1}`}
-                        className="w-full h-20 object-cover rounded border-2 border-slate-200 hover:border-emerald-500 cursor-pointer transition-colors"
+                        className="w-full h-20 object-cover rounded border-2 border-border hover:border-secondary cursor-pointer transition-colors"
                       />
                     ))}
                   </div>
@@ -132,12 +132,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                 <h1 className="text-3xl md:text-4xl font-bold text-primary mb-6">{product.name}</h1>
 
-                <div className="prose max-w-none text-slate-600 mb-8">
+                <div className="prose max-w-none text-muted mb-8">
                   <h3 className="text-lg font-semibold text-primary mb-2">Description</h3>
                   <p>{product.description}</p>
                 </div>
 
-                <div className="bg-slate-50 rounded-lg p-6 border border-slate-100">
+                <div className="bg-accent rounded-lg p-6 border border-border">
                   <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
                     <Box className="w-5 h-5 text-secondary" /> Product Specifications
                   </h3>
@@ -146,13 +146,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       <span className="text-xs font-medium text-muted-foreground uppercase">
                         HS Code
                       </span>
-                      <span className="font-mono text-slate-900">{product.hsCode || 'N/A'}</span>
+                      <span className="font-mono text-foreground">{product.hsCode || 'N/A'}</span>
                     </div>
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-muted-foreground uppercase">
                         Minimum Order Quantity (MOQ)
                       </span>
-                      <span className="font-medium text-slate-900">
+                      <span className="font-medium text-foreground">
                         {product.moq || 'Negotiable'}
                       </span>
                     </div>
@@ -160,16 +160,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       <span className="text-xs font-medium text-muted-foreground uppercase">
                         Shelf Life
                       </span>
-                      <span className="font-medium text-slate-900 flex items-center gap-2">
-                        <Calendar className="w-3 h-3 text-slate-400" /> {product.shelfLife || 'N/A'}
+                      <span className="font-medium text-foreground flex items-center gap-2">
+                        <Calendar className="w-3 h-3 text-muted" /> {product.shelfLife || 'N/A'}
                       </span>
                     </div>
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-muted-foreground uppercase">
                         Origin
                       </span>
-                      <span className="font-medium text-slate-900 flex items-center gap-2">
-                        <Globe className="w-3 h-3 text-slate-400" /> {product.origin}
+                      <span className="font-medium text-foreground flex items-center gap-2">
+                        <Globe className="w-3 h-3 text-muted" /> {product.origin}
                       </span>
                     </div>
                   </div>
@@ -177,7 +177,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                 {/* Product Catalogs */}
                 {productCatalogs.length > 0 && (
-                  <div className="bg-blue-50 rounded-lg p-6 border border-blue-100 mt-6">
+                  <div className="bg-accent rounded-lg p-6 border border-border mt-6">
                     <h3 className="text-lg font-semibold text-primary mb-4">
                       Product Catalogs & Specifications
                     </h3>
@@ -188,17 +188,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
                           href={catalog.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-between p-3 bg-white hover:bg-blue-50 border border-blue-200 rounded-lg transition-colors group"
+                          className="flex items-center justify-between p-3 bg-white hover:bg-accent border border-border rounded-lg transition-colors group"
                         >
                           <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-100 rounded">
-                              <Factory className="w-5 h-5 text-blue-600" />
+                            <div className="p-2 bg-secondary/10 rounded">
+                              <Factory className="w-5 h-5 text-secondary" />
                             </div>
                             <div>
-                              <span className="text-sm font-medium text-slate-700 group-hover:text-emerald-600 block">
+                              <span className="text-sm font-medium text-foreground group-hover:text-secondary block">
                                 {catalog.filename}
                               </span>
-                              <span className="text-xs text-slate-500">
+                              <span className="text-xs text-muted">
                                 {catalog.type === 'application/pdf' ? 'PDF Document' : 'Image File'}
                               </span>
                             </div>
@@ -215,14 +215,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
 
-          {/* Right Column: RFQ & Seller Info */}
+          {/* Right Column: RFQ & Seller Info
+                         */}
           <div className="space-y-6">
             {/* RFQ Form */}
             <RFQForm productId={product.id} />
 
             {/* Seller Card */}
             <Card>
-              <CardHeader className="pb-3 border-b border-border bg-slate-50/50">
+              <CardHeader className="pb-3 border-b border-border bg-accent/50">
                 <CardTitle className="text-base flex items-center gap-2">Sold by</CardTitle>
               </CardHeader>
               <CardContent className="pt-4">
@@ -233,17 +234,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     </Link>
                   </h3>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className="uppercase font-semibold bg-slate-100 px-1.5 py-0.5 rounded">
+                    <span className="uppercase font-semibold bg-accent px-1.5 py-0.5 rounded">
                       {product.seller.type}
                     </span>
-                    <span>•</span>
                     <span>
                       {product.seller.city}, {product.seller.state}
                     </span>
                   </div>
                 </div>
 
-                <div className="text-sm text-slate-600 mb-4 line-clamp-3">
+                <div className="text-sm text-muted mb-4 line-clamp-3">
                   {product.seller.description}
                 </div>
 

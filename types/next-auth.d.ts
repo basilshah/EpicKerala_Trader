@@ -3,6 +3,8 @@ import 'next-auth';
 declare module 'next-auth' {
   interface User {
     slug?: string;
+    userType?: string;
+    subscriptionTier?: string;
   }
 
   interface Session {
@@ -10,7 +12,9 @@ declare module 'next-auth' {
       id: string;
       email: string;
       name: string;
-      slug: string;
+      slug?: string;
+      userType: string;
+      subscriptionTier: string;
     };
   }
 }
@@ -19,5 +23,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     id?: string;
     slug?: string;
+    userType?: string;
+    subscriptionTier?: string;
   }
 }

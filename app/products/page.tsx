@@ -23,24 +23,12 @@ export default async function ProductsPage() {
 
   return (
     <div className="bg-background min-h-screen pb-20">
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-border py-4">
-        <Container>
-          <div className="text-sm text-muted">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-primary font-medium">All Products</span>
-          </div>
-        </Container>
-      </div>
 
       <Container className="mt-12">
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-primary mb-3">All Products</h1>
-          <p className="text-lg text-muted">
+          <p className="text-lg text-muted-foreground">
             {products.length} products available from verified exporters
           </p>
         </div>
@@ -111,11 +99,11 @@ export default async function ProductsPage() {
                             {product.seller.companyName}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2 text-muted">
+                        <div className="flex items-center gap-2 text-muted-foreground">
                           <Factory className="w-3.5 h-3.5" />
                           <span className="text-xs">{product.seller.type}</span>
                         </div>
-                        <div className="flex items-center gap-1 text-muted">
+                        <div className="flex items-center gap-1 text-muted-foreground">
                           <MapPin className="w-4 h-4" />
                           <span className="text-sm">
                             {product.seller.city}, {product.seller.state}
@@ -127,12 +115,12 @@ export default async function ProductsPage() {
                       {(product.hsCode || product.moq) && (
                         <div className="flex flex-wrap gap-2 mb-4">
                           {product.hsCode && (
-                            <span className="text-xs text-muted border border-slate-200 px-2 py-1 rounded">
+                            <span className="text-xs text-muted-foreground border border-slate-200 px-2 py-1 rounded">
                               HS: {product.hsCode}
                             </span>
                           )}
                           {product.moq && (
-                            <span className="text-xs text-muted border border-slate-200 px-2 py-1 rounded">
+                            <span className="text-xs text-muted-foreground border border-slate-200 px-2 py-1 rounded">
                               MOQ: {product.moq}
                             </span>
                           )}
@@ -149,7 +137,7 @@ export default async function ProductsPage() {
         ) : (
           <div className="text-center py-20">
             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted">No products found</p>
+            <p className="text-lg text-muted-foreground">No products found</p>
           </div>
         )}
       </Container>

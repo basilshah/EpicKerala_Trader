@@ -1,78 +1,86 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/Card';
-import { CategorySubLink } from '@/components/CategorySubLink';
-import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
-import { ProductCountBadge, SubcategoryBadge } from '@/components/ui/Badge';
-import { Package } from 'lucide-react';
-
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  children?: Array<{ id: string; name: string; slug: string }>;
-  _count?: { products: number };
-}
+import { Badge } from '@/components/ui/Badge';
+import { Package, ArrowRight } from 'lucide-react';
 
 interface CategoryCardProps {
-  category: Category;
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+    _count?: {
+      products: number;
+    };
+    children?: {
+      id: string;
+      name: string;
+      slug: string;
+    }[];
+    // Fallback for categories page structure which might have totalProducts at top level
+    totalProducts?: number;
+  };
+  // Optional image URL prop for flexibility, though Home design uses placeholder logic currently
   imageUrl?: string;
-  maxSubcategories?: number;
 }
 
-export function CategoryCard({ category, imageUrl, maxSubcategories = 3 }: CategoryCardProps) {
+export function CategoryCard({ category, imageUrl }: CategoryCardProps) {
+  const productCount = category.totalProducts ?? category._count?.products ?? 0;
   const subcategories = category.children || [];
-  const productCount = category._count?.products || 0;
 
   return (
-    <Link href={`/category/${category.slug}`}>
-      <Card className="overflow-hidden hover:shadow-lg transition-all group flex flex-col cursor-pointer border border-slate-200">
-        {/* Category Image */}
-        <div className="relative h-[200px] bg-slate-100 overflow-hidden">
+    <Link href={`/category/${category.slug}`} className="group block h-full">
+      <Card className="h-full overflow-hidden border-border/60 hover:border-secondary/30 hover:shadow-xl transition-all duration-300 rounded-xl bg-white group-hover:-translate-y-1">
+        <div className="h-48 bg-slate-50 relative overflow-hidden flex items-center justify-center">
           {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={category.name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
+            <>
+              <Image
+                src={imageUrl}
+                alt={category.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </>
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10">
-              <Package className="w-20 h-20 text-slate-300" />
-            </div>
+            <>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 group-hover:scale-110 transition-transform duration-700" />
+              <Package className="w-12 h-12 text-primary/20 absolute z-0" />
+            </>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute top-4 right-4">
-            <ProductCountBadge count={productCount} />
-          </div>
+
+          <Badge
+            variant="outline"
+            className="absolute top-3 right-3 z-10 backdrop-blur-sm shadow-md border-0 text-xs bg-white/90 text-foreground font-semibold"
+          >
+            {productCount} Products
+          </Badge>
         </div>
-
-        <CardContent className="p-6 flex flex-col flex-grow">
-          <h3 className="text-2xl font-bold text-primary mb-3">{category.name}</h3>
-
-          <div className="flex-grow mb-4">
-            <div className="min-h-[90px]">
-              {subcategories.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-foreground mb-2">Sub-categories:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {subcategories.slice(0, maxSubcategories).map((child) => (
-                      <CategorySubLink key={child.id} href={`/category/${child.slug}`}>
-                        <SubcategoryBadge interactive>{child.name}</SubcategoryBadge>
-                      </CategorySubLink>
-                    ))}
-                    {subcategories.length > maxSubcategories && (
-                      <SubcategoryBadge>
-                        +{subcategories.length - maxSubcategories} more
-                      </SubcategoryBadge>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
+        <CardContent className="p-6 flex flex-col flex-1">
+          <h3 className="text-xl font-bold text-primary group-hover:text-secondary transition-colors duration-300 mb-4">
+            {category.name}
+          </h3>
+          <ul className="space-y-2 mb-6 flex-1">
+            {subcategories.slice(0, 3).map((child) => (
+              <li
+                key={child.id}
+                className="flex items-center text-sm text-muted-foreground/80 before:content-['•'] before:mr-2 before:text-secondary"
+              >
+                {child.name}
+              </li>
+            ))}
+            {subcategories.length > 3 && (
+              <li className="flex items-center text-sm text-muted-foreground/80 before:content-['•'] before:mr-2 before:text-secondary">
+                +{subcategories.length - 3} more
+              </li>
+            )}
+            {subcategories.length === 0 && (
+              <li className="text-sm text-muted-foreground/60 italic">Explore products inside</li>
+            )}
+          </ul>
+          <div className="flex items-center text-sm font-semibold text-secondary group-hover:translate-x-1 transition-transform mt-auto">
+            Explore Category <ArrowRight className="ml-1 w-4 h-4" />
           </div>
-
-          <ViewDetailsLink text="Browse Products" />
         </CardContent>
       </Card>
     </Link>

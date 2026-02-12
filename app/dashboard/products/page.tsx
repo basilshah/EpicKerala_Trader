@@ -79,6 +79,34 @@ export default async function ProductsPage() {
                 key={product.id}
                 className="bg-white rounded-lg shadow-md p-6 border border-slate-200 hover:shadow-lg transition-shadow"
               >
+                {/* Mobile: Status and Actions at Top */}
+                <div className="flex md:hidden items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    {product.isPublic ? (
+                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
+                        Active
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full font-medium">
+                        Draft
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Link href={`/product/${product.slug}`}>
+                      <Button variant="outline" size="sm">
+                        View
+                      </Button>
+                    </Link>
+                    <Link href={`/dashboard/products/${product.id}/edit`}>
+                      <Button variant="outline" size="sm">
+                        Edit
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Product Content */}
                 <div className="flex items-start justify-between gap-4">
                   {firstImage && (
                     <img
@@ -90,12 +118,13 @@ export default async function ProductsPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-lg font-semibold text-slate-900">{product.name}</h3>
+                      {/* Desktop: Status Badge */}
                       {product.isPublic ? (
-                        <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
+                        <span className="hidden md:inline-flex px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
                           Active
                         </span>
                       ) : (
-                        <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full font-medium">
+                        <span className="hidden md:inline-flex px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full font-medium">
                           Draft
                         </span>
                       )}
@@ -115,7 +144,8 @@ export default async function ProductsPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
+                  {/* Desktop: Action Buttons */}
+                  <div className="hidden md:flex gap-2">
                     <Link href={`/product/${product.slug}`}>
                       <Button variant="outline" size="sm">
                         View

@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'EPIC - B2B Export Directory',
   description: 'Connect with verified manufacturers and exporters from Kerala.',
+  icons: {
+    icon: '/epicLandLogo.webp',
+  },
 };
 
 export default function RootLayout({

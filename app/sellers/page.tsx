@@ -26,24 +26,12 @@ export default async function SellersPage() {
 
   return (
     <div className="bg-background min-h-screen pb-20">
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-border py-4">
-        <Container>
-          <div className="text-sm text-muted">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-primary font-medium">All Exporters</span>
-          </div>
-        </Container>
-      </div>
 
       <Container className="mt-12">
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-primary mb-3">Kerala Exporters</h1>
-          <p className="text-lg text-muted">
+          <p className="text-lg text-muted-foreground">
             {sellers.length} verified manufacturers and exporters
           </p>
         </div>
@@ -73,7 +61,7 @@ export default async function SellersPage() {
                     </h3>
 
                     {/* Location */}
-                    <div className="flex items-center gap-1 text-muted mb-4">
+                    <div className="flex items-center gap-1 text-muted-foreground mb-4">
                       <MapPin className="w-4 h-4" />
                       <span className="text-sm">
                         {seller.city}, {seller.state}
@@ -86,7 +74,7 @@ export default async function SellersPage() {
                         <p className="text-2xl font-bold text-secondary">
                           {seller._count.products}
                         </p>
-                        <p className="text-xs text-muted">Products</p>
+                        <p className="text-xs text-muted-foreground">Products</p>
                       </div>
                       {seller.offersOEM && (
                         <div className="flex items-center gap-1 text-xs bg-primary/10 text-primary px-2 py-1 rounded">
@@ -98,7 +86,7 @@ export default async function SellersPage() {
 
                     {/* Description */}
                     {seller.description && (
-                      <p className="text-sm text-muted line-clamp-2 mb-4">{seller.description}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{seller.description}</p>
                     )}
 
                     <ViewDetailsLink text="View Profile" />
@@ -110,7 +98,7 @@ export default async function SellersPage() {
         ) : (
           <div className="text-center py-20">
             <Factory className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted">No exporters found</p>
+            <p className="text-lg text-muted-foreground">No exporters found</p>
           </div>
         )}
       </Container>

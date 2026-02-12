@@ -73,6 +73,27 @@ model Seller {
   products        Product[]
 }
 
+model Importer {
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  password        String   // Hashed password
+  
+  // Subscription
+  subscriptionTier String  @default("FREE") // FREE, PREMIUM
+  
+  // Company Info (optional)
+  companyName     String?
+  country         String?
+  phone           String?
+  
+  // Meta
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  rfqs            RFQ[]
+}
+
 model Product {
   id          String   @id @default(cuid())
   name        String
@@ -125,6 +146,8 @@ model RFQ {
   // Relations
   productId       String
   product         Product  @relation(fields: [productId], references: [id])
+  importerId      String?
+  importer        Importer? @relation(fields: [importerId], references: [id])
   
   status          String   @default("PENDING") // PENDING, SENT, REPLIED
   createdAt       DateTime @default(now())

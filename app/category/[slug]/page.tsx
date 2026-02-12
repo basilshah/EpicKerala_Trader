@@ -69,30 +69,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="bg-background min-h-screen pb-20">
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-border py-4">
-        <Container>
-          <div className="text-sm text-muted">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href="/categories" className="hover:text-primary">
-              Categories
-            </Link>
-            {category.parent && (
-              <>
-                <span className="mx-2">/</span>
-                <Link href={`/category/${category.parent.slug}`} className="hover:text-primary">
-                  {category.parent.name}
-                </Link>
-              </>
-            )}
-            <span className="mx-2">/</span>
-            <span className="text-primary font-medium">{category.name}</span>
-          </div>
-        </Container>
-      </div>
 
       <Container className="mt-12">
         {/* Category Header with Image */}
@@ -101,7 +77,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {/* Left: Text Content */}
             <div className="p-8 flex flex-col justify-center">
               <h1 className="text-4xl font-bold text-primary mb-4">{category.name}</h1>
-              <p className="text-base text-muted mb-6 leading-relaxed">
+              <p className="text-base text-muted-foreground mb-6 leading-relaxed">
                 Explore Kerala's premium {category.name.toLowerCase()} exports including{' '}
                 {category.children.length > 0
                   ? category.children
@@ -114,14 +90,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="flex items-center gap-6">
                 <div>
                   <p className="text-3xl font-bold text-secondary">{allProducts.length}</p>
-                  <p className="text-sm text-muted">Products</p>
+                  <p className="text-sm text-muted-foreground">Products</p>
                 </div>
                 <div className="h-12 w-px bg-border"></div>
                 <div>
                   <p className="text-3xl font-bold text-secondary">
                     {new Set(allProducts.map((p) => p.sellerId)).size}
                   </p>
-                  <p className="text-sm text-muted">Verified Exporters</p>
+                  <p className="text-sm text-muted-foreground">Verified Exporters</p>
                 </div>
               </div>
             </div>
@@ -263,7 +239,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         {product.name}
                       </h3>
 
-                      <p className="text-sm text-muted mb-3 line-clamp-2 min-h-[2.5rem]">
+                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2 min-h-[2.5rem]">
                         {product.description || ''}
                       </p>
 
@@ -274,16 +250,16 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             <BadgeCheck className="w-3 h-3 text-secondary" />
                           )}
                         </p>
-                        <p className="text-xs text-muted flex items-center gap-1 mb-1">
+                        <p className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
                           <Factory className="w-3 h-3" /> {product.seller.type}
                         </p>
-                        <p className="text-xs text-muted flex items-center gap-1 mb-3">
+                        <p className="text-xs text-muted-foreground flex items-center gap-1 mb-3">
                           <MapPin className="w-3 h-3" /> {product.seller.city},{' '}
                           {product.seller.state}
                         </p>
 
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted">MOQ: {product.moq || 'Negotiable'}</span>
+                          <span className="text-muted-foreground">MOQ: {product.moq || 'Negotiable'}</span>
                           {product.hsCode && (
                             <span className="text-xs font-mono bg-slate-100 px-2 py-1 rounded">
                               HS: {product.hsCode}
@@ -308,7 +284,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="text-center py-16 bg-white rounded-lg border border-dashed">
             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">No Products Found</h3>
-            <p className="text-muted mb-6">
+            <p className="text-muted-foreground mb-6">
               There are currently no products listed in this category.
             </p>
             <Link href="/categories">
