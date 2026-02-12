@@ -59,20 +59,28 @@ export default async function CategoriesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
-          {categoriesWithTotalCount.map((category: any, index: number) => {
-            // Logic for index-based images from original code
-            let imageUrl = undefined;
-            if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
-            else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
+        {categoriesWithTotalCount.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
+            {categoriesWithTotalCount.map((category: any, index: number) => {
+              // Logic for index-based images from original code
+              let imageUrl = undefined;
+              if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
+              else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
 
-            return (
-              <div key={category.id} className="h-full">
-                <CategoryCard category={category} imageUrl={imageUrl} />
-              </div>
-            );
-          })}
-        </div>
+              return (
+                <div key={category.id} className="h-full">
+                  <CategoryCard category={category} imageUrl={imageUrl} />
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-20 px-4">
+            <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+            <p className="text-lg text-muted-foreground mb-2">No categories available yet</p>
+            <p className="text-sm text-muted-foreground">Categories will be added soon</p>
+          </div>
+        )}
       </Container>
     </div>
   );

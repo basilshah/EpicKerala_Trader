@@ -158,32 +158,42 @@ export default async function HomePage() {
             <div className="w-24 h-1 bg-secondary mx-auto mt-6 rounded-full opacity-60"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {categories.map((category, index) => {
-              // Logic to match images from categories page
-              let imageUrl = undefined;
-              if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
-              else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
+          {categories.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                {categories.map((category, index) => {
+                  // Logic to match images from categories page
+                  let imageUrl = undefined;
+                  if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
+                  else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
 
-              return (
-                <div key={category.id} className="h-full">
-                  <CategoryCard category={category} imageUrl={imageUrl} />
-                </div>
-              );
-            })}
-          </div>
+                  return (
+                    <div key={category.id} className="h-full">
+                      <CategoryCard category={category} imageUrl={imageUrl} />
+                    </div>
+                  );
+                })}
+              </div>
 
-          <div className="text-center mt-12">
-            <Link href="/categories">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-primary/20 text-primary hover:bg-primary/5 font-semibold px-8"
-              >
-                View All Categories
-              </Button>
-            </Link>
-          </div>
+              <div className="text-center mt-12">
+                <Link href="/categories">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-primary/20 text-primary hover:bg-primary/5 font-semibold px-8"
+                  >
+                    View All Categories
+                  </Button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-16">
+              <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+              <p className="text-lg text-muted-foreground mb-2">No categories available yet</p>
+              <p className="text-sm text-muted-foreground">Check back soon for exciting product categories</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -200,23 +210,33 @@ export default async function HomePage() {
                 Premium quality exports directly from manufacturers.
               </p>
             </div>
-            <Link href="/products">
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-secondary group font-medium text-base"
-              >
-                View All Products{' '}
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            {featuredProducts.length > 0 && (
+              <Link href="/products">
+                <Button
+                  variant="ghost"
+                  className="text-primary hover:text-secondary group font-medium text-base"
+                >
+                  View All Products{' '}
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {featuredProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+              <p className="text-lg text-muted-foreground mb-2">No products available yet</p>
+              <p className="text-sm text-muted-foreground">Exporters will be adding products soon</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -232,19 +252,22 @@ export default async function HomePage() {
                 Connect with top-rated government verified manufacturers.
               </p>
             </div>
-            <Link href="/sellers">
-              <Button
-                variant="ghost"
-                className="text-primary hover:text-secondary group font-medium text-base"
-              >
-                View All Exporters{' '}
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            {verifiedSellers.length > 0 && (
+              <Link href="/sellers">
+                <Button
+                  variant="ghost"
+                  className="text-primary hover:text-secondary group font-medium text-base"
+                >
+                  View All Exporters{' '}
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {verifiedSellers.map((seller) => (
+          {verifiedSellers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {verifiedSellers.map((seller) => (
               <Card
                 key={seller.id}
                 className="group border-none shadow-sm hover:shadow-xl transition-all duration-300 bg-white overflow-hidden rounded-xl"
@@ -300,7 +323,14 @@ export default async function HomePage() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <Factory className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+              <p className="text-lg text-muted-foreground mb-2">No exporters registered yet</p>
+              <p className="text-sm text-muted-foreground">Manufacturers will be joining soon</p>
+            </div>
+          )}
         </div>
       </section>
 
