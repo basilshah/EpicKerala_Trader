@@ -72,7 +72,9 @@ export default async function SellerPage({ params }: SellerPageProps) {
                 </Badge>
               </div>
 
-              <p className="text-slate-700 text-lg mb-6 max-w-3xl font-medium">{seller.description}</p>
+              <p className="text-slate-700 text-lg mb-6 max-w-3xl font-medium">
+                {seller.description}
+              </p>
 
               <div className="flex flex-wrap gap-y-3 gap-x-6 text-sm text-slate-600">
                 <div className="flex items-center gap-2">

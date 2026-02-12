@@ -124,7 +124,9 @@ export default function AdminCategoriesClient({ categories }: AdminCategoriesCli
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                           <h3 className="font-bold text-slate-900 text-xl mb-1">{category.name}</h3>
-                          <p className="text-sm text-slate-800 font-mono mb-2 font-medium">/{category.slug}</p>
+                          <p className="text-sm text-slate-800 font-mono mb-2 font-medium">
+                            /{category.slug}
+                          </p>
                           {category.description && (
                             <p className="text-sm text-slate-800 leading-relaxed">
                               {category.description}
@@ -225,7 +227,9 @@ export default function AdminCategoriesClient({ categories }: AdminCategoriesCli
                               <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                               <h4 className="font-semibold text-slate-900">{subcat.name}</h4>
                             </div>
-                            <p className="text-sm text-slate-800 font-mono ml-4 font-medium">/{subcat.slug}</p>
+                            <p className="text-sm text-slate-800 font-mono ml-4 font-medium">
+                              /{subcat.slug}
+                            </p>
                             {subcat.description && (
                               <p className="text-sm text-slate-800 mt-1 ml-4">
                                 {subcat.description}

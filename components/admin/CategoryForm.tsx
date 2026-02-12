@@ -227,7 +227,9 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
                   <div className="text-center">
                     <Upload className="w-12 h-12 mx-auto text-slate-400 mb-2" />
                     <p className="text-sm text-slate-800 font-medium">Click to upload image</p>
-                    <p className="text-xs text-slate-700 mt-1 font-medium">PNG, JPG, WEBP up to 5MB</p>
+                    <p className="text-xs text-slate-700 mt-1 font-medium">
+                      PNG, JPG, WEBP up to 5MB
+                    </p>
                   </div>
                 </label>
                 <input

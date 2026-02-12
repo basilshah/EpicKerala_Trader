@@ -125,7 +125,7 @@ export function ProductCard({ product, showSeller = true }: ProductCardProps) {
                 </div>
               </div>
             )}
-            
+
             {product.moq && (
               <div className="flex items-start gap-2 text-sm">
                 <Factory className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
