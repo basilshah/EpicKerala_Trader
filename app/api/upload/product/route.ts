@@ -4,11 +4,17 @@ import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
+    console.log('Product image upload request received');
+    
     const session = await auth();
 
     if (!session?.user?.email) {
+      console.log('Unauthorized product upload attempt');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -16,13 +22,17 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File;
 
     if (!file) {
+      console.log('No file in product upload request');
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
+    
+    console.log('Product file received:', { name: file.name, type: file.type, size: file.size });
 
     // Validate file type - only images
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
     if (!allowedTypes.includes(file.type)) {
+      console.log('Invalid product file type:', file.type);
       return NextResponse.json(
         { error: 'Invalid file type. Only images (JPG, PNG, WEBP) are allowed.' },
         { status: 400 }
@@ -32,12 +42,14 @@ export async function POST(request: NextRequest) {
     // Validate file size (10MB max for product images)
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
+      console.log('Product file too large:', file.size);
       return NextResponse.json({ error: 'File size must be less than 10MB' }, { status: 400 });
     }
 
     // Create uploads directory if it doesn't exist
     const uploadsDir = join(process.cwd(), 'public', 'uploads', 'products');
     if (!existsSync(uploadsDir)) {
+      console.log('Creating product upload directory:', uploadsDir);
       await mkdir(uploadsDir, { recursive: true });
     }
 
@@ -48,12 +60,14 @@ export async function POST(request: NextRequest) {
     const filepath = join(uploadsDir, filename);
 
     // Write file
+    console.log('Saving product file to:', filepath);
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     await writeFile(filepath, buffer);
 
     // Return public URL
     const fileUrl = `/uploads/products/${filename}`;
+    console.log('Product file uploaded successfully:', fileUrl);
 
     return NextResponse.json({
       message: 'Image uploaded successfully',
@@ -61,7 +75,7 @@ export async function POST(request: NextRequest) {
       filename: file.name,
     });
   } catch (error: any) {
-    console.error('Image upload error:', error);
-    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
+    console.error('Product image upload error:', error);
+    return NextResponse.json({ error: error.message || 'Failed to upload image' }, { status: 500 });
   }
 }

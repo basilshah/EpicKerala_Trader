@@ -103,6 +103,21 @@ export default function AddProductForm({
     const file = event.target.files?.[0];
     if (!file) return;
 
+    // Validate file size
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Image size must be less than 10MB');
+      event.target.value = '';
+      return;
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      setError('Please upload an image file (JPG, PNG, WEBP)');
+      event.target.value = '';
+      return;
+    }
+
     setUploadingImage(true);
     setError('');
 
@@ -123,6 +138,7 @@ export default function AddProductForm({
 
       setProductImages([...productImages, { url: result.url, filename: result.filename }]);
     } catch (err: any) {
+      console.error('Product image upload error:', err);
       setError(err.message || 'Failed to upload image');
     } finally {
       setUploadingImage(false);

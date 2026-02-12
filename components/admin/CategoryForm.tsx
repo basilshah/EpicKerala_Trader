@@ -91,7 +91,7 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
 
       setFormData((prev) => ({ ...prev, imageUrl: data.url }));
       setImagePreview(data.url);
-      
+
       // Clear the file input
       e.target.value = '';
     } catch (err: any) {

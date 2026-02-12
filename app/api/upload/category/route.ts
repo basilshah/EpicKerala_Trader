@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest) {
   try {
     console.log('Category image upload request received');
-    
+
     const session = await adminAuth();
     if (!session?.user) {
       console.log('Unauthorized upload attempt');
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const filepath = join(uploadDir, filename);
-    
+
     console.log('Saving file to:', filepath);
     await writeFile(filepath, buffer);
 
