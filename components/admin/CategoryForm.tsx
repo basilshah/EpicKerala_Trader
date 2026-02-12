@@ -60,10 +60,23 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Validate file size
+    if (file.size > 5 * 1024 * 1024) {
+      setError('Image size must be less than 5MB');
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setError('Please upload an image file (PNG, JPG, WEBP)');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', file);
 
     setIsLoading(true);
+    setError('');
     try {
       const response = await fetch('/api/upload/category', {
         method: 'POST',
@@ -78,8 +91,12 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
 
       setFormData((prev) => ({ ...prev, imageUrl: data.url }));
       setImagePreview(data.url);
+      
+      // Clear the file input
+      e.target.value = '';
     } catch (err: any) {
-      setError(err.message);
+      console.error('Upload error:', err);
+      setError(err.message || 'Failed to upload image');
     } finally {
       setIsLoading(false);
     }
@@ -213,7 +230,8 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
                 <button
                   type="button"
                   onClick={removeImage}
-                  className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-full hover:bg-red-700"
+                  disabled={isLoading}
+                  className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-full hover:bg-red-700 disabled:opacity-50"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -224,13 +242,20 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
                   htmlFor="image"
                   className="flex items-center justify-center w-full h-48 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-emerald-500 transition-colors"
                 >
-                  <div className="text-center">
-                    <Upload className="w-12 h-12 mx-auto text-slate-400 mb-2" />
-                    <p className="text-sm text-slate-800 font-medium">Click to upload image</p>
-                    <p className="text-xs text-slate-700 mt-1 font-medium">
-                      PNG, JPG, WEBP up to 5MB
-                    </p>
-                  </div>
+                  {isLoading ? (
+                    <div className="text-center">
+                      <div className="w-12 h-12 mx-auto mb-2 border-4 border-slate-300 border-t-emerald-600 rounded-full animate-spin"></div>
+                      <p className="text-sm text-slate-800 font-medium">Uploading...</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <Upload className="w-12 h-12 mx-auto text-slate-400 mb-2" />
+                      <p className="text-sm text-slate-800 font-medium">Click to upload image</p>
+                      <p className="text-xs text-slate-700 mt-1 font-medium">
+                        PNG, JPG, WEBP up to 5MB
+                      </p>
+                    </div>
+                  )}
                 </label>
                 <input
                   id="image"
