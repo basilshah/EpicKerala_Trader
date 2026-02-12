@@ -24,27 +24,22 @@ export default function Error({
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-red-600" />
           </div>
-          
-          <h1 className="text-2xl font-bold text-primary mb-2">
-            Something went wrong!
-          </h1>
-          
+
+          <h1 className="text-2xl font-bold text-primary mb-2">Something went wrong!</h1>
+
           <p className="text-muted-foreground mb-6">
             {error.message || 'An unexpected error occurred. Please try again.'}
           </p>
-          
+
           <div className="space-y-3">
-            <Button
-              onClick={reset}
-              className="w-full gap-2"
-            >
+            <Button onClick={reset} className="w-full gap-2">
               <RefreshCw className="w-4 h-4" />
               Try Again
             </Button>
-            
+
             <Button
               variant="outline"
-              onClick={() => window.location.href = '/'}
+              onClick={() => (window.location.href = '/')}
               className="w-full"
             >
               Go to Homepage

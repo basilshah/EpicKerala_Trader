@@ -51,19 +51,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   // If this category has children, also fetch products from children
   let allProducts = [...category.products];
   if (category.children.length > 0) {
-    const childProducts = await prismaClient.product.findMany({
-      where: {
-        categoryId: {
-          in: category.children.map((c: { id: string }) => c.id),
+    const childProducts = await prismaClient.product
+      .findMany({
+        where: {
+          categoryId: {
+            in: category.children.map((c: { id: string }) => c.id),
+          },
+          isPublic: true,
+          verificationStatus: 'APPROVED',
         },
-        isPublic: true,
-        verificationStatus: 'APPROVED',
-      },
-      include: {
-        seller: true,
-        category: true,
-      },
-    }).catch(() => []);
+        include: {
+          seller: true,
+          category: true,
+        },
+      })
+      .catch(() => []);
     allProducts = [...allProducts, ...childProducts];
   }
 

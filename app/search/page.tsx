@@ -22,54 +22,60 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   if (query) {
     // Search categories (with error handling)
-    categories = await prismaClient.category.findMany({
-      where: {
-        name: { contains: query },
-      },
-      include: {
-        _count: {
-          select: { products: true },
+    categories = await prismaClient.category
+      .findMany({
+        where: {
+          name: { contains: query },
         },
-        children: true,
-      },
-      take: 6,
-    }).catch(() => []);
+        include: {
+          _count: {
+            select: { products: true },
+          },
+          children: true,
+        },
+        take: 6,
+      })
+      .catch(() => []);
 
     // Search products (with error handling)
-    products = await prismaClient.product.findMany({
-      where: {
-        AND: [
-          { verificationStatus: 'APPROVED' },
-          {
-            OR: [{ name: { contains: query } }, { description: { contains: query } }],
-          },
-        ],
-      },
-      include: {
-        category: true,
-        seller: true,
-      },
-      take: 9,
-    }).catch(() => []);
+    products = await prismaClient.product
+      .findMany({
+        where: {
+          AND: [
+            { verificationStatus: 'APPROVED' },
+            {
+              OR: [{ name: { contains: query } }, { description: { contains: query } }],
+            },
+          ],
+        },
+        include: {
+          category: true,
+          seller: true,
+        },
+        take: 9,
+      })
+      .catch(() => []);
 
     // Search sellers (with error handling)
-    sellers = await prismaClient.seller.findMany({
-      where: {
-        OR: [{ companyName: { contains: query } }, { description: { contains: query } }],
-      },
-      include: {
-        _count: {
-          select: {
-            products: {
-              where: {
-                verificationStatus: 'APPROVED',
+    sellers = await prismaClient.seller
+      .findMany({
+        where: {
+          OR: [{ companyName: { contains: query } }, { description: { contains: query } }],
+        },
+        include: {
+          _count: {
+            select: {
+              products: {
+                where: {
+                  verificationStatus: 'APPROVED',
+                },
               },
             },
           },
         },
-      },
-      take: 6,
-    }).catch(() => []);
+        take: 6,
+      })
+      .catch(() => []);
   }
 
   const totalResults = categories.length + products.length + sellers.length;

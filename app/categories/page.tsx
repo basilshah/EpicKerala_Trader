@@ -14,23 +14,25 @@ export const dynamic = 'force-dynamic';
 
 export default async function CategoriesPage() {
   // Fetch All Main Categories with Subcategories (with error handling)
-  const categories = await prismaClient.category.findMany({
-    where: { parentId: null },
-    orderBy: { name: 'asc' },
-    include: {
-      children: {
-        orderBy: { name: 'asc' },
-        include: {
-          _count: {
-            select: { products: true },
+  const categories = await prismaClient.category
+    .findMany({
+      where: { parentId: null },
+      orderBy: { name: 'asc' },
+      include: {
+        children: {
+          orderBy: { name: 'asc' },
+          include: {
+            _count: {
+              select: { products: true },
+            },
           },
         },
+        _count: {
+          select: { products: true },
+        },
       },
-      _count: {
-        select: { products: true },
-      },
-    },
-  }).catch(() => []);
+    })
+    .catch(() => []);
 
   // Calculate total products including subcategories
   const categoriesWithTotalCount = categories.map((category: any) => {
@@ -59,16 +61,16 @@ export default async function CategoriesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
           {categoriesWithTotalCount.map((category: any, index: number) => {
-             // Logic for index-based images from original code
-             let imageUrl = undefined;
-             if (index === 0) imageUrl = "/cat_spices_1769688487625.png";
-             else if (index === 2) imageUrl = "/cat_handicrafts_1769688509505.png";
+            // Logic for index-based images from original code
+            let imageUrl = undefined;
+            if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
+            else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
 
-             return (
-               <div key={category.id} className="h-full">
-                 <CategoryCard category={category} imageUrl={imageUrl} />
-               </div>
-             )
+            return (
+              <div key={category.id} className="h-full">
+                <CategoryCard category={category} imageUrl={imageUrl} />
+              </div>
+            );
           })}
         </div>
       </Container>

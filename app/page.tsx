@@ -18,35 +18,41 @@ export default async function HomePage() {
   const session = await auth();
 
   // 1. Fetch Categories (with error handling)
-  const categories = await prismaClient.category.findMany({
-    where: { parentId: null },
-    orderBy: { name: 'asc' },
-    take: 4,
-    include: {
-      _count: { select: { products: true } },
-      children: { take: 3 },
-    },
-  }).catch(() => []);
+  const categories = await prismaClient.category
+    .findMany({
+      where: { parentId: null },
+      orderBy: { name: 'asc' },
+      take: 4,
+      include: {
+        _count: { select: { products: true } },
+        children: { take: 3 },
+      },
+    })
+    .catch(() => []);
 
   // 2. Fetch Featured Sellers (with error handling)
-  const verifiedSellers = await prismaClient.seller.findMany({
-    where: { isVerified: true },
-    take: 3,
-    include: { _count: { select: { products: true } } },
-  }).catch(() => []);
+  const verifiedSellers = await prismaClient.seller
+    .findMany({
+      where: { isVerified: true },
+      take: 3,
+      include: { _count: { select: { products: true } } },
+    })
+    .catch(() => []);
 
   // 3. Fetch Featured Products (with error handling)
-  const featuredProducts = await prismaClient.product.findMany({
-    where: {
-      isPublic: true,
-      verificationStatus: 'APPROVED',
-    },
-    take: 4,
-    include: {
-      seller: true,
-      category: true,
-    },
-  }).catch(() => []);
+  const featuredProducts = await prismaClient.product
+    .findMany({
+      where: {
+        isPublic: true,
+        verificationStatus: 'APPROVED',
+      },
+      take: 4,
+      include: {
+        seller: true,
+        category: true,
+      },
+    })
+    .catch(() => []);
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans selection:bg-secondary/30">

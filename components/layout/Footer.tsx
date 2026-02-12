@@ -134,20 +134,20 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-base mb-5">Contact</h3>
             <ul className="space-y-3 text-sm text-white/80">
-              <li>Kerala Industrial Development</li>
-              <li>Corporation Building</li>
-              <li>Thiruvananthapuram, Kerala</li>
+              <li>Adampail Lane 2, 37/398B</li>
+              <li>Kalamassery, Kochi</li>
+              <li>Kerala 682033</li>
               <li className="pt-2">
                 <a
-                  href="mailto:info@epickerala.gov.in"
+                  href="mailto:contact@epickerala.com"
                   className="hover:text-secondary transition-colors"
                 >
-                  info@epickerala.gov.in
+                  contact@epickerala.com
                 </a>
               </li>
               <li>
-                <a href="tel:+914712345678" className="hover:text-secondary transition-colors">
-                  +91 471 234 5678
+                <a href="tel:+917034322220" className="hover:text-secondary transition-colors">
+                  +91 70343 22220
                 </a>
               </li>
             </ul>
@@ -158,7 +158,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10 bg-primary/80">
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/70">
-          <p>© 2025 EPIC. All rights reserved.</p>
+          <p>© 2026 EPIC LAND. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-secondary transition-colors">
               Privacy Policy

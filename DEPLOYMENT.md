@@ -1,6 +1,7 @@
 # Deployment Guide for Vercel
 
 ## Prerequisites
+
 - ✅ GitHub account
 - ✅ Vercel account
 - ✅ All code committed to GitHub
@@ -10,16 +11,19 @@
 ### 1. Prepare Database
 
 #### Option A: Vercel Postgres (Recommended)
+
 1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
 2. Navigate to **Storage** → **Create Database** → **Postgres**
 3. Copy the `DATABASE_URL` connection string
 
 #### Option B: Neon (Free Tier)
+
 1. Visit [neon.tech](https://neon.tech)
 2. Create a new project
 3. Copy the connection string
 
 ### 2. Push to GitHub
+
 ```bash
 git add .
 git commit -m "Ready for production"
@@ -27,6 +31,7 @@ git push origin main
 ```
 
 ### 3. Import to Vercel
+
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Import your GitHub repository
 3. Configure project:
@@ -52,6 +57,7 @@ NODE_ENV=production
 ```
 
 ### 5. Deploy
+
 Click **Deploy** button in Vercel
 
 ### 6. Run Database Migration
@@ -59,6 +65,7 @@ Click **Deploy** button in Vercel
 After first deployment, run migrations:
 
 **Using Vercel CLI:**
+
 ```bash
 # Install Vercel CLI globally
 npm install -g vercel
@@ -76,12 +83,14 @@ DATABASE_URL=<your-production-url> npx prisma migrate deploy
 ```
 
 **Or manually:**
+
 ```bash
 # In your local terminal
 DATABASE_URL="your_production_database_url" npx prisma migrate deploy
 ```
 
 ### 7. Seed Production Data (Optional)
+
 ```bash
 DATABASE_URL="your_production_database_url" npx prisma db seed
 ```
@@ -106,21 +115,25 @@ DATABASE_URL="your_production_database_url" npx prisma db seed
 ## Troubleshooting
 
 ### Build Fails
+
 - Check Vercel build logs
 - Ensure all dependencies are in `package.json`
 - Verify `postinstall` script runs `prisma generate`
 
 ### Database Connection Issues
+
 - Verify `DATABASE_URL` is correctly set in Vercel
 - Check database allows connections from Vercel IPs
 - Ensure connection string includes `?sslmode=require` for production
 
 ### NextAuth Issues
+
 - Verify `NEXTAUTH_URL` matches your deployed domain
 - Check `NEXTAUTH_SECRET` is set
 - Clear browser cookies and try again
 
 ### Static Files Not Loading
+
 - Ensure public folder is included in deployment
 - Check file paths are correct
 - Verify uploads are stored in persistent storage (consider Vercel Blob or S3)
@@ -128,6 +141,7 @@ DATABASE_URL="your_production_database_url" npx prisma db seed
 ## Important Notes
 
 ⚠️ **File Uploads:** Vercel's free tier has serverless functions that are stateless. Uploaded files in `/public/uploads` won't persist across deployments. Consider:
+
 - **Vercel Blob Storage** (recommended)
 - **AWS S3**
 - **Cloudinary**
@@ -136,6 +150,7 @@ DATABASE_URL="your_production_database_url" npx prisma db seed
 ⚠️ **Environment Variables:** Never commit `.env.local` to GitHub. Always set them in Vercel Dashboard.
 
 ⚠️ **Database Migrations:** Always run migrations after schema changes:
+
 ```bash
 npx prisma migrate deploy
 ```
@@ -171,6 +186,7 @@ vercel env ls
 ## Production Checklist
 
 Before going live:
+
 - [ ] All environment variables set in Vercel
 - [ ] Database migrated successfully
 - [ ] Admin user created

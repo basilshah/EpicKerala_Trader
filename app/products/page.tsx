@@ -7,17 +7,19 @@ import { Package } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 
 export default async function ProductsPage() {
-  const products = await prismaClient.product.findMany({
-    where: {
-      isPublic: true,
-      verificationStatus: 'APPROVED',
-    },
-    include: {
-      seller: true,
-      category: true,
-    },
-    orderBy: { createdAt: 'desc' },
-  }).catch(() => []);
+  const products = await prismaClient.product
+    .findMany({
+      where: {
+        isPublic: true,
+        verificationStatus: 'APPROVED',
+      },
+      include: {
+        seller: true,
+        category: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+    .catch(() => []);
 
   return (
     <div className="bg-background min-h-screen pb-20">

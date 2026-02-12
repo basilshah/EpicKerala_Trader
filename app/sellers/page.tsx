@@ -9,24 +9,25 @@ import { BadgeCheck, MapPin, Package, Factory, Award } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 
 export default async function SellersPage() {
-  const sellers = await prismaClient.seller.findMany({
-    include: {
-      _count: {
-        select: {
-          products: {
-            where: {
-              verificationStatus: 'APPROVED',
+  const sellers = await prismaClient.seller
+    .findMany({
+      include: {
+        _count: {
+          select: {
+            products: {
+              where: {
+                verificationStatus: 'APPROVED',
+              },
             },
           },
         },
       },
-    },
-    orderBy: { isVerified: 'desc' },
-  }).catch(() => []);
+      orderBy: { isVerified: 'desc' },
+    })
+    .catch(() => []);
 
   return (
     <div className="bg-background min-h-screen pb-20">
-
       <Container className="mt-12">
         {/* Header */}
         <div className="mb-10">
@@ -86,7 +87,9 @@ export default async function SellersPage() {
 
                     {/* Description */}
                     {seller.description && (
-                      <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{seller.description}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                        {seller.description}
+                      </p>
                     )}
 
                     <ViewDetailsLink text="View Profile" />
