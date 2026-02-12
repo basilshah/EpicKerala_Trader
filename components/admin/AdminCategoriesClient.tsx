@@ -25,7 +25,17 @@ interface Category {
   parent?: {
     name: string;
   } | null;
-  children: Category[];
+  children: {
+    id: string;
+    name: string;
+    slug: string;
+    description: string | null;
+    imageUrl: string | null;
+    parentId: string | null;
+    _count: {
+      products: number;
+    };
+  }[];
   _count: {
     products: number;
   };
