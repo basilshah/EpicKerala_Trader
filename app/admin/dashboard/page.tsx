@@ -3,6 +3,9 @@ import { adminAuth } from '@/lib/admin-auth';
 import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import AdminDashboardClient from '@/components/admin/AdminDashboardClient';
+import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
+import { FolderTree, LogOut } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -93,9 +96,30 @@ export default async function AdminDashboard() {
     <div className="min-h-screen bg-slate-50">
       <div className="bg-white border-b border-slate-200">
         <Container className="py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-slate-900">Admin Dashboard</h1>
-            <p className="text-slate-600">Welcome, {session.user.name}</p>
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900">Admin Dashboard</h1>
+              <p className="text-slate-800 font-medium mt-1">Welcome, {session.user.name}</p>
+            </div>
+            <Link href="/api/admin/logout">
+              <Button variant="outline" size="sm">
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </Button>
+            </Link>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex gap-3">
+            <Link href="/admin/categories">
+              <Button
+                variant="outline"
+                className="border-emerald-600 text-emerald-700 hover:bg-emerald-50"
+              >
+                <FolderTree className="w-4 h-4 mr-2" />
+                Manage Categories
+              </Button>
+            </Link>
           </div>
         </Container>
       </div>

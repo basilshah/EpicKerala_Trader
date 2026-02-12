@@ -191,7 +191,9 @@ export default async function HomePage() {
             <div className="text-center py-16">
               <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
               <p className="text-lg text-muted-foreground mb-2">No categories available yet</p>
-              <p className="text-sm text-muted-foreground">Check back soon for exciting product categories</p>
+              <p className="text-sm text-muted-foreground">
+                Check back soon for exciting product categories
+              </p>
             </div>
           )}
         </div>
@@ -234,7 +236,9 @@ export default async function HomePage() {
             <div className="text-center py-16">
               <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
               <p className="text-lg text-muted-foreground mb-2">No products available yet</p>
-              <p className="text-sm text-muted-foreground">Exporters will be adding products soon</p>
+              <p className="text-sm text-muted-foreground">
+                Exporters will be adding products soon
+              </p>
             </div>
           )}
         </div>
@@ -268,61 +272,61 @@ export default async function HomePage() {
           {verifiedSellers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {verifiedSellers.map((seller) => (
-              <Card
-                key={seller.id}
-                className="group border-none shadow-sm hover:shadow-xl transition-all duration-300 bg-white overflow-hidden rounded-xl"
-              >
-                <CardContent className="p-0">
-                  <div className="p-6 md:p-8 flex flex-col items-center text-center border-b border-border/50 bg-gradient-to-b from-white to-background/50">
-                    <div className="w-20 h-20 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Factory className="w-8 h-8 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-bold text-primary mb-1 line-clamp-1">
-                      {seller.companyName}
-                    </h3>
-                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-3">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {seller.city}, {seller.state}
-                    </div>
+                <Card
+                  key={seller.id}
+                  className="group border-none shadow-sm hover:shadow-xl transition-all duration-300 bg-white overflow-hidden rounded-xl"
+                >
+                  <CardContent className="p-0">
+                    <div className="p-6 md:p-8 flex flex-col items-center text-center border-b border-border/50 bg-gradient-to-b from-white to-background/50">
+                      <div className="w-20 h-20 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <Factory className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-primary mb-1 line-clamp-1">
+                        {seller.companyName}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-3">
+                        <MapPin className="w-3.5 h-3.5" />
+                        {seller.city}, {seller.state}
+                      </div>
 
-                    <div className="flex flex-wrap gap-2 justify-center mb-4">
-                      {seller.isVerified && (
-                        <Badge
-                          variant="secondary"
-                          className="bg-green-50 text-green-700 hover:bg-green-100 border-green-200 gap-1 pl-1 pr-2"
-                        >
-                          <CheckCircle2 className="w-3 h-3" /> Verified
-                        </Badge>
-                      )}
-                      {seller.offersOEM && (
-                        <Badge
-                          variant="outline"
-                          className="border-blue-200 bg-blue-50 text-blue-700"
-                        >
-                          OEM
-                        </Badge>
-                      )}
+                      <div className="flex flex-wrap gap-2 justify-center mb-4">
+                        {seller.isVerified && (
+                          <Badge
+                            variant="secondary"
+                            className="bg-green-50 text-green-700 hover:bg-green-100 border-green-200 gap-1 pl-1 pr-2"
+                          >
+                            <CheckCircle2 className="w-3 h-3" /> Verified
+                          </Badge>
+                        )}
+                        {seller.offersOEM && (
+                          <Badge
+                            variant="outline"
+                            className="border-blue-200 bg-blue-50 text-blue-700"
+                          >
+                            OEM
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-4 bg-gray-50/50 flex items-center justify-between">
-                    <div className="text-xs font-medium text-muted-foreground">
-                      <span className="text-primary font-bold text-sm block">
-                        {seller._count.products}
-                      </span>{' '}
-                      Products
+                    <div className="p-4 bg-gray-50/50 flex items-center justify-between">
+                      <div className="text-xs font-medium text-muted-foreground">
+                        <span className="text-primary font-bold text-sm block">
+                          {seller._count.products}
+                        </span>{' '}
+                        Products
+                      </div>
+                      <Link href={`/seller/${seller.slug}`}>
+                        <Button
+                          size="sm"
+                          className="bg-white hover:bg-primary hover:text-white text-primary border border-border shadow-sm transition-colors text-xs h-8 px-4 font-semibold"
+                        >
+                          View Profile
+                        </Button>
+                      </Link>
                     </div>
-                    <Link href={`/seller/${seller.slug}`}>
-                      <Button
-                        size="sm"
-                        className="bg-white hover:bg-primary hover:text-white text-primary border border-border shadow-sm transition-colors text-xs h-8 px-4 font-semibold"
-                      >
-                        View Profile
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           ) : (
             <div className="text-center py-16">

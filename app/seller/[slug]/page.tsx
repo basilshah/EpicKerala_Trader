@@ -72,7 +72,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
                 </Badge>
               </div>
 
-              <p className="text-muted-foreground text-lg mb-6 max-w-3xl">{seller.description}</p>
+              <p className="text-slate-700 text-lg mb-6 max-w-3xl font-medium">{seller.description}</p>
 
               <div className="flex flex-wrap gap-y-3 gap-x-6 text-sm text-slate-600">
                 <div className="flex items-center gap-2">
@@ -142,13 +142,13 @@ export default async function SellerPage({ params }: SellerPageProps) {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <span className="block text-xs font-medium text-muted-foreground uppercase mb-1">
+                  <span className="block text-xs font-semibold text-slate-600 uppercase mb-1">
                     Business Type
                   </span>
                   <span className="font-medium capitalize">{seller.type}</span>
                 </div>
                 <div>
-                  <span className="block text-xs font-medium text-muted-foreground uppercase mb-1">
+                  <span className="block text-xs font-semibold text-slate-600 uppercase mb-1">
                     Location
                   </span>
                   <span>
@@ -157,7 +157,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
                 </div>
                 {seller.certifications && (
                   <div>
-                    <span className="block text-xs font-medium text-muted-foreground uppercase mb-1">
+                    <span className="block text-xs font-semibold text-slate-600 uppercase mb-1">
                       Certifications
                     </span>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -214,7 +214,7 @@ export default async function SellerPage({ params }: SellerPageProps) {
             </div>
 
             {seller.products.length === 0 && (
-              <div className="text-center py-12 bg-white rounded-lg border border-dashed text-muted-foreground">
+              <div className="text-center py-12 bg-white rounded-lg border border-dashed text-slate-700 font-medium">
                 No listed products found.
               </div>
             )}

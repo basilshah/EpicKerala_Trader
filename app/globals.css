@@ -11,7 +11,7 @@
   --color-secondary-foreground: #ffffff;
 
   --color-muted: #f3f4f6;
-  --color-muted-foreground: #6b7280; /* Text Secondary */
+  --color-muted-foreground: #374151; /* Text Secondary - Darker for better visibility */
 
   --color-card: #ffffff; /* Pure White */
   --color-card-foreground: #1a1a2e;

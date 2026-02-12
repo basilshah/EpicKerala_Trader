@@ -10,16 +10,16 @@ async function main() {
   // --- Create Admin User ---
   const hashedPassword = await bcrypt.hash('admin123', 10);
   await prisma.admin.upsert({
-    where: { email: 'admin@epickeral.com' },
+    where: { email: 'admin@epickerala.com' },
     update: {},
     create: {
-      email: 'admin@epickeral.com',
+      email: 'admin@epickerala.com',
       password: hashedPassword,
       name: 'Admin User',
       role: 'admin',
     },
   });
-  console.log('✓ Admin user created (email: admin@epickeral.com, password: admin123)');
+  console.log('✓ Admin user created (email: admin@epickerala.com, password: admin123)');
 
   // --- 1. Agriculture & Food Products ---
   const catAgri = await prisma.category.upsert({

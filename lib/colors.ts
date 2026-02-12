@@ -61,11 +61,11 @@ export const colorPalette = {
     shadowSelected: 'shadow-lg',
   },
 
-  // Text colors - using theme colors
+  // Text colors - using darker colors for better visibility
   text: {
-    primary: 'text-foreground',
-    secondary: 'text-muted',
-    tertiary: 'text-muted-foreground',
+    primary: 'text-slate-900',
+    secondary: 'text-slate-700',
+    tertiary: 'text-slate-600',
   },
 
   // Badge colors

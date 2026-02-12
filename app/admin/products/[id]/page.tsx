@@ -199,22 +199,28 @@ export default async function AdminProductPage({ params }: AdminProductPageProps
               </CardHeader>
               <CardContent className="space-y-3">
                 <div>
-                  <h4 className="text-sm font-medium text-slate-500">Company Name</h4>
+                  <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                    Company Name
+                  </h4>
                   <p className="font-semibold text-slate-900">{product.seller.companyName}</p>
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-slate-500">Email</h4>
-                  <p className="text-slate-700">{product.seller.email}</p>
+                  <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                    Email
+                  </h4>
+                  <p className="text-slate-900 font-medium">{product.seller.email}</p>
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-slate-500">Location</h4>
-                  <p className="text-slate-700">
+                  <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                    Location
+                  </h4>
+                  <p className="text-slate-900 font-medium">
                     {product.seller.city}, {product.seller.state}
                   </p>
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-slate-500">Type</h4>
-                  <p className="text-slate-700">{product.seller.type}</p>
+                  <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wide">Type</h4>
+                  <p className="text-slate-900 font-medium">{product.seller.type}</p>
                 </div>
                 <Link
                   href={`/seller/${product.seller.slug}`}
@@ -247,17 +253,23 @@ export default async function AdminProductPage({ params }: AdminProductPageProps
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <div>
-                  <span className="text-slate-500">Created:</span>
-                  <p className="font-medium">{new Date(product.createdAt).toLocaleString()}</p>
+                  <span className="text-slate-700 font-semibold">Created:</span>
+                  <p className="font-medium text-slate-900">
+                    {new Date(product.createdAt).toLocaleString()}
+                  </p>
                 </div>
                 <div>
-                  <span className="text-slate-500">Last Updated:</span>
-                  <p className="font-medium">{new Date(product.updatedAt).toLocaleString()}</p>
+                  <span className="text-slate-700 font-semibold">Last Updated:</span>
+                  <p className="font-medium text-slate-900">
+                    {new Date(product.updatedAt).toLocaleString()}
+                  </p>
                 </div>
                 {product.verifiedAt && (
                   <div>
-                    <span className="text-slate-500">Verified:</span>
-                    <p className="font-medium">{new Date(product.verifiedAt).toLocaleString()}</p>
+                    <span className="text-slate-700 font-semibold">Verified:</span>
+                    <p className="font-medium text-slate-900">
+                      {new Date(product.verifiedAt).toLocaleString()}
+                    </p>
                   </div>
                 )}
               </CardContent>

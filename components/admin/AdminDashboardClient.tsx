@@ -146,7 +146,7 @@ export default function AdminDashboardClient({
           </CardHeader>
           <CardContent className="p-4 md:p-6">
             {allPendingProducts.length === 0 ? (
-              <p className="text-sm md:text-base text-slate-600 text-center py-6 md:py-8">
+              <p className="text-sm md:text-base text-slate-800 text-center py-6 md:py-8 font-medium">
                 No pending products
               </p>
             ) : (
@@ -160,10 +160,10 @@ export default function AdminDashboardClient({
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h3 className="font-semibold text-slate-900">{product.name}</h3>
-                        <p className="text-sm text-slate-600 mt-1">
+                        <p className="text-sm text-slate-800 mt-1 font-medium">
                           {product.seller.companyName} • {product.category.name}
                         </p>
-                        <p className="text-xs text-slate-500 mt-1">Submitted {product.createdAt}</p>
+                        <p className="text-xs text-slate-800 mt-1 font-medium">Submitted {product.createdAt}</p>
                       </div>
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-medium">
                         Pending
@@ -184,7 +184,7 @@ export default function AdminDashboardClient({
           </CardHeader>
           <CardContent>
             {allApprovedProducts.length === 0 ? (
-              <p className="text-slate-600 text-center py-8">No approved products</p>
+              <p className="text-slate-800 text-center py-8 font-medium">No approved products</p>
             ) : (
               <div className="space-y-3">
                 {allApprovedProducts.map((product) => (
@@ -196,10 +196,10 @@ export default function AdminDashboardClient({
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h3 className="font-semibold text-slate-900">{product.name}</h3>
-                        <p className="text-sm text-slate-600 mt-1">
+                        <p className="text-sm text-slate-800 mt-1 font-medium">
                           {product.seller.companyName} • {product.category.name}
                         </p>
-                        <p className="text-xs text-slate-500 mt-1">Submitted {product.createdAt}</p>
+                        <p className="text-xs text-slate-800 mt-1 font-medium">Submitted {product.createdAt}</p>
                       </div>
                       <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
                         Approved
@@ -220,7 +220,7 @@ export default function AdminDashboardClient({
           </CardHeader>
           <CardContent>
             {allRFQs.length === 0 ? (
-              <p className="text-slate-600 text-center py-8">No enquiries yet</p>
+              <p className="text-slate-800 text-center py-8 font-medium">No enquiries yet</p>
             ) : (
               <div className="space-y-4">
                 {allRFQs.map((rfq) => (
@@ -231,28 +231,30 @@ export default function AdminDashboardClient({
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <h3 className="font-semibold text-slate-900">{rfq.buyerName}</h3>
-                        <p className="text-sm text-slate-600">{rfq.buyerEmail}</p>
+                        <p className="text-sm text-slate-800 font-medium">{rfq.buyerEmail}</p>
                         {rfq.buyerCompany && (
-                          <p className="text-sm text-slate-500">
+                          <p className="text-sm text-slate-800 font-medium">
                             {rfq.buyerCompany}
                             {rfq.buyerCountry && ` • ${rfq.buyerCountry}`}
                           </p>
                         )}
                       </div>
-                      <span className="text-xs text-slate-500">{rfq.createdAt}</span>
+                      <span className="text-xs text-slate-800 font-medium">{rfq.createdAt}</span>
                     </div>
                     <div className="mb-2">
-                      <p className="text-sm font-medium text-slate-700">
+                      <p className="text-sm font-medium text-slate-900">
                         Product: {rfq.product.name}
                       </p>
-                      <p className="text-xs text-slate-600">
+                      <p className="text-xs text-slate-800 font-medium">
                         Seller: {rfq.product.seller.companyName}
                       </p>
                       {rfq.quantity && (
-                        <p className="text-sm text-slate-600">Quantity: {rfq.quantity}</p>
+                        <p className="text-sm text-slate-800 font-medium">
+                          Quantity: {rfq.quantity}
+                        </p>
                       )}
                     </div>
-                    <p className="text-sm text-slate-700 bg-slate-50 p-2 rounded">{rfq.message}</p>
+                    <p className="text-sm text-slate-900 bg-slate-50 p-2 rounded">{rfq.message}</p>
                   </div>
                 ))}
               </div>
@@ -268,7 +270,7 @@ export default function AdminDashboardClient({
           </CardHeader>
           <CardContent>
             {allSellers.length === 0 ? (
-              <p className="text-slate-600 text-center py-8">No sellers yet</p>
+              <p className="text-slate-800 text-center py-8 font-medium">No sellers yet</p>
             ) : (
               <div className="space-y-3">
                 {allSellers.map((seller) => (
@@ -279,9 +281,9 @@ export default function AdminDashboardClient({
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h3 className="font-semibold text-slate-900">{seller.companyName}</h3>
-                        <p className="text-sm text-slate-600">{seller.email}</p>
+                        <p className="text-sm text-slate-800 font-medium">{seller.email}</p>
                         {seller.city && seller.state && (
-                          <p className="text-sm text-slate-500">
+                          <p className="text-sm text-slate-800 font-medium">
                             {seller.city}, {seller.state}
                           </p>
                         )}

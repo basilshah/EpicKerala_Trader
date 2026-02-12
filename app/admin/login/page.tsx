@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
               <Shield className="w-8 h-8 text-red-600" />
             </div>
             <h2 className="text-3xl font-bold text-slate-900">Admin Portal</h2>
-            <p className="text-slate-600 mt-2">Sign in to access the admin dashboard</p>
+            <p className="text-slate-700 mt-2 font-medium">Sign in to access the admin dashboard</p>
           </div>
 
           {error && (
@@ -110,7 +110,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-700 font-medium">
               Admin access only. Unauthorized access is prohibited.
             </p>
           </div>
