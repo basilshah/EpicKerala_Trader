@@ -64,18 +64,18 @@ export function CategoryCard({ category, imageUrl }: CategoryCardProps) {
             {subcategories.slice(0, 3).map((child) => (
               <li
                 key={child.id}
-                className="flex items-center text-sm text-muted-foreground/80 before:content-['•'] before:mr-2 before:text-secondary"
+                className="flex items-center text-sm text-slate-700 font-medium before:content-['•'] before:mr-2 before:text-secondary"
               >
                 {child.name}
               </li>
             ))}
             {subcategories.length > 3 && (
-              <li className="flex items-center text-sm text-muted-foreground/80 before:content-['•'] before:mr-2 before:text-secondary">
+              <li className="flex items-center text-sm text-slate-700 font-medium before:content-['•'] before:mr-2 before:text-secondary">
                 +{subcategories.length - 3} more
               </li>
             )}
             {subcategories.length === 0 && (
-              <li className="text-sm text-muted-foreground/60 italic">Explore products inside</li>
+              <li className="text-sm text-slate-700 font-medium italic">Explore products inside</li>
             )}
           </ul>
           <div className="flex items-center text-sm font-semibold text-secondary group-hover:translate-x-1 transition-transform mt-auto">

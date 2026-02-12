@@ -144,22 +144,22 @@ export default async function SellerPage({ params }: SellerPageProps) {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <span className="block text-xs font-semibold text-slate-600 uppercase mb-1">
+                  <span className="block text-xs font-bold text-slate-700 uppercase mb-1">
                     Business Type
                   </span>
-                  <span className="font-medium capitalize">{seller.type}</span>
+                  <span className="font-semibold text-slate-900 capitalize">{seller.type}</span>
                 </div>
                 <div>
-                  <span className="block text-xs font-semibold text-slate-600 uppercase mb-1">
+                  <span className="block text-xs font-bold text-slate-700 uppercase mb-1">
                     Location
                   </span>
-                  <span>
+                  <span className="text-slate-900 font-medium">
                     {seller.city}, {seller.state}
                   </span>
                 </div>
                 {seller.certifications && (
                   <div>
-                    <span className="block text-xs font-semibold text-slate-600 uppercase mb-1">
+                    <span className="block text-xs font-bold text-slate-700 uppercase mb-1">
                       Certifications
                     </span>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -216,8 +216,8 @@ export default async function SellerPage({ params }: SellerPageProps) {
             </div>
 
             {seller.products.length === 0 && (
-              <div className="text-center py-12 bg-white rounded-lg border border-dashed text-slate-700 font-medium">
-                No listed products found.
+              <div className="text-center py-12 bg-white rounded-lg border border-dashed border-slate-300">
+                <p className="text-slate-700 font-medium">No listed products found.</p>
               </div>
             )}
           </div>

@@ -47,9 +47,9 @@ export function SellerCard({ seller }: SellerCardProps) {
 
           {/* Location */}
           {seller.city && seller.state && (
-            <div className="flex items-center gap-1 text-muted mb-4">
+            <div className="flex items-center gap-1 text-slate-700 mb-4">
               <MapPin className="w-4 h-4" />
-              <span className="text-sm">
+              <span className="text-sm font-medium">
                 {seller.city}, {seller.state}
               </span>
             </div>
@@ -59,7 +59,7 @@ export function SellerCard({ seller }: SellerCardProps) {
           <div className="flex items-center gap-4 mb-4 pb-4 border-b border-slate-100">
             <div>
               <p className="text-2xl font-bold text-secondary">{productCount}</p>
-              <p className="text-xs text-muted">Products</p>
+              <p className="text-xs text-slate-700 font-bold">Products</p>
             </div>
             {seller.offersOEM && (
               <Badge
@@ -74,7 +74,9 @@ export function SellerCard({ seller }: SellerCardProps) {
 
           {/* Description */}
           {seller.description && (
-            <p className="text-sm text-muted line-clamp-2 mb-4">{seller.description}</p>
+            <p className="text-sm text-slate-700 line-clamp-2 mb-4 font-medium">
+              {seller.description}
+            </p>
           )}
 
           <ViewDetailsLink text="View Profile" />
