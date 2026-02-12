@@ -63,7 +63,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         seller: true,
         category: true,
       },
-    });
+    }).catch(() => []);
     allProducts = [...allProducts, ...childProducts];
   }
 

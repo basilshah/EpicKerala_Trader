@@ -13,7 +13,7 @@ import { CategoryCard } from '@/components/cards/CategoryCard';
 export const dynamic = 'force-dynamic';
 
 export default async function CategoriesPage() {
-  // Fetch All Main Categories with Subcategories
+  // Fetch All Main Categories with Subcategories (with error handling)
   const categories = await prismaClient.category.findMany({
     where: { parentId: null },
     orderBy: { name: 'asc' },
@@ -30,7 +30,7 @@ export default async function CategoriesPage() {
         select: { products: true },
       },
     },
-  });
+  }).catch(() => []);
 
   // Calculate total products including subcategories
   const categoriesWithTotalCount = categories.map((category: any) => {

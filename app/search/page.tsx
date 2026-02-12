@@ -21,7 +21,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   let sellers: any[] = [];
 
   if (query) {
-    // Search categories
+    // Search categories (with error handling)
     categories = await prismaClient.category.findMany({
       where: {
         name: { contains: query },
@@ -33,9 +33,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         children: true,
       },
       take: 6,
-    });
+    }).catch(() => []);
 
-    // Search products
+    // Search products (with error handling)
     products = await prismaClient.product.findMany({
       where: {
         AND: [
@@ -50,9 +50,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         seller: true,
       },
       take: 9,
-    });
+    }).catch(() => []);
 
-    // Search sellers
+    // Search sellers (with error handling)
     sellers = await prismaClient.seller.findMany({
       where: {
         OR: [{ companyName: { contains: query } }, { description: { contains: query } }],
@@ -69,7 +69,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         },
       },
       take: 6,
-    });
+    }).catch(() => []);
   }
 
   const totalResults = categories.length + products.length + sellers.length;

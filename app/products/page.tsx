@@ -17,7 +17,7 @@ export default async function ProductsPage() {
       category: true,
     },
     orderBy: { createdAt: 'desc' },
-  });
+  }).catch(() => []);
 
   return (
     <div className="bg-background min-h-screen pb-20">

@@ -17,7 +17,7 @@ export const dynamic = 'force-dynamic';
 export default async function HomePage() {
   const session = await auth();
 
-  // 1. Fetch Categories
+  // 1. Fetch Categories (with error handling)
   const categories = await prismaClient.category.findMany({
     where: { parentId: null },
     orderBy: { name: 'asc' },
@@ -26,16 +26,16 @@ export default async function HomePage() {
       _count: { select: { products: true } },
       children: { take: 3 },
     },
-  });
+  }).catch(() => []);
 
-  // 2. Fetch Featured Sellers
+  // 2. Fetch Featured Sellers (with error handling)
   const verifiedSellers = await prismaClient.seller.findMany({
     where: { isVerified: true },
     take: 3,
     include: { _count: { select: { products: true } } },
-  });
+  }).catch(() => []);
 
-  // 3. Fetch Featured Products (Add this missing query)
+  // 3. Fetch Featured Products (with error handling)
   const featuredProducts = await prismaClient.product.findMany({
     where: {
       isPublic: true,
@@ -46,7 +46,7 @@ export default async function HomePage() {
       seller: true,
       category: true,
     },
-  });
+  }).catch(() => []);
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans selection:bg-secondary/30">

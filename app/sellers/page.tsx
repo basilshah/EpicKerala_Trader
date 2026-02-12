@@ -22,7 +22,7 @@ export default async function SellersPage() {
       },
     },
     orderBy: { isVerified: 'desc' },
-  });
+  }).catch(() => []);
 
   return (
     <div className="bg-background min-h-screen pb-20">
