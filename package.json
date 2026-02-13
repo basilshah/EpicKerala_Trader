@@ -11,7 +11,8 @@
     "admin:create": "tsx scripts/create-admin.ts",
     "admin:reset": "tsx scripts/reset-admin-password.ts",
     "seed:categories": "tsx scripts/seed-categories.ts",
-    "seed:exporter": "tsx scripts/create-exporter-demo.ts"
+    "seed:exporter": "tsx scripts/create-exporter-demo.ts",
+    "clean:images": "tsx scripts/remove-all-images.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -1,14 +1,9 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
-import { Card, CardContent } from '@/components/ui/Card';
-import { CategorySubLink } from '@/components/CategorySubLink';
-import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
-import { ProductCountBadge, SubcategoryBadge } from '@/components/ui/Badge';
-import { Package, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { Package } from 'lucide-react';
 import { CategoryCard } from '@/components/cards/CategoryCard';
+import { CATEGORY_IMAGES, FALLBACK_IMAGE } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,11 +56,8 @@ export default async function CategoriesPage() {
 
         {categoriesWithTotalCount.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
-            {categoriesWithTotalCount.map((category: any, index: number) => {
-              // Logic for index-based images from original code
-              let imageUrl = undefined;
-              if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
-              else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
+            {categoriesWithTotalCount.map((category: any) => {
+              const imageUrl = CATEGORY_IMAGES[category.slug] || FALLBACK_IMAGE;
 
               return (
                 <div key={category.id} className="h-full">

@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/Input';
 import { Separator } from '@/components/ui/Separator';
 import { Badge } from '@/components/ui/Badge';
 import { auth } from '@/lib/auth';
+import { CATEGORY_IMAGES, FALLBACK_IMAGE } from '@/lib/constants';
 import { Search, MapPin, ArrowRight, CheckCircle2, Globe, Package, Factory } from 'lucide-react';
 import { cn } from '@/lib/utils'; // Ensure cn is imported if used
 
@@ -161,11 +162,8 @@ export default async function HomePage() {
           {categories.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-                {categories.map((category, index) => {
-                  // Logic to match images from categories page
-                  let imageUrl = undefined;
-                  if (index === 0) imageUrl = '/cat_spices_1769688487625.png';
-                  else if (index === 2) imageUrl = '/cat_handicrafts_1769688509505.png';
+                {categories.map((category) => {
+                  const imageUrl = CATEGORY_IMAGES[category.slug] || FALLBACK_IMAGE;
 
                   return (
                     <div key={category.id} className="h-full">
