@@ -14,11 +14,11 @@ export function CTASection() {
           Join thousands of international buyers connecting with verified exporters on the official
           trade portal.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 sm:pt-4">
+        <div className="flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4">
           <Link href="/register/importer">
             <Button
               size="lg"
-              className="h-12 sm:h-14 px-8 sm:px-10 text-base sm:text-lg bg-secondary hover:bg-secondary/90 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all w-full sm:w-auto"
+              className="h-11 sm:h-14 px-5 sm:px-10 text-sm sm:text-lg bg-secondary hover:bg-secondary/90 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all shrink-0"
             >
               Get Started
             </Button>
@@ -27,7 +27,7 @@ export function CTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="h-12 sm:h-14 px-8 sm:px-10 text-base sm:text-lg border-white/30 text-white hover:bg-white hover:text-primary font-bold rounded-full bg-white/5 backdrop-blur-sm transition-all w-full sm:w-auto"
+              className="h-11 sm:h-14 px-5 sm:px-10 text-sm sm:text-lg border-white/30 text-white hover:bg-white hover:text-primary font-bold rounded-full bg-white/5 backdrop-blur-sm transition-all shrink-0"
             >
               Browse Products
             </Button>
