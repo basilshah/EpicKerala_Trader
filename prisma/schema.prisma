@@ -21,6 +21,7 @@ model Category {
   updatedAt   DateTime  @default(now()) @updatedAt
   
   @@index([slug])
+  @@index([parentId, name])
 }
 
 model Admin {
@@ -75,6 +76,8 @@ model Seller {
   updatedAt       DateTime @updatedAt
   
   products        Product[]
+  
+  @@index([isVerified])
 }
 
 model Importer {
@@ -132,6 +135,9 @@ model Product {
   updatedAt   DateTime @updatedAt
   
   rfqs        RFQ[]
+  
+  @@index([isPublic, verificationStatus])
+  @@index([categoryId])
 }
 
 model RFQ {

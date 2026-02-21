@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { BLUR_PLACEHOLDER } from '@/lib/image-utils';
 
 interface ProductImageCarouselProps {
   images: Array<{ url: string; filename: string }>;
@@ -40,11 +42,18 @@ export function ProductImageCarousel({
     <div className="space-y-4">
       {/* Main Image with Navigation */}
       <div className="relative group">
-        <div className="h-64 md:h-80 bg-accent overflow-hidden">
-          <img
+        <div className="relative h-64 md:h-80 bg-accent overflow-hidden">
+          <Image
             src={images[currentIndex].url}
             alt={`${productName} - Image ${currentIndex + 1}`}
-            className="w-full h-full object-cover transition-opacity duration-300"
+            fill
+            priority={currentIndex === 0}
+            loading={currentIndex === 0 ? undefined : 'lazy'}
+            placeholder="blur"
+            blurDataURL={BLUR_PLACEHOLDER}
+            quality={88}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-opacity duration-300"
           />
         </div>
 
@@ -90,10 +99,16 @@ export function ProductImageCarousel({
                   : 'border-border hover:border-secondary/50'
               )}
             >
-              <img
+              <Image
                 src={image.url}
                 alt={`${productName} - Thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
+                fill
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
+                quality={70}
+                sizes="120px"
+                className="object-cover"
               />
             </button>
           ))}

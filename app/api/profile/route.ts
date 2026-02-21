@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { auth } from '@/lib/auth';
 import prismaClient from '@/lib/prisma';
+import { CACHE_TAGS } from '@/lib/home/getHomePageData';
 
 export async function PUT(request: NextRequest) {
   try {
@@ -45,6 +47,7 @@ export async function PUT(request: NextRequest) {
       },
     });
 
+    revalidateTag(CACHE_TAGS.sellers, 'max');
     return NextResponse.json({
       message: 'Profile updated successfully',
       seller: updatedSeller,

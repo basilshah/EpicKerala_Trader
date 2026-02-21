@@ -48,7 +48,7 @@ export default async function CategoriesPage() {
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary mb-3 md:mb-4">
             Explore All Categories
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground">
+          <p className="text-base md:text-lg text-slate-600">
             Browse our comprehensive directory of verified Kerala exporters across major industries.
           </p>
         </div>
@@ -66,8 +66,8 @@ export default async function CategoriesPage() {
         ) : (
           <div className="text-center py-20 px-4">
             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground mb-2">No categories available yet</p>
-            <p className="text-sm text-muted-foreground">Categories will be added soon</p>
+            <p className="text-lg text-slate-600 mb-2">No categories available yet</p>
+            <p className="text-sm text-slate-600">Categories will be added soon</p>
           </div>
         )}
       </Container>

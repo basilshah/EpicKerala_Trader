@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import prismaClient from '@/lib/prisma';
 import { adminAuth } from '@/lib/admin-auth';
+import { CACHE_TAGS } from '@/lib/home/getHomePageData';
 
 // GET all categories
 export async function GET(request: NextRequest) {
@@ -67,6 +69,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    revalidateTag(CACHE_TAGS.categories, 'max');
     return NextResponse.json(category, { status: 201 });
   } catch (error: any) {
     console.error('Error creating category:', error);

@@ -27,7 +27,7 @@ export default function Error({
 
           <h1 className="text-2xl font-bold text-primary mb-2">Something went wrong!</h1>
 
-          <p className="text-muted-foreground mb-6">
+          <p className="text-slate-600 mb-6">
             {error.message || 'An unexpected error occurred. Please try again.'}
           </p>
 

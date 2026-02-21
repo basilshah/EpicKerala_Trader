@@ -40,7 +40,7 @@ export default function Navbar() {
                 pathname === link.href ||
                   (link.href !== '/' && pathname?.startsWith(link.href.replace(/s$/, ''))) // Handle singular/plural rough match
                   ? 'text-primary font-semibold'
-                  : 'text-muted-foreground hover:text-primary'
+                  : 'text-slate-600 hover:text-primary'
               )}
             >
               {link.name}
@@ -62,7 +62,7 @@ export default function Navbar() {
               <Button
                 variant="outline"
                 onClick={() => signOut({ callbackUrl: '/' })}
-                className="gap-2 border-slate-200 text-muted-foreground hover:text-red-500 hover:border-red-100 hover:bg-red-50"
+                className="gap-2 border-slate-200 text-slate-600 hover:text-red-500 hover:border-red-100 hover:bg-red-50"
               >
                 <LogOut className="w-4 h-4" />
                 Sign Out

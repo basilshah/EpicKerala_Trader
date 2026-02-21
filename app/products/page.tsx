@@ -27,7 +27,7 @@ export default async function ProductsPage() {
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-primary mb-3">All Products</h1>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-slate-600">
             {products.length} products available from verified exporters
           </p>
         </div>
@@ -42,7 +42,7 @@ export default async function ProductsPage() {
         ) : (
           <div className="text-center py-20">
             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground">No products found</p>
+            <p className="text-lg text-slate-600">No products found</p>
           </div>
         )}
       </Container>

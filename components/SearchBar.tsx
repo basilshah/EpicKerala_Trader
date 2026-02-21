@@ -125,13 +125,13 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
               setTimeout(() => setIsFocused(false), 200);
             }}
             placeholder="Search products, categories, or exporters..."
-            className="w-full h-12 px-5 pr-10 rounded-l-md text-foreground bg-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary border-0"
+            className="w-full h-12 px-5 pr-10 rounded-l-md text-foreground bg-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-secondary border-0"
           />
           {isLoading ? (
             <button
               type="button"
               onClick={clearSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
             >
               <Loader2 className="w-4 h-4 animate-spin" />
             </button>
@@ -139,7 +139,7 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
             <button
               type="button"
               onClick={clearSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-foreground"
             >
               <X className="w-4 h-4" />
             </button>
@@ -166,12 +166,12 @@ export function SearchBar({ initialQuery = '' }: SearchBarProps) {
                   className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center justify-between group"
                 >
                   <div className="flex items-center gap-3">
-                    <Search className="w-4 h-4 text-muted" />
+                    <Search className="w-4 h-4 text-slate-500" />
                     <span className="text-foreground group-hover:text-primary font-medium">
                       {suggestion.name}
                     </span>
                   </div>
-                  <span className="text-xs text-muted bg-slate-100 px-2 py-1 rounded-full">
+                  <span className="text-xs text-slate-600 bg-slate-100 px-2 py-1 rounded-full">
                     {getTypeLabel(suggestion.type)}
                   </span>
                 </button>

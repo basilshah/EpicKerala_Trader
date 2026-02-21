@@ -14,7 +14,7 @@ export default function RegisterPage() {
             <h1 className="text-3xl md:text-4xl font-bold text-primary mb-3 md:mb-4">
               Register as Exporter
             </h1>
-            <p className="text-base md:text-lg text-muted max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-slate-700 max-w-2xl mx-auto">
               Join Kerala's premier export platform and connect with global buyers. Get verified and
               showcase your products to international markets.
             </p>
@@ -24,14 +24,14 @@ export default function RegisterPage() {
           <Card className="border-slate-200">
             <CardHeader className="p-4 md:p-6">
               <CardTitle className="text-xl md:text-2xl">Company Information</CardTitle>
-              <p className="text-xs md:text-sm text-muted mt-2">
+              <p className="text-xs md:text-sm text-slate-600 mt-2">
                 Fill in your company details to get started. All fields marked with * are required.
               </p>
             </CardHeader>
             <CardContent className="p-4 md:p-6">
               <RegisterForm />
 
-              <div className="mt-6 text-center text-sm text-muted-foreground">
+              <div className="mt-6 text-center text-sm text-slate-600">
                 Looking to buy products?{' '}
                 <Link
                   href="/register/importer"

@@ -1,5 +1,5 @@
-import { PageLoader } from '@/components/ui/LoadingStates';
+import { HomePageSkeleton } from '@/components/organisms/home/HomePageSkeleton';
 
 export default function Loading() {
-  return <PageLoader />;
+  return <HomePageSkeleton />;
 }

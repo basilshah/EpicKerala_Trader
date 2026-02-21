@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import prismaClient from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { CACHE_TAGS } from '@/lib/home/getHomePageData';
 
 function slugify(text: string): string {
   return text
@@ -96,6 +98,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    revalidateTag(CACHE_TAGS.sellers, 'max');
     return NextResponse.json({
       success: true,
       slug: seller.slug,

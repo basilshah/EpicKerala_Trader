@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { Globe, Search } from 'lucide-react';
@@ -6,35 +5,49 @@ import { Globe, Search } from 'lucide-react';
 export function HeroSection() {
   return (
     <section className="w-full relative overflow-hidden min-h-[480px] sm:min-h-[560px] lg:min-h-[650px] flex items-center">
-      {/* Background Image */}
+
+      {/* ── Background: native <picture> for responsive image swap ── */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/kerala_hero_bg.png"
-          alt="Kerala Spice Plantation"
-          fill
-          className="object-cover object-center"
-          priority
-          sizes="100vw"
-        />
-        {/* Gradient overlay — deep green (primary) left, slightly transparent right, blends with gold accent */}
+        <picture className="absolute inset-0 w-full h-full">
+          {/* Desktop ≥ 768px → use desktop image, focussed on the top (plantation panorama) */}
+          <source
+            media="(min-width: 768px)"
+            srcSet="/kerala_hero_desktop.png" 
+          />
+          {/* Mobile < 768px → use the square portrait image, focussed on the bottom (spice sacks) */}
+          <source
+            media="(max-width: 767px)"
+            srcSet="/kerala_hero_bg.png"
+          />
+          {/* Fallback img — always present, hidden visually but carries the src */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/kerala_hero_desktop.png"
+            alt="Kerala Spice Plantation"
+            className="absolute inset-0 w-full h-full object-cover md:object-[center_40%] object-[center_60%]"
+            style={{ imageRendering: 'auto' }}
+          />
+        </picture>
+
+        {/* Gradient overlay — deep green on the left for text readability */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(105deg, rgba(31,61,43,0.88) 0%, rgba(31,61,43,0.75) 45%, rgba(31,61,43,0.45) 70%, rgba(31,61,43,0.15) 100%)',
+              'linear-gradient(105deg, rgba(31,61,43,0.92) 0%, rgba(31,61,43,0.78) 40%, rgba(31,61,43,0.45) 65%, rgba(31,61,43,0.10) 100%)',
           }}
         />
-        {/* Subtle gold shimmer at top */}
+        {/* Subtle gold shimmer at the very top */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(201,163,74,0.07) 0%, transparent 40%)',
+              'linear-gradient(to bottom, rgba(201,163,74,0.08) 0%, transparent 35%)',
           }}
         />
       </div>
 
-      {/* Content */}
+      {/* ── Content ── */}
       <div className="container-custom relative z-10 py-12 sm:py-16 lg:py-24 w-full min-w-0">
         <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-in slide-in-from-left duration-700 fade-in min-w-0 overflow-hidden max-w-2xl">
           <div className="space-y-2 sm:space-y-4">
@@ -48,9 +61,8 @@ export function HeroSection() {
 
             <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
               Connecting Global Buyers to{' '}
-              <span className="text-secondary relative">
+              <span className="text-secondary">
                 Kerala&apos;s Finest
-                <span className="absolute bottom-1 left-0 w-full h-2 bg-secondary/20 -z-10 rounded-sm" />
               </span>{' '}
               Export Products
             </h1>

@@ -77,8 +77,8 @@ export function FeaturedExportersSection({ sellers }: FeaturedExportersSectionPr
         ) : (
           <div className="text-center py-10 sm:py-16">
             <Factory className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground mb-2">No exporters registered yet</p>
-            <p className="text-sm text-muted-foreground">Manufacturers will be joining soon</p>
+            <p className="text-lg text-slate-700 mb-2">No exporters registered yet</p>
+            <p className="text-sm text-slate-600">Manufacturers will be joining soon</p>
           </div>
         )}
       </div>

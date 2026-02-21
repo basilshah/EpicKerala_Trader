@@ -20,7 +20,7 @@ export function SectionHeader({
     return (
       <div className={cn('text-center max-w-3xl mx-auto mb-16', className)}>
         <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">{title}</h2>
-        {description ? <p className="text-sm sm:text-base md:text-lg text-muted-foreground">{description}</p> : null}
+        {description ? <p className="text-sm sm:text-base md:text-lg text-slate-600">{description}</p> : null}
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function SectionHeader({
     <div className={cn('flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-12 gap-2 sm:gap-4', className)}>
       <div>
         <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-primary mb-1 sm:mb-3">{title}</h2>
-        {description ? <p className="text-sm sm:text-base md:text-lg text-muted-foreground">{description}</p> : null}
+        {description ? <p className="text-sm sm:text-base md:text-lg text-slate-600">{description}</p> : null}
       </div>
       {action}
     </div>

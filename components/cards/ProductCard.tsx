@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/Card';
 import { ViewDetailsLink } from '@/components/ui/ViewDetailsLink';
 import { VerifiedBadge, Badge, CategoryBadge } from '@/components/ui/Badge';
 import { Factory, MapPin, BadgeCheck } from 'lucide-react';
+import { BLUR_PLACEHOLDER } from '@/lib/image-utils';
 
 interface Product {
   id: string;
@@ -32,9 +34,11 @@ interface ProductCardProps {
   showSeller?: boolean;
   /** When true (carousel context), allows vertical page scroll while touching the card */
   allowVerticalScroll?: boolean;
+  /** When true, loads image with priority (e.g. first cards above the fold) */
+  priority?: boolean;
 }
 
-export function ProductCard({ product, showSeller = true, allowVerticalScroll = false }: ProductCardProps) {
+export function ProductCard({ product, showSeller = true, allowVerticalScroll = false, priority = false }: ProductCardProps) {
   // Parse product images
   let firstImage = null;
   if (product.images) {
@@ -57,10 +61,17 @@ export function ProductCard({ product, showSeller = true, allowVerticalScroll = 
         {/* Product Image */}
         <div className="h-48 sm:h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
           {firstImage ? (
-            <img
+            <Image
               src={firstImage}
               alt={product.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              fill
+              priority={priority}
+              loading={priority ? undefined : 'lazy'}
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
+              quality={82}
+              sizes="(max-width: 640px) 85vw, (max-width: 1024px) 75vw, 25vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
             <Factory className="w-16 h-16 text-slate-300" />

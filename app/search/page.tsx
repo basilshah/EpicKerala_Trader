@@ -94,7 +94,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         {!query ? (
           <div className="text-center py-20">
             <Search className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted">
+            <p className="text-lg text-slate-700">
               Enter a search term to find products, categories, or exporters
             </p>
           </div>
@@ -102,15 +102,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <div className="text-center py-20">
             <Search className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-foreground mb-2">No Results Found</h2>
-            <p className="text-muted">
+            <p className="text-slate-700">
               No results found for &quot;<span className="font-semibold">{query}</span>&quot;
             </p>
-            <p className="text-sm text-muted mt-2">Try searching with different keywords</p>
+            <p className="text-sm text-slate-600 mt-2">Try searching with different keywords</p>
           </div>
         ) : (
           <div className="space-y-12">
             <div className="text-center">
-              <p className="text-muted">
+              <p className="text-slate-700">
                 Found <span className="font-bold text-foreground">{totalResults} results</span> for
                 &quot;<span className="font-semibold text-foreground">{query}</span>&quot;
               </p>

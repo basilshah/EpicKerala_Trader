@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import prismaClient from '@/lib/prisma';
 import { adminAuth } from '@/lib/admin-auth';
+import { CACHE_TAGS } from '@/lib/home/getHomePageData';
 
 // GET single category
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -73,6 +75,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       },
     });
 
+    revalidateTag(CACHE_TAGS.categories, 'max');
     return NextResponse.json(category);
   } catch (error: any) {
     console.error('Error updating category:', error);
@@ -126,6 +129,7 @@ export async function DELETE(
       where: { id },
     });
 
+    revalidateTag(CACHE_TAGS.categories, 'max');
     return NextResponse.json({ message: 'Category deleted successfully' });
   } catch (error: any) {
     console.error('Error deleting category:', error);

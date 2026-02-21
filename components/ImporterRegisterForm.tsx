@@ -259,7 +259,7 @@ export function ImporterRegisterForm() {
         )}
       </Button>
 
-      <div className="text-center text-sm text-muted-foreground">
+      <div className="text-center text-sm text-slate-600">
         Already have an account?{' '}
         <Link href="/signin" className="text-primary hover:underline font-medium">
           Sign In

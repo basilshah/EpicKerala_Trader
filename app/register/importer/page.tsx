@@ -14,7 +14,7 @@ export default function ImporterRegisterPage() {
             <h1 className="text-3xl md:text-4xl font-bold text-primary mb-3 md:mb-4">
               Register as Importer/Buyer
             </h1>
-            <p className="text-base md:text-lg text-muted max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-slate-700 max-w-2xl mx-auto">
               Create a free account to access product details, contact exporters, and submit RFQs.
             </p>
           </div>
@@ -26,14 +26,14 @@ export default function ImporterRegisterPage() {
                 <ShoppingCart className="h-6 w-6" />
                 Create Your Account
               </CardTitle>
-              <p className="text-xs md:text-sm text-muted mt-2">
+              <p className="text-xs md:text-sm text-slate-600 mt-2">
                 Quick and easy registration. Fields marked with * are required.
               </p>
             </CardHeader>
             <CardContent className="p-4 md:p-6">
               <ImporterRegisterForm />
 
-              <div className="mt-6 text-center text-sm text-muted-foreground">
+              <div className="mt-6 text-center text-sm text-slate-600">
                 Are you an exporter?{' '}
                 <Link href="/register" className="text-primary hover:underline font-medium">
                   Register as Exporter

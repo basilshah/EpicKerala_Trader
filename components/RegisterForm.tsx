@@ -197,10 +197,10 @@ export function RegisterForm() {
       <div className="text-center py-12">
         <CheckCircle className="w-16 h-16 text-secondary mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-foreground mb-2">Registration Successful!</h2>
-        <p className="text-muted mb-4">
+        <p className="text-slate-700 mb-4">
           Your profile has been created. Our team will review and verify your account shortly.
         </p>
-        <p className="text-sm text-muted">Redirecting to your profile...</p>
+        <p className="text-sm text-slate-600">Redirecting to your profile...</p>
       </div>
     );
   }
@@ -231,7 +231,7 @@ export function RegisterForm() {
               </div>
               <span
                 className={`hidden md:block text-xs mt-2 font-medium text-center whitespace-nowrap ${
-                  currentStep >= step.id ? 'text-secondary' : 'text-muted'
+                  currentStep >= step.id ? 'text-secondary' : 'text-slate-500'
                 }`}
               >
                 {step.title}
@@ -267,7 +267,7 @@ export function RegisterForm() {
               <h3 className="text-lg font-semibold text-foreground">
                 Account & Contact Information
               </h3>
-              <p className="text-sm text-muted mt-1">
+              <p className="text-sm text-slate-600 mt-1">
                 Create your login credentials and provide contact details
               </p>
             </div>
@@ -283,7 +283,7 @@ export function RegisterForm() {
                 placeholder="company@example.com"
               />
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-              <p className="text-xs text-muted mt-1">You'll use this email to sign in</p>
+              <p className="text-xs text-slate-600 mt-1">You'll use this email to sign in</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -356,7 +356,7 @@ export function RegisterForm() {
           <div className="space-y-4 animate-in fade-in duration-300">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Company Details</h3>
-              <p className="text-sm text-muted mt-1">Tell us about your business</p>
+              <p className="text-sm text-slate-600 mt-1">Tell us about your business</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -441,7 +441,7 @@ export function RegisterForm() {
           <div className="space-y-4 animate-in fade-in duration-300">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Address Details</h3>
-              <p className="text-sm text-muted mt-1">Where is your business located?</p>
+              <p className="text-sm text-slate-600 mt-1">Where is your business located?</p>
             </div>
 
             <div>
@@ -505,7 +505,7 @@ export function RegisterForm() {
           <div className="space-y-4 animate-in fade-in duration-300">
             <div>
               <h3 className="text-lg font-semibold text-foreground">Additional Information</h3>
-              <p className="text-sm text-muted mt-1">
+              <p className="text-sm text-slate-600 mt-1">
                 Help buyers know more about your capabilities
               </p>
             </div>
@@ -600,7 +600,7 @@ export function RegisterForm() {
         </div>
 
         {currentStep === STEPS.length && (
-          <p className="text-xs text-muted text-center mt-4">
+          <p className="text-xs text-slate-600 text-center mt-4">
             By registering, you agree to our Terms of Service and Privacy Policy. Your information
             will be reviewed by our team for verification.
           </p>

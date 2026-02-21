@@ -102,13 +102,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
                     <div className="flex flex-col">
-                      <span className="text-xs font-medium text-muted-foreground uppercase">
+                      <span className="text-xs font-medium text-slate-600 uppercase">
                         HS Code
                       </span>
                       <span className="font-mono text-foreground">{product.hsCode || 'N/A'}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-medium text-muted-foreground uppercase">
+                      <span className="text-xs font-medium text-slate-600 uppercase">
                         Minimum Order Quantity (MOQ)
                       </span>
                       <span className="font-medium text-foreground">
@@ -116,19 +116,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-medium text-muted-foreground uppercase">
+                      <span className="text-xs font-medium text-slate-600 uppercase">
                         Shelf Life
                       </span>
                       <span className="font-medium text-foreground flex items-center gap-2">
-                        <Calendar className="w-3 h-3 text-muted" /> {product.shelfLife || 'N/A'}
+                        <Calendar className="w-3 h-3 text-slate-500" /> {product.shelfLife || 'N/A'}
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-medium text-muted-foreground uppercase">
+                      <span className="text-xs font-medium text-slate-600 uppercase">
                         Origin
                       </span>
                       <span className="font-medium text-foreground flex items-center gap-2">
-                        <Globe className="w-3 h-3 text-muted" /> {product.origin}
+                        <Globe className="w-3 h-3 text-slate-500" /> {product.origin}
                       </span>
                     </div>
                   </div>
@@ -157,7 +157,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                               <span className="text-sm font-medium text-foreground group-hover:text-secondary block">
                                 {catalog.filename}
                               </span>
-                              <span className="text-xs text-muted">
+                              <span className="text-xs text-slate-500">
                                 {catalog.type === 'application/pdf' ? 'PDF Document' : 'Image File'}
                               </span>
                             </div>
@@ -192,7 +192,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       {product.seller.companyName}
                     </Link>
                   </h3>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs text-slate-600">
                     <span className="uppercase font-semibold bg-accent px-1.5 py-0.5 rounded">
                       {product.seller.type}
                     </span>
@@ -202,7 +202,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                 </div>
 
-                <div className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                <div className="text-sm text-slate-600 mb-4 line-clamp-3">
                   {product.seller.description}
                 </div>
 

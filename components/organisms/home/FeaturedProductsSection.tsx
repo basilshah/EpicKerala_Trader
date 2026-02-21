@@ -58,9 +58,9 @@ export function FeaturedProductsSection({ products }: FeaturedProductsSectionPro
               className="md:hidden flex gap-4 overflow-x-auto overflow-y-hidden pb-2 -mx-3 sm:-mx-4 px-3 sm:px-4 snap-x snap-mandatory overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
             >
-              {products.map((product) => (
+              {products.map((product, i) => (
                 <div key={product.id} className="flex-[0_0_85%] sm:flex-[0_0_75%] min-w-0 snap-start">
-                  <ProductCard product={product} allowVerticalScroll />
+                  <ProductCard product={product} allowVerticalScroll priority={i < 2} />
                 </div>
               ))}
               <Link
@@ -75,16 +75,16 @@ export function FeaturedProductsSection({ products }: FeaturedProductsSectionPro
 
             {/* Desktop: grid */}
             <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {products.map((product, i) => (
+                <ProductCard key={product.id} product={product} priority={i < 4} />
               ))}
             </div>
           </>
         ) : (
           <div className="text-center py-10 sm:py-16">
             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground mb-2">No products available yet</p>
-            <p className="text-sm text-muted-foreground">Exporters will be adding products soon</p>
+            <p className="text-lg text-slate-700 mb-2">No products available yet</p>
+            <p className="text-sm text-slate-600">Exporters will be adding products soon</p>
           </div>
         )}
       </div>

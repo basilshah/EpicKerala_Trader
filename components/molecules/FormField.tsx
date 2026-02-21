@@ -17,7 +17,7 @@ export function FormField({ label, error, required, helperText, children }: Form
         {required ? <span className="text-red-500 ml-1">*</span> : null}
       </label>
       {children}
-      {helperText ? <p className="text-xs text-muted-foreground mt-1">{helperText}</p> : null}
+      {helperText ? <p className="text-xs text-slate-600 mt-1">{helperText}</p> : null}
       <FieldError message={error} />
     </div>
   );

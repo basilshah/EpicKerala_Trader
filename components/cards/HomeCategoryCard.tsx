@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Package } from 'lucide-react';
+import { BLUR_PLACEHOLDER } from '@/lib/image-utils';
 
 interface HomeCategoryCardProps {
   category: {
@@ -21,6 +22,10 @@ export function HomeCategoryCard({ category, imageUrl }: HomeCategoryCardProps) 
               src={imageUrl}
               alt={category.name}
               fill
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
+              quality={82}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />

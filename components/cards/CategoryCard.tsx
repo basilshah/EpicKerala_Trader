@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/Card';
+import { BLUR_PLACEHOLDER } from '@/lib/image-utils';
 import { Badge } from '@/components/ui/Badge';
 import { Package, ArrowRight } from 'lucide-react';
 
@@ -38,7 +39,12 @@ export function CategoryCard({ category, imageUrl }: CategoryCardProps) {
                 src={imageUrl}
                 alt={category.name}
                 fill
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
+                quality={82}
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </>

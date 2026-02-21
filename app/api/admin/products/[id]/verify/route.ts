@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { adminAuth } from '@/lib/admin-auth';
 import prismaClient from '@/lib/prisma';
+import { CACHE_TAGS } from '@/lib/home/getHomePageData';
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -37,6 +39,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       },
     });
 
+    revalidateTag(CACHE_TAGS.products, 'max');
     return NextResponse.json({
       message: 'Product verification updated successfully',
       product,

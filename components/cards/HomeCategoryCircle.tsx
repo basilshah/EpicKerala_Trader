@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Package } from 'lucide-react';
+import { BLUR_PLACEHOLDER } from '@/lib/image-utils';
 
 interface HomeCategoryCircleProps {
   category: {
@@ -9,9 +10,11 @@ interface HomeCategoryCircleProps {
     slug: string;
   };
   imageUrl?: string;
+  /** When true, loads image with priority (e.g. first circles visible without scroll) */
+  priority?: boolean;
 }
 
-export function HomeCategoryCircle({ category, imageUrl }: HomeCategoryCircleProps) {
+export function HomeCategoryCircle({ category, imageUrl, priority = false }: HomeCategoryCircleProps) {
   return (
     <Link
       href={`/category/${category.slug}`}
@@ -24,6 +27,12 @@ export function HomeCategoryCircle({ category, imageUrl }: HomeCategoryCirclePro
             alt={category.name}
             width={80}
             height={80}
+            priority={priority}
+            loading={priority ? undefined : 'lazy'}
+            placeholder="blur"
+            blurDataURL={BLUR_PLACEHOLDER}
+            quality={80}
+            sizes="(max-width: 640px) 56px, 80px"
             className="w-full h-full object-cover"
           />
         ) : (

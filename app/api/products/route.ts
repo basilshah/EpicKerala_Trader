@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { auth } from '@/lib/auth';
 import prismaClient from '@/lib/prisma';
+import { CACHE_TAGS } from '@/lib/home/getHomePageData';
 
 function slugify(text: string): string {
   return text
@@ -69,6 +71,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    revalidateTag(CACHE_TAGS.products, 'max');
     return NextResponse.json({
       message: 'Product created successfully',
       product,

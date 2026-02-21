@@ -29,7 +29,7 @@ export default async function SellersPage() {
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-3">Kerala Exporters</h1>
-          <p className="text-base sm:text-lg text-muted-foreground">
+          <p className="text-base sm:text-lg text-slate-600">
             {sellers.length} verified manufacturers and exporters
           </p>
         </div>
@@ -44,7 +44,7 @@ export default async function SellersPage() {
         ) : (
           <div className="text-center py-20">
             <Factory className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <p className="text-lg text-muted-foreground">No exporters found</p>
+            <p className="text-lg text-slate-600">No exporters found</p>
           </div>
         )}
       </Container>

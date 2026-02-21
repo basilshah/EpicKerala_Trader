@@ -78,7 +78,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {/* Left: Text Content */}
             <div className="p-6 sm:p-8 flex flex-col justify-center">
               <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-4">{category.name}</h1>
-              <p className="text-base text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-base text-slate-600 mb-6 leading-relaxed">
                 Explore Kerala's premium {category.name.toLowerCase()} exports including{' '}
                 {category.children.length > 0
                   ? category.children
@@ -91,14 +91,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="flex items-center gap-4 sm:gap-6">
                 <div>
                   <p className="text-3xl font-bold text-secondary">{allProducts.length}</p>
-                  <p className="text-sm text-muted-foreground">Products</p>
+                  <p className="text-sm text-slate-600">Products</p>
                 </div>
                 <div className="h-12 w-px bg-border"></div>
                 <div>
                   <p className="text-3xl font-bold text-secondary">
                     {new Set(allProducts.map((p) => p.sellerId)).size}
                   </p>
-                  <p className="text-sm text-muted-foreground">Verified Exporters</p>
+                  <p className="text-sm text-slate-600">Verified Exporters</p>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="text-center py-16 bg-white rounded-lg border border-dashed">
             <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">No Products Found</h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-slate-600 mb-6">
               There are currently no products listed in this category.
             </p>
             <Link href="/categories">

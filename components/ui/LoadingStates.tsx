@@ -5,7 +5,7 @@ export function PageLoader() {
     <div className="min-h-[60vh] flex items-center justify-center">
       <div className="text-center">
         <Spinner size="lg" className="text-primary mb-4" />
-        <p className="text-muted text-sm">Loading...</p>
+        <p className="text-slate-600 text-sm">Loading...</p>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export const colorPalette = {
       underline: 'bg-primary',
     },
     inactive: {
-      text: 'text-muted',
+      text: 'text-slate-600',
       hover: 'hover:text-foreground',
     },
     signOut: {
