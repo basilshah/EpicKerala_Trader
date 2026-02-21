@@ -6,11 +6,18 @@ const prisma = new PrismaClient();
 
 async function createAdmin() {
   try {
-    // Get admin details from environment variables or use defaults
+    // Get admin details from environment variables
     const email = process.env.ADMIN_EMAIL;
     const password = process.env.ADMIN_PASSWORD;
     const name = process.env.ADMIN_NAME;
     const role = process.env.ADMIN_ROLE;
+
+    if (!email || !password || !name || !role) {
+      console.error(
+        'Missing required environment variables: ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME, ADMIN_ROLE'
+      );
+      process.exit(1);
+    }
 
     console.log('Creating admin user...');
     console.log('Email:', email);
