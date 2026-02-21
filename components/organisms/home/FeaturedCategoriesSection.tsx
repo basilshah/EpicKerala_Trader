@@ -17,13 +17,13 @@ interface FeaturedCategoriesSectionProps {
 
 export function FeaturedCategoriesSection({ categories }: FeaturedCategoriesSectionProps) {
   return (
-    <section className="py-6 sm:py-10 bg-slate-50/50 border-t border-border/40">
+    <section className="py-4 sm:py-8 lg:py-10 bg-slate-50/50 border-t border-border/40">
       <div className="container-custom">
-        <h2 className="text-base sm:text-lg font-semibold text-primary mb-4">Category</h2>
+        <h2 className="text-base sm:text-lg font-semibold text-primary mb-3 sm:mb-4">Category</h2>
 
         {categories.length > 0 ? (
           <div
-            className="flex items-start gap-5 sm:gap-8 overflow-x-auto overflow-y-hidden pb-2 -mx-3 sm:-mx-4 md:-mx-8 px-3 sm:px-4 md:px-8 overscroll-contain [scrollbar-width:none] sm:[scrollbar-width:thin] sm:[scrollbar-color:theme(colors.slate.300)_transparent] [&::-webkit-scrollbar]:hidden sm:[&::-webkit-scrollbar]:block sm:[&::-webkit-scrollbar]:h-1.5 sm:[&::-webkit-scrollbar-track]:bg-transparent sm:[&::-webkit-scrollbar-thumb]:rounded-full sm:[&::-webkit-scrollbar-thumb]:bg-slate-200"
+            className="flex items-start gap-5 sm:gap-8 overflow-x-auto overflow-y-hidden pb-2 -mx-3 sm:-mx-4 md:-mx-8 px-3 sm:px-4 md:px-8 overscroll-x-contain overscroll-y-auto touch-pan-x [scrollbar-width:none] sm:[scrollbar-width:thin] sm:[scrollbar-color:theme(colors.slate.300)_transparent] [&::-webkit-scrollbar]:hidden sm:[&::-webkit-scrollbar]:block sm:[&::-webkit-scrollbar]:h-1.5 sm:[&::-webkit-scrollbar-track]:bg-transparent sm:[&::-webkit-scrollbar-thumb]:rounded-full sm:[&::-webkit-scrollbar-thumb]:bg-slate-200"
             style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
           >
             {categories.map((category) => (

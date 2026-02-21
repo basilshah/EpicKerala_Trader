@@ -30,9 +30,11 @@ interface Product {
 interface ProductCardProps {
   product: Product;
   showSeller?: boolean;
+  /** When true (carousel context), allows vertical page scroll while touching the card */
+  allowVerticalScroll?: boolean;
 }
 
-export function ProductCard({ product, showSeller = true }: ProductCardProps) {
+export function ProductCard({ product, showSeller = true, allowVerticalScroll = false }: ProductCardProps) {
   // Parse product images
   let firstImage = null;
   if (product.images) {
@@ -47,7 +49,10 @@ export function ProductCard({ product, showSeller = true }: ProductCardProps) {
   }
 
   return (
-    <Link href={`/product/${product.slug}`}>
+    <Link
+      href={`/product/${product.slug}`}
+      style={allowVerticalScroll ? ({ touchAction: 'pan-y' } as React.CSSProperties) : undefined}
+    >
       <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
         {/* Product Image */}
         <div className="h-48 sm:h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">

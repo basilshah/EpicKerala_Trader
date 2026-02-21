@@ -21,13 +21,17 @@ interface Seller {
 
 interface SellerCardProps {
   seller: Seller;
+  allowVerticalScroll?: boolean;
 }
 
-export function SellerCard({ seller }: SellerCardProps) {
+export function SellerCard({ seller, allowVerticalScroll = false }: SellerCardProps) {
   const productCount = seller._count?.products || 0;
 
   return (
-    <Link href={`/seller/${seller.slug}`}>
+    <Link
+      href={`/seller/${seller.slug}`}
+      style={allowVerticalScroll ? ({ touchAction: 'pan-y' } as React.CSSProperties) : undefined}
+    >
       <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
         {/* Header Section */}
         <div className="relative h-32 bg-gradient-to-br from-primary to-secondary p-6">

@@ -5,21 +5,21 @@ import { Globe, Search } from 'lucide-react';
 
 export function HeroSection() {
   return (
-    <section className="w-full py-12 sm:py-16 lg:py-24 bg-white relative overflow-hidden">
+    <section className="w-full py-6 sm:py-12 lg:py-24 bg-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
 
-      <div className="container-custom relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center min-w-0">
-        <div className="space-y-6 sm:space-y-8 animate-in slide-in-from-left duration-700 fade-in min-w-0 overflow-hidden">
-          <div className="space-y-4">
+      <div className="container-custom relative z-10 grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center min-w-0">
+        <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-in slide-in-from-left duration-700 fade-in min-w-0 overflow-hidden">
+          <div className="space-y-2 sm:space-y-4">
             <Badge
               variant="outline"
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 border-secondary/20 text-secondary text-xs font-bold tracking-wider uppercase"
+              className="inline-flex items-center gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-secondary/10 border-secondary/20 text-secondary text-[10px] sm:text-xs font-bold tracking-wider uppercase"
             >
-              <Globe className="w-3 h-3" />
+              <Globe className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
               Official Trade Portal of Kerala
             </Badge>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-primary leading-[1.1]">
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-primary leading-[1.1]">
               Connecting Global Buyers to{' '}
               <span className="text-secondary relative">
                 Kerala&apos;s Finest
@@ -28,7 +28,7 @@ export function HeroSection() {
               Export Products
             </h1>
 
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
               Source premium quality spices, coir, textiles, and more directly from verified
               manufacturers.
             </p>
@@ -70,7 +70,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative h-[300px] sm:h-[400px] lg:h-[550px] w-full flex items-center justify-center animate-in slide-in-from-right duration-700 fade-in lg:justify-end">
+        <div className="relative h-[200px] sm:h-[350px] lg:h-[550px] w-full flex items-center justify-center animate-in slide-in-from-right duration-700 fade-in lg:justify-end">
           <div className="absolute inset-0 bg-secondary/5 rounded-full blur-[100px] scale-75 translate-x-12 translate-y-12" />
           <Image
             src="/hero_export_kerala_illustration.png"
