@@ -70,9 +70,6 @@ async function main() {
       moq: '500 kg',
       origin: 'Kerala, India',
       shelfLife: '24 months',
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1596040033229-a0b0c8c67e4e?w=500',
-      ]),
       verificationStatus: 'APPROVED',
       verifiedAt: new Date(),
     },
@@ -86,9 +83,6 @@ async function main() {
       moq: '100 kg',
       origin: 'Idukki, Kerala',
       shelfLife: '18 months',
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1596040033229-a0b0c8c67e4e?w=500',
-      ]),
       verificationStatus: 'APPROVED',
       verifiedAt: new Date(),
     },
@@ -102,9 +96,6 @@ async function main() {
       moq: '1000 kg',
       origin: 'Kerala, India',
       shelfLife: '12 months',
-      images: JSON.stringify([
-        'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=500',
-      ]),
       verificationStatus: 'APPROVED',
       verifiedAt: new Date(),
     },

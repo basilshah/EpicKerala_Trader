@@ -43,7 +43,7 @@ export default function DashboardNav() {
           <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex items-center">
               <img
-                src="https://trade.epickerala.com/wp-content/uploads/2026/01/cropped-Logo-EPIC-1-e1769326543778-1-e1769345122998.png"
+                src="/epicLandLogo.webp"
                 alt="Epic Kerala"
                 className="h-8 md:h-10 cursor-pointer"
               />
@@ -94,7 +94,7 @@ export default function DashboardNav() {
 
             {/* Mobile Menu Toggle */}
             <button
-              className="md:hidden p-2 text-slate-700"
+              className="md:hidden min-w-[44px] min-h-[44px] p-2 text-slate-700"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

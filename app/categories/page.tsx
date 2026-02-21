@@ -3,7 +3,6 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import { Package } from 'lucide-react';
 import { CategoryCard } from '@/components/cards/CategoryCard';
-import { CATEGORY_IMAGES, FALLBACK_IMAGE } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -57,11 +56,9 @@ export default async function CategoriesPage() {
         {categoriesWithTotalCount.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
             {categoriesWithTotalCount.map((category: any) => {
-              const imageUrl = CATEGORY_IMAGES[category.slug] || FALLBACK_IMAGE;
-
               return (
                 <div key={category.id} className="h-full">
-                  <CategoryCard category={category} imageUrl={imageUrl} />
+                  <CategoryCard category={category} imageUrl={category.imageUrl || undefined} />
                 </div>
               );
             })}

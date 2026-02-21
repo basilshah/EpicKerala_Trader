@@ -12,6 +12,9 @@ import { Input } from '@/components/ui/Input';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { countries } from '@/lib/countries';
+import { ErrorMessage } from '@/components/atoms/ErrorMessage';
+import { SuccessMessage } from '@/components/atoms/SuccessMessage';
+import { FieldError } from '@/components/atoms/FieldError';
 
 const importerRegisterSchema = z
   .object({
@@ -98,21 +101,14 @@ export function ImporterRegisterForm() {
   if (success) {
     return (
       <div className="text-center py-8">
-        <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-4">
-          <p className="font-medium">Registration successful!</p>
-          <p className="text-sm mt-1">Redirecting you...</p>
-        </div>
+        <SuccessMessage message="Registration successful! Redirecting you..." className="mb-4" />
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
-          {error}
-        </div>
-      )}
+      <ErrorMessage message={error} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -126,7 +122,7 @@ export function ImporterRegisterForm() {
             {...register('name')}
             className={errors.name ? 'border-red-500' : ''}
           />
-          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+          <FieldError message={errors.name?.message} />
         </div>
 
         <div>
@@ -140,7 +136,7 @@ export function ImporterRegisterForm() {
             {...register('email')}
             className={errors.email ? 'border-red-500' : ''}
           />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          <FieldError message={errors.email?.message} />
         </div>
 
         <div>

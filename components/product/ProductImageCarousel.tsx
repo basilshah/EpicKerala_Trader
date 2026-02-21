@@ -55,7 +55,7 @@ export function ProductImageCarousel({
               variant="outline"
               size="sm"
               onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-border shadow-lg opacity-0 group-hover:opacity-100 transition-opacity w-9 h-9 p-0"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-border shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity w-11 h-11 sm:w-9 sm:h-9 p-0"
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
@@ -63,7 +63,7 @@ export function ProductImageCarousel({
               variant="outline"
               size="sm"
               onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-border shadow-lg opacity-0 group-hover:opacity-100 transition-opacity w-9 h-9 p-0"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white border-border shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity w-11 h-11 sm:w-9 sm:h-9 p-0"
             >
               <ChevronRight className="w-5 h-5" />
             </Button>

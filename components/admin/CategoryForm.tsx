@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { Loader2, Upload, X } from 'lucide-react';
+import { ErrorMessage } from '@/components/atoms/ErrorMessage';
 
 interface Category {
   id: string;
@@ -146,11 +147,7 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
   return (
     <Card>
       <CardContent className="p-6">
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-            {error}
-          </div>
-        )}
+        <ErrorMessage message={error} className="mb-6" />
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Category Name */}

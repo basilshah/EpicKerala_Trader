@@ -74,10 +74,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <Container className="mt-12">
         {/* Category Header with Image */}
         <Card className="mb-10 overflow-hidden">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left: Text Content */}
-            <div className="p-8 flex flex-col justify-center">
-              <h1 className="text-4xl font-bold text-primary mb-4">{category.name}</h1>
+            <div className="p-6 sm:p-8 flex flex-col justify-center">
+              <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-4">{category.name}</h1>
               <p className="text-base text-muted-foreground mb-6 leading-relaxed">
                 Explore Kerala's premium {category.name.toLowerCase()} exports including{' '}
                 {category.children.length > 0
@@ -88,7 +88,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   : 'quality products'}
                 , and more from verified manufacturers.
               </p>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6">
                 <div>
                   <p className="text-3xl font-bold text-secondary">{allProducts.length}</p>
                   <p className="text-sm text-muted-foreground">Products</p>
@@ -104,17 +104,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
 
             {/* Right: Category Image */}
-            <div className="relative h-[300px] bg-gradient-to-br from-primary/10 to-secondary/10">
-              {category.slug === 'agriculture-food' || category.slug === 'spices' ? (
+            <div className="relative h-[220px] sm:h-[260px] md:h-[300px] bg-gradient-to-br from-primary/10 to-secondary/10">
+              {category.imageUrl ? (
                 <Image
-                  src="/cat_spices_1769688487625.png"
-                  alt={category.name}
-                  fill
-                  className="object-cover"
-                />
-              ) : category.slug === 'handicrafts' || category.slug === 'textiles' ? (
-                <Image
-                  src="/cat_handicrafts_1769688509505.png"
+                  src={category.imageUrl}
                   alt={category.name}
                   fill
                   className="object-cover"

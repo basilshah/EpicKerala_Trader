@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="w-full bg-primary text-white">
       {/* Main Footer Content */}
       <div className="container-custom py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Column 1: About */}
           <div className="space-y-4">
             <Logo size="lg" linkable={false} className="text-white" />
@@ -15,28 +15,28 @@ export default function Footer() {
               Official export trade portal connecting global buyers with Kerala&apos;s finest
               manufacturers and exporters.
             </p>
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-2 sm:gap-3 pt-2">
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+                className="w-11 h-11 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
               >
                 <Facebook className="w-4 h-4" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+                className="w-11 h-11 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
               >
                 <Twitter className="w-4 h-4" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+                className="w-11 h-11 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
+                className="w-11 h-11 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-secondary flex items-center justify-center transition-all hover:scale-110"
               >
                 <Instagram className="w-4 h-4" />
               </a>
@@ -159,7 +159,7 @@ export default function Footer() {
       <div className="border-t border-white/10 bg-primary/80">
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/70">
           <p>© 2026 EPIC LAND. All rights reserved.</p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
             <Link href="/privacy" className="hover:text-secondary transition-colors">
               Privacy Policy
             </Link>

@@ -11,13 +11,14 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import {
   Loader2,
-  CheckCircle2,
-  AlertCircle,
   Upload,
   X,
   FileText,
   Image as ImageIcon,
 } from 'lucide-react';
+import { ErrorMessage } from '@/components/atoms/ErrorMessage';
+import { SuccessMessage } from '@/components/atoms/SuccessMessage';
+import { FieldError } from '@/components/atoms/FieldError';
 
 const profileSchema = z.object({
   companyName: z.string().min(2, 'Company name must be at least 2 characters'),
@@ -201,27 +202,14 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {success && (
-        <div className="flex items-center gap-2 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
-          <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-          <p>{success}</p>
-        </div>
-      )}
-
-      {error && (
-        <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <p>{error}</p>
-        </div>
-      )}
+      <SuccessMessage message={success} />
+      <ErrorMessage message={error} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Label htmlFor="companyName">Company Name</Label>
           <Input id="companyName" {...register('companyName')} />
-          {errors.companyName && (
-            <p className="text-red-600 text-sm mt-1">{errors.companyName.message}</p>
-          )}
+          <FieldError message={errors.companyName?.message} />
         </div>
 
         <div>

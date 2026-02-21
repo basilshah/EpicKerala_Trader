@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/Label';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Loader2, CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ErrorMessage } from '@/components/atoms/ErrorMessage';
 
 // Complete schema for final submission
 const registerSchema = z
@@ -206,11 +207,7 @@ export function RegisterForm() {
 
   return (
     <div className="space-y-6">
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-          {error}
-        </div>
-      )}
+      <ErrorMessage message={error} />
 
       {/* Progress Steps Indicator */}
       <div className="mb-8">

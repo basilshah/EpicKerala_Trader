@@ -31,7 +31,7 @@ export function CategoryCard({ category, imageUrl }: CategoryCardProps) {
   return (
     <Link href={`/category/${category.slug}`} className="group block h-full">
       <Card className="h-full overflow-hidden border-border/60 hover:border-secondary/30 hover:shadow-xl transition-all duration-300 rounded-xl bg-white group-hover:-translate-y-1">
-        <div className="h-48 bg-slate-50 relative overflow-hidden flex items-center justify-center">
+        <div className="h-40 sm:h-48 bg-slate-50 relative overflow-hidden flex items-center justify-center">
           {imageUrl ? (
             <>
               <Image

@@ -7,9 +7,10 @@ import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Input } from './ui/Input';
-import { Label } from './ui/Label';
 import { Button } from './ui/Button';
-import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, Loader2 } from 'lucide-react';
+import { ErrorMessage } from '@/components/atoms/ErrorMessage';
+import { FormField } from '@/components/molecules/FormField';
 
 const signInSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -59,15 +60,9 @@ export default function SignInForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error && (
-        <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <p>{error}</p>
-        </div>
-      )}
+      <ErrorMessage message={error} />
 
-      <div>
-        <Label htmlFor="email">Email Address</Label>
+      <FormField label="Email Address" error={errors.email?.message}>
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <Input
@@ -78,11 +73,9 @@ export default function SignInForm() {
             placeholder="your@company.com"
           />
         </div>
-        {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
-      </div>
+      </FormField>
 
-      <div>
-        <Label htmlFor="password">Password</Label>
+      <FormField label="Password" error={errors.password?.message}>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <Input
@@ -93,8 +86,7 @@ export default function SignInForm() {
             placeholder="Enter your password"
           />
         </div>
-        {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>}
-      </div>
+      </FormField>
 
       <Button type="submit" disabled={isLoading} className="w-full">
         {isLoading ? (

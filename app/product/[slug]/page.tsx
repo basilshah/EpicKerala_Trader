@@ -61,9 +61,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="bg-background min-h-screen pb-20">
       <Container className="mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Column: Product Info */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="md:col-span-2 space-y-8">
             {/* Product Main Card */}
             <div className="bg-white rounded-lg border border-border overflow-hidden">
               <div className="p-4 md:p-6 relative">

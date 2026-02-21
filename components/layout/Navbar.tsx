@@ -89,7 +89,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-md transition-colors"
+          className="lg:hidden min-w-[44px] min-h-[44px] p-2 text-slate-700 hover:bg-slate-100 rounded-md transition-colors"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -98,7 +98,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-xl lg:hidden animate-in slide-in-from-top-2">
+        <div className="absolute top-full left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xl lg:hidden animate-in slide-in-from-top-2">
           <div className="container-custom py-6 space-y-4">
             {navLinks.map((link) => (
               <Link
@@ -143,14 +143,14 @@ export default function Navbar() {
               ) : (
                 <>
                   <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                    <Button className="w-full justify-center text-base py-6 bg-primary font-semibold">
+                    <Button className="w-full justify-center text-base py-4 sm:py-6 bg-primary font-semibold">
                       Register as Exporter
                     </Button>
                   </Link>
                   <Link href="/signin" onClick={() => setMobileMenuOpen(false)}>
                     <Button
                       variant="outline"
-                      className="w-full justify-center text-base py-6 border-slate-200"
+                      className="w-full justify-center text-base py-4 sm:py-6 border-slate-200"
                     >
                       Sign In
                     </Button>

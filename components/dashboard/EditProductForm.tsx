@@ -9,7 +9,12 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
-import { Loader2, AlertCircle, Upload, X, FileText, Image as ImageIcon } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { ErrorMessage } from '@/components/atoms/ErrorMessage';
+import { FieldError } from '@/components/atoms/FieldError';
+import { FileUploadField } from '@/components/molecules/FileUploadField';
+import { ImageUploadPreview } from '@/components/molecules/ImageUploadPreview';
+import { FileListPreview } from '@/components/molecules/FileListPreview';
 
 const productSchema = z.object({
   name: z.string().min(3, 'Product name must be at least 3 characters'),
@@ -336,17 +341,12 @@ export default function EditProductForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error && (
-        <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <p>{error}</p>
-        </div>
-      )}
+      <ErrorMessage message={error} />
 
       <div>
         <Label htmlFor="name">Product Name</Label>
         <Input id="name" {...register('name')} placeholder="e.g., Premium Basmati Rice" />
-        {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>}
+        <FieldError message={errors.name?.message} />
       </div>
 
       <div>
@@ -365,161 +365,55 @@ export default function EditProductForm({
       <div>
         <Label>Product Images</Label>
         <div className="mt-2 space-y-3">
-          {/* Upload Button */}
-          <div>
-            <label
-              htmlFor="productImageUpload"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded-lg cursor-pointer transition-colors border border-emerald-300"
-            >
-              <Upload className="w-4 h-4" />
-              {uploadingImage ? 'Uploading...' : 'Upload Product Image'}
-            </label>
-            <input
-              id="productImageUpload"
-              type="file"
-              accept="image/jpeg,image/jpg,image/png,image/webp"
-              onChange={handleImageUpload}
-              disabled={uploadingImage}
-              className="hidden"
-            />
-            <p className="text-xs text-slate-500 mt-1">
-              JPG, PNG, or WEBP (max 10MB). Add multiple images for better presentation.
-            </p>
-          </div>
-
-          {/* Image Previews */}
-          {productImages.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {productImages.map((image, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={image.url}
-                    alt={image.filename}
-                    className="w-full h-32 object-cover rounded-lg border-2 border-slate-200"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                  <p className="text-xs text-slate-600 mt-1 truncate">{image.filename}</p>
-                </div>
-              ))}
-            </div>
-          )}
+          <FileUploadField
+            inputId="productImageUpload"
+            label="Product Images"
+            accept="image/jpeg,image/jpg,image/png,image/webp"
+            onChange={handleImageUpload}
+            uploading={uploadingImage}
+            idleText="Upload Product Image"
+            helperText="JPG, PNG, or WEBP (max 10MB). Add multiple images for better presentation."
+            tone="green"
+          />
+          <ImageUploadPreview images={productImages} onRemove={removeImage} />
         </div>
       </div>
 
       <div>
         <Label>Product Catalogs</Label>
         <div className="mt-2 space-y-3">
-          {/* Upload Button */}
-          <div>
-            <label
-              htmlFor="catalogUpload"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg cursor-pointer transition-colors border border-blue-300"
-            >
-              <Upload className="w-4 h-4" />
-              {uploadingCatalog ? 'Uploading...' : 'Upload Catalog'}
-            </label>
-            <input
-              id="catalogUpload"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png,.webp"
-              onChange={handleCatalogUpload}
-              disabled={uploadingCatalog}
-              className="hidden"
-            />
-            <p className="text-xs text-slate-500 mt-1">
-              PDF or images (max 10MB). Product specs, brochures, data sheets, etc.
-            </p>
-          </div>
-
-          {/* Catalog Files List */}
-          {productCatalogs.length > 0 && (
-            <div className="space-y-2">
-              {productCatalogs.map((catalog, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg"
-                >
-                  <div className="flex items-center gap-2">
-                    {catalog.type === 'application/pdf' ? (
-                      <FileText className="w-5 h-5 text-red-500" />
-                    ) : (
-                      <ImageIcon className="w-5 h-5 text-blue-500" />
-                    )}
-                    <span className="text-sm text-slate-700">{catalog.filename}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => removeCatalog(index)}
-                    className="p-1 text-red-600 hover:bg-red-50 rounded"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+          <FileUploadField
+            inputId="catalogUpload"
+            label="Product Catalogs"
+            accept=".pdf,.jpg,.jpeg,.png,.webp"
+            onChange={handleCatalogUpload}
+            uploading={uploadingCatalog}
+            idleText="Upload Catalog"
+            helperText="PDF or images (max 10MB). Product specs, brochures, data sheets, etc."
+            tone="blue"
+          />
+          <FileListPreview files={productCatalogs} onRemove={removeCatalog} variant="catalog" />
         </div>
       </div>
 
       <div>
         <Label>Product Certifications</Label>
         <div className="mt-2 space-y-3">
-          {/* Upload Button */}
-          <div>
-            <label
-              htmlFor="certificateUpload"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg cursor-pointer transition-colors border border-purple-300"
-            >
-              <Upload className="w-4 h-4" />
-              {uploadingCertificate ? 'Uploading...' : 'Upload Certificate'}
-            </label>
-            <input
-              id="certificateUpload"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png,.webp"
-              onChange={handleCertificateUpload}
-              disabled={uploadingCertificate}
-              className="hidden"
-            />
-            <p className="text-xs text-slate-500 mt-1">
-              PDF or images (max 10MB). Quality certificates, test reports, organic certifications,
-              etc.
-            </p>
-          </div>
-
-          {/* Certificate Files List */}
-          {productCertificates.length > 0 && (
-            <div className="space-y-2">
-              {productCertificates.map((cert, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 bg-purple-50 border border-purple-200 rounded-lg"
-                >
-                  <div className="flex items-center gap-2">
-                    {cert.type === 'application/pdf' ? (
-                      <FileText className="w-5 h-5 text-red-500" />
-                    ) : (
-                      <ImageIcon className="w-5 h-5 text-purple-500" />
-                    )}
-                    <span className="text-sm text-slate-700">{cert.filename}</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => removeCertificate(index)}
-                    className="p-1 text-red-600 hover:bg-red-50 rounded"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+          <FileUploadField
+            inputId="certificateUpload"
+            label="Product Certifications"
+            accept=".pdf,.jpg,.jpeg,.png,.webp"
+            onChange={handleCertificateUpload}
+            uploading={uploadingCertificate}
+            idleText="Upload Certificate"
+            helperText="PDF or images (max 10MB). Quality certificates, test reports, organic certifications, etc."
+            tone="purple"
+          />
+          <FileListPreview
+            files={productCertificates}
+            onRemove={removeCertificate}
+            variant="certificate"
+          />
         </div>
       </div>
 

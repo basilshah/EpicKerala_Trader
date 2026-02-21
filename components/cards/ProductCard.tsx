@@ -50,7 +50,7 @@ export function ProductCard({ product, showSeller = true }: ProductCardProps) {
     <Link href={`/product/${product.slug}`}>
       <Card className="group hover:shadow-lg transition-all h-full border border-slate-200">
         {/* Product Image */}
-        <div className="h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
+        <div className="h-48 sm:h-56 bg-slate-100 flex items-center justify-center relative overflow-hidden">
           {firstImage ? (
             <img
               src={firstImage}
@@ -76,7 +76,7 @@ export function ProductCard({ product, showSeller = true }: ProductCardProps) {
 
         <CardContent className="p-5">
           {/* Category Badge */}
-          <div className="mb-2 min-h-[28px] flex items-start">
+          <div className="mb-2 min-h-[24px] sm:min-h-[28px] flex items-start">
             {product.category && <CategoryBadge>{product.category.name}</CategoryBadge>}
           </div>
 
