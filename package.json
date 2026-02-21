@@ -12,6 +12,7 @@
     "admin:reset": "tsx scripts/reset-admin-password.ts",
     "seed:categories": "tsx scripts/seed-categories.ts",
     "seed:exporter": "tsx scripts/create-exporter-demo.ts",
+    "migrate:uploads:r2": "tsx scripts/migrate-local-uploads-to-r2.ts",
     "clean:images": "tsx scripts/remove-all-images.ts"
   },
   "dependencies": {
