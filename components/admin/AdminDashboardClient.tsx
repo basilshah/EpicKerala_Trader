@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Link from 'next/link';
 import { Package, CheckCircle, Clock, Users, TrendingUp } from 'lucide-react';
@@ -66,9 +67,51 @@ export default function AdminDashboardClient({
   allRFQs,
   allSellers,
 }: AdminDashboardClientProps) {
+  const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<'pending' | 'approved' | 'rfqs' | 'sellers'>(
     'pending'
   );
+  const [processingId, setProcessingId] = useState<string | null>(null);
+
+  const updateProductStatus = async (productId: string, verificationStatus: string) => {
+    setProcessingId(productId);
+    try {
+      const response = await fetch(`/api/admin/products/${productId}/verify`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ verificationStatus }),
+      });
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.error || 'Failed to update product status');
+      }
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const updateSellerVerification = async (sellerId: string, isVerified: boolean) => {
+    setProcessingId(sellerId);
+    try {
+      const response = await fetch(`/api/admin/sellers/${sellerId}/verify`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isVerified }),
+      });
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.error || 'Failed to update seller verification');
+      }
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setProcessingId(null);
+    }
+  };
 
   const stats = [
     {
@@ -209,6 +252,20 @@ export default function AdminDashboardClient({
                         Approved
                       </span>
                     </div>
+                    <div className="mt-3">
+                      <button
+                        type="button"
+                        disabled={processingId === product.id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          void updateProductStatus(product.id, 'PENDING');
+                        }}
+                        className="text-xs px-3 py-1 rounded border border-amber-300 text-amber-700 hover:bg-amber-50 disabled:opacity-60"
+                      >
+                        Unapprove
+                      </button>
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -292,11 +349,31 @@ export default function AdminDashboardClient({
                           </p>
                         )}
                       </div>
-                      {seller.isVerified && (
-                        <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
-                          Verified
-                        </span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/admin/sellers/${seller.id}/edit`}
+                          className="text-xs px-3 py-1 rounded border border-slate-300 text-slate-700 hover:bg-slate-100"
+                        >
+                          Edit Seller
+                        </Link>
+                        {seller.isVerified && (
+                          <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
+                            Verified
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          disabled={processingId === seller.id}
+                          onClick={() => void updateSellerVerification(seller.id, !seller.isVerified)}
+                          className={`text-xs px-3 py-1 rounded border disabled:opacity-60 ${
+                            seller.isVerified
+                              ? 'border-slate-300 text-slate-700 hover:bg-slate-100'
+                              : 'border-emerald-300 text-emerald-700 hover:bg-emerald-50'
+                          }`}
+                        >
+                          {seller.isVerified ? 'Undo Verify' : 'Verify'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}

@@ -7,10 +7,10 @@ const prisma = new PrismaClient();
 async function createAdmin() {
   try {
     // Get admin details from environment variables or use defaults
-    const email = process.env.ADMIN_EMAIL || 'admin@epickerala.com';
-    const password = process.env.ADMIN_PASSWORD || 'admin123';
-    const name = process.env.ADMIN_NAME || 'Admin User';
-    const role = process.env.ADMIN_ROLE || 'admin';
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+    const name = process.env.ADMIN_NAME;
+    const role = process.env.ADMIN_ROLE;
 
     console.log('Creating admin user...');
     console.log('Email:', email);

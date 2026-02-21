@@ -43,9 +43,17 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 
 interface ProfileFormProps {
   seller: any;
+  submitUrl?: string;
+  cancelHref?: string;
+  isAdminMode?: boolean;
 }
 
-export default function ProfileForm({ seller }: ProfileFormProps) {
+export default function ProfileForm({
+  seller,
+  submitUrl = '/api/profile',
+  cancelHref = '/dashboard',
+  isAdminMode = false,
+}: ProfileFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState('');
@@ -168,7 +176,7 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
     setSuccess('');
 
     try {
-      const response = await fetch('/api/profile', {
+      const response = await fetch(submitUrl, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -215,7 +223,9 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
         <div>
           <Label htmlFor="email">Email</Label>
           <Input id="email" type="email" {...register('email')} disabled />
-          <p className="text-xs text-slate-500 mt-1">Email cannot be changed</p>
+          <p className="text-xs text-slate-500 mt-1">
+            {isAdminMode ? 'Email is read-only in admin edit mode' : 'Email cannot be changed'}
+          </p>
         </div>
 
         <div>
@@ -478,7 +488,7 @@ export default function ProfileForm({ seller }: ProfileFormProps) {
             'Save Changes'
           )}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.push('/dashboard')}>
+        <Button type="button" variant="outline" onClick={() => router.push(cancelHref)}>
           Cancel
         </Button>
       </div>

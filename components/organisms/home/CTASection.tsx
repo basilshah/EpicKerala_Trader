@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 
 export function CTASection() {
   return (
-    <section className="py-8 sm:py-12 lg:py-24 bg-[url('/pattern-bg.png')] bg-no-repeat bg-cover bg-center bg-scroll sm:bg-fixed relative">
+    <section className="py-8 sm:py-12 lg:py-24 sm:bg-fixed relative">
       <div className="absolute inset-0 bg-primary/95" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/80 via-primary to-primary-foreground/5 opacity-50" />
       <div className="container-custom relative z-10 text-center max-w-4xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">

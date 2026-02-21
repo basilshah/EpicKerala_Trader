@@ -97,7 +97,15 @@ export default async function AdminProductPage({ params }: AdminProductPageProps
           </Link>
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold text-slate-900">Product Verification</h1>
-            {getStatusBadge(product.verificationStatus)}
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/admin/products/${product.id}/edit`}
+                className="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-100"
+              >
+                Edit Product
+              </Link>
+              {getStatusBadge(product.verificationStatus)}
+            </div>
           </div>
         </Container>
       </div>

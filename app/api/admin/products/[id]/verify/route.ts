@@ -17,7 +17,10 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const data = await request.json();
 
     // Validate required fields
-    if (!data.verificationStatus || !['APPROVED', 'REJECTED'].includes(data.verificationStatus)) {
+    if (
+      !data.verificationStatus ||
+      !['PENDING', 'APPROVED', 'REJECTED'].includes(data.verificationStatus)
+    ) {
       return NextResponse.json({ error: 'Invalid verification status' }, { status: 400 });
     }
 
@@ -31,7 +34,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       data: {
         verificationStatus: data.verificationStatus,
         rejectionReason: data.rejectionReason || null,
-        verifiedAt: new Date(),
+        verifiedAt: data.verificationStatus === 'APPROVED' ? new Date() : null,
       },
       include: {
         seller: true,

@@ -23,7 +23,7 @@ export default function ProductVerificationForm({
   const [reason, setReason] = useState(rejectionReason || '');
   const [message, setMessage] = useState('');
 
-  const handleVerification = async (status: 'APPROVED' | 'REJECTED') => {
+  const handleVerification = async (status: 'PENDING' | 'APPROVED' | 'REJECTED') => {
     if (status === 'REJECTED' && !reason.trim()) {
       setMessage('Please provide a reason for rejection');
       return;
@@ -50,7 +50,7 @@ export default function ProductVerificationForm({
         throw new Error(result.error || 'Failed to update verification status');
       }
 
-      setMessage(`Product ${status.toLowerCase()} successfully!`);
+      setMessage(`Product status updated to ${status.toLowerCase()} successfully!`);
       setTimeout(() => {
         router.push('/admin/dashboard');
         router.refresh();
@@ -124,23 +124,43 @@ export default function ProductVerificationForm({
       )}
 
       {currentStatus === 'APPROVED' && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-center">
-          <CheckCircle className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
-          <p className="text-emerald-700 font-medium">This product has been approved</p>
+        <div className="space-y-3">
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-center">
+            <CheckCircle className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+            <p className="text-emerald-700 font-medium">This product has been approved</p>
+          </div>
+          <Button
+            onClick={() => handleVerification('PENDING')}
+            disabled={isLoading}
+            variant="outline"
+            className="w-full"
+          >
+            Undo Approval (Set Pending)
+          </Button>
         </div>
       )}
 
       {currentStatus === 'REJECTED' && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <div className="flex items-center gap-2 mb-2">
-            <XCircle className="w-5 h-5 text-red-600" />
-            <p className="text-red-700 font-medium">This product has been rejected</p>
+        <div className="space-y-3">
+          <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <XCircle className="w-5 h-5 text-red-600" />
+              <p className="text-red-700 font-medium">This product has been rejected</p>
+            </div>
+            {rejectionReason && (
+              <p className="text-sm text-red-600 mt-2">
+                <strong>Reason:</strong> {rejectionReason}
+              </p>
+            )}
           </div>
-          {rejectionReason && (
-            <p className="text-sm text-red-600 mt-2">
-              <strong>Reason:</strong> {rejectionReason}
-            </p>
-          )}
+          <Button
+            onClick={() => handleVerification('PENDING')}
+            disabled={isLoading}
+            variant="outline"
+            className="w-full"
+          >
+            Undo Rejection (Set Pending)
+          </Button>
         </div>
       )}
     </div>

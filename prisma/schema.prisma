@@ -162,3 +162,17 @@ model RFQ {
   status          String   @default("PENDING") // PENDING, SENT, REPLIED
   createdAt       DateTime @default(now())
 }
+
+model UploadedFile {
+  id         String   @id @default(cuid())
+  type       String   // image | pdf
+  fileName   String
+  fileUrl    String
+  fileSize   Int
+  mimeType   String
+  uploadedAt DateTime @default(now())
+  userId     String
+
+  @@index([userId, uploadedAt])
+  @@index([type])
+}

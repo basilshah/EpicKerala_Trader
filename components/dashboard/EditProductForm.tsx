@@ -60,6 +60,9 @@ interface EditProductFormProps {
   sellerId: string;
   mainCategories: Category[];
   allCategories: Category[];
+  submitUrl?: string;
+  cancelHref?: string;
+  includeSellerId?: boolean;
 }
 
 export default function EditProductForm({
@@ -67,6 +70,9 @@ export default function EditProductForm({
   sellerId,
   mainCategories,
   allCategories,
+  submitUrl,
+  cancelHref = '/dashboard/products',
+  includeSellerId = true,
 }: EditProductFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -310,14 +316,14 @@ export default function EditProductForm({
     setError('');
 
     try {
-      const response = await fetch(`/api/products/${product.id}`, {
+      const response = await fetch(submitUrl || `/api/products/${product.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...data,
-          sellerId,
+          ...(includeSellerId ? { sellerId } : {}),
           images: JSON.stringify(productImages),
           catalogs: JSON.stringify(productCatalogs),
           certificationFiles: JSON.stringify(productCertificates),
@@ -330,8 +336,7 @@ export default function EditProductForm({
         throw new Error(result.error || 'Failed to update product');
       }
 
-      // Redirect to products list
-      router.push('/dashboard/products');
+      router.push(cancelHref);
       router.refresh();
     } catch (err: any) {
       setError(err.message || 'Something went wrong. Please try again.');
@@ -513,7 +518,7 @@ export default function EditProductForm({
             'Update Product'
           )}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.push('/dashboard/products')}>
+        <Button type="button" variant="outline" onClick={() => router.push(cancelHref)}>
           Cancel
         </Button>
       </div>
