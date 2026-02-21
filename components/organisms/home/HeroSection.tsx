@@ -12,17 +12,17 @@ export function HeroSection() {
           {/* Desktop ≥ 768px → use desktop image, focussed on the top (plantation panorama) */}
           <source
             media="(min-width: 768px)"
-            srcSet="/kerala_hero_desktop.png" 
+            srcSet="/kerala_hero_desktop.webp"
           />
           {/* Mobile < 768px → use the square portrait image, focussed on the bottom (spice sacks) */}
           <source
             media="(max-width: 767px)"
-            srcSet="/kerala_hero_bg.png"
+            srcSet="/kerala_hero_bg.webp"
           />
           {/* Fallback img — always present, hidden visually but carries the src */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/kerala_hero_desktop.png"
+            src="/kerala_hero_desktop.webp"
             alt="Kerala Spice Plantation"
             className="absolute inset-0 w-full h-full object-cover md:object-[center_40%] object-[center_60%]"
             style={{ imageRendering: 'auto' }}
