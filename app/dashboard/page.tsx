@@ -44,6 +44,27 @@ export default async function DashboardPage() {
   const activeListings = allProducts.filter((p) => p.isPublic).length;
   const totalRFQs = allRFQs.length;
 
+  const serializedProducts = allProducts.map((product) => ({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    images: product.images,
+    isPublic: product.isPublic,
+  }));
+
+  const serializedRFQs = allRFQs.map((rfq) => ({
+    id: rfq.id,
+    buyerName: rfq.buyerName,
+    buyerEmail: rfq.buyerEmail,
+    buyerCompany: rfq.buyerCompany,
+    quantity: rfq.quantity,
+    message: rfq.message,
+    createdAt: rfq.createdAt.toISOString(),
+    product: {
+      name: rfq.product.name,
+    },
+  }));
+
   return (
     <Container>
       <div className="mb-8">
@@ -59,8 +80,8 @@ export default async function DashboardPage() {
         totalProducts={totalProducts}
         activeListings={activeListings}
         totalRFQs={totalRFQs}
-        allProducts={allProducts}
-        allRFQs={allRFQs}
+        allProducts={serializedProducts}
+        allRFQs={serializedRFQs}
         sellerSlug={seller.slug}
       />
     </Container>

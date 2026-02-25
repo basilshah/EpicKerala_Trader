@@ -21,7 +21,7 @@ interface RFQ {
   buyerCompany: string | null;
   quantity: string | null;
   message: string;
-  createdAt: Date;
+  createdAt: string;
   product: {
     name: string;
   };
