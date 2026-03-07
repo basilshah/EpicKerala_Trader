@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
 import { adminAuth } from '@/lib/admin-auth';
+import { uploadBufferToR2 } from '@/lib/r2-storage';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -44,28 +42,21 @@ export async function POST(request: NextRequest) {
     const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
     const filename = `cat_${timestamp}_${originalName}`;
 
-    // Ensure upload directory exists
-    const uploadDir = join(process.cwd(), 'public', 'uploads', 'categories');
-    if (!existsSync(uploadDir)) {
-      console.log('Creating upload directory:', uploadDir);
-      await mkdir(uploadDir, { recursive: true });
-    }
-
-    // Save file
+    // Upload file
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const filepath = join(uploadDir, filename);
-
-    console.log('Saving file to:', filepath);
-    await writeFile(filepath, buffer);
-
-    // Return public URL
-    const url = `/uploads/categories/${filename}`;
+    const key = `categories/${filename}`;
+    const url = await uploadBufferToR2({
+      key,
+      body: buffer,
+      contentType: file.type,
+    });
     console.log('File uploaded successfully:', url);
 
     return NextResponse.json({ url }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Upload failed';
     console.error('Upload error:', error);
-    return NextResponse.json({ error: error.message || 'Upload failed' }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

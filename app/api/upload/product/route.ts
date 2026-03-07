@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { uploadBufferToR2 } from '@/lib/r2-storage';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -10,7 +8,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest) {
   try {
     console.log('Product image upload request received');
-    
+
     const session = await auth();
 
     if (!session?.user?.email) {
@@ -25,7 +23,7 @@ export async function POST(request: NextRequest) {
       console.log('No file in product upload request');
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
-    
+
     console.log('Product file received:', { name: file.name, type: file.type, size: file.size });
 
     // Validate file type - only images
@@ -46,27 +44,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File size must be less than 10MB' }, { status: 400 });
     }
 
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), 'public', 'uploads', 'products');
-    if (!existsSync(uploadsDir)) {
-      console.log('Creating product upload directory:', uploadsDir);
-      await mkdir(uploadsDir, { recursive: true });
-    }
-
     // Generate unique filename
     const timestamp = Date.now();
-    const extension = file.name.split('.').pop();
+    const extension = file.name.split('.').pop()?.toLowerCase() || 'bin';
     const filename = `product_${timestamp}_${Math.random().toString(36).substring(7)}.${extension}`;
-    const filepath = join(uploadsDir, filename);
 
-    // Write file
-    console.log('Saving product file to:', filepath);
+    // Upload file
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
+    const key = `products/${filename}`;
+    const fileUrl = await uploadBufferToR2({
+      key,
+      body: buffer,
+      contentType: file.type,
+    });
 
-    // Return public URL
-    const fileUrl = `/uploads/products/${filename}`;
     console.log('Product file uploaded successfully:', fileUrl);
 
     return NextResponse.json({
@@ -74,8 +66,9 @@ export async function POST(request: NextRequest) {
       url: fileUrl,
       filename: file.name,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to upload image';
     console.error('Product image upload error:', error);
-    return NextResponse.json({ error: error.message || 'Failed to upload image' }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

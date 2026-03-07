@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { uploadBufferToR2 } from '@/lib/r2-storage';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -38,33 +36,29 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File size must be less than 5MB' }, { status: 400 });
     }
 
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), 'public', 'uploads', 'certifications');
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
-    }
-
     // Generate unique filename
     const timestamp = Date.now();
-    const extension = file.name.split('.').pop();
+    const extension = file.name.split('.').pop()?.toLowerCase() || 'bin';
     const filename = `cert_${timestamp}_${Math.random().toString(36).substring(7)}.${extension}`;
-    const filepath = join(uploadsDir, filename);
 
-    // Write file
+    // Upload file
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
-
-    // Return public URL
-    const fileUrl = `/uploads/certifications/${filename}`;
+    const key = `certifications/${filename}`;
+    const fileUrl = await uploadBufferToR2({
+      key,
+      body: buffer,
+      contentType: file.type,
+    });
 
     return NextResponse.json({
       message: 'File uploaded successfully',
       url: fileUrl,
       filename: file.name,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('File upload error:', error);
-    return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Failed to upload file';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

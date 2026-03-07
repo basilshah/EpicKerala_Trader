@@ -1,5 +1,25 @@
 import type { NextConfig } from 'next';
 
+const r2PublicBaseUrl = process.env.R2_PUBLIC_BASE_URL;
+
+const remotePatterns = r2PublicBaseUrl
+  ? (() => {
+      try {
+        const url = new URL(r2PublicBaseUrl);
+        return [
+          {
+            protocol: url.protocol.replace(':', '') as 'http' | 'https',
+            hostname: url.hostname,
+            port: url.port,
+            pathname: `${url.pathname.replace(/\/+$/, '') || ''}/**`,
+          },
+        ];
+      } catch {
+        return [];
+      }
+    })()
+  : [];
+
 const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -7,8 +27,8 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // Allow the quality levels currently used across image components.
     qualities: [70, 75, 80, 82, 88],
-    // Only site uploads (public/uploads) and public folder — same-origin, no remote hosts needed
-    remotePatterns: [],
+    // Allow R2-hosted assets through your configured public domain.
+    remotePatterns,
   },
 };
 
