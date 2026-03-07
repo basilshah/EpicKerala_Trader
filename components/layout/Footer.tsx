@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Ship, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
+import { SITE_CONTACT, SITE_COPY, SITE_NAME } from '@/lib/site-content';
 
 export default function Footer() {
   return (
@@ -14,8 +15,7 @@ export default function Footer() {
               <Logo size="lg" linkable={false} className="text-white" />
             </div>
             <p className="text-xs sm:text-sm text-white/80 leading-relaxed line-clamp-3 sm:line-clamp-none">
-              Official export trade portal connecting global buyers with Kerala&apos;s finest
-              manufacturers and exporters.
+              {SITE_COPY.shortDescription}
             </p>
             <div className="flex items-center gap-1.5 sm:gap-3 pt-1 sm:pt-2">
               <a
@@ -136,20 +136,23 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <h3 className="font-bold text-sm sm:text-base mb-2 sm:mb-5">Contact</h3>
             <ul className="space-y-1 sm:space-y-3 text-xs sm:text-sm text-white/80">
-              <li>Adampail Lane 2, 37/398B</li>
-              <li>Kalamassery, Kochi</li>
-              <li>Kerala 682033</li>
+              {SITE_CONTACT.addressLines.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
               <li className="pt-2">
                 <a
-                  href="mailto:contact@epickerala.com"
+                  href={`mailto:${SITE_CONTACT.email}`}
                   className="hover:text-secondary transition-colors"
                 >
-                  contact@epickerala.com
+                  {SITE_CONTACT.email}
                 </a>
               </li>
               <li>
-                <a href="tel:+917034322220" className="hover:text-secondary transition-colors">
-                  +91 70343 22220
+                <a
+                  href={`tel:${SITE_CONTACT.phoneHref}`}
+                  className="hover:text-secondary transition-colors"
+                >
+                  {SITE_CONTACT.phoneDisplay}
                 </a>
               </li>
             </ul>
@@ -160,7 +163,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10 bg-primary/80">
         <div className="container-custom py-4 sm:py-6 flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-4 text-xs sm:text-sm text-white/70">
-          <p>© 2026 EPIC LAND. All rights reserved.</p>
+          <p>© 2026 {SITE_NAME}. All rights reserved.</p>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
             <Link href="/privacy" className="hover:text-secondary transition-colors">
               Privacy Policy

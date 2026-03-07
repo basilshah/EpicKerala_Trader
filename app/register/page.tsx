@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { RegisterForm } from '@/components/RegisterForm';
 import { Factory, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { SITE_COPY } from '@/lib/site-content';
 
 export default function RegisterPage() {
   return (
@@ -15,8 +16,7 @@ export default function RegisterPage() {
               Register as Exporter
             </h1>
             <p className="text-base md:text-lg text-slate-700 max-w-2xl mx-auto">
-              Join Kerala's premier export platform and connect with global buyers. Get verified and
-              showcase your products to international markets.
+              {SITE_COPY.registerDescription}
             </p>
           </div>
 

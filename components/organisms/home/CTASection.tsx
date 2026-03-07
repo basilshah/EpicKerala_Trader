@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { SITE_COPY } from '@/lib/site-content';
 
 export function CTASection() {
   return (
@@ -8,11 +9,10 @@ export function CTASection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/80 via-primary to-primary-foreground/5 opacity-50" />
       <div className="container-custom relative z-10 text-center max-w-4xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
         <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-white tracking-tight">
-          Ready to Source Premium Kerala Products?
+          {SITE_COPY.ctaTitle}
         </h2>
         <p className="text-sm sm:text-base lg:text-xl text-white/80 max-w-2xl mx-auto font-light">
-          Join thousands of international buyers connecting with verified exporters on the official
-          trade portal.
+          {SITE_COPY.ctaDescription}
         </p>
         <div className="flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4">
           <Link href="/register/importer">

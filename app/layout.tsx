@@ -7,6 +7,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AuthProvider from '@/components/AuthProvider';
 import ConditionalLayout from '@/components/ConditionalLayout';
+import { SITE_COPY, SITE_NAME } from '@/lib/site-content';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,8 +20,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'EPIC - B2B Export Directory',
-  description: 'Connect with verified manufacturers and exporters from Kerala.',
+  title: `${SITE_NAME} - Made in Kerala Export B2B Platform`,
+  description: SITE_COPY.metadataDescription,
+  openGraph: {
+    title: `${SITE_NAME} - Made in Kerala Export B2B Platform`,
+    description: SITE_COPY.metadataDescription,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} - Made in Kerala Export B2B Platform`,
+    description: SITE_COPY.metadataDescription,
+  },
   icons: {
     icon: '/epicLandLogo.webp',
   },

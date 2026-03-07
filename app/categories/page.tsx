@@ -3,6 +3,7 @@ import prismaClient from '@/lib/prisma';
 import { Container } from '@/components/ui/Container';
 import { Package } from 'lucide-react';
 import { CategoryCard } from '@/components/cards/CategoryCard';
+import { SITE_COPY } from '@/lib/site-content';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,9 +49,7 @@ export default async function CategoriesPage() {
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary mb-3 md:mb-4">
             Explore All Categories
           </h1>
-          <p className="text-base md:text-lg text-slate-600">
-            Browse our comprehensive directory of verified Kerala exporters across major industries.
-          </p>
+          <p className="text-base md:text-lg text-slate-600">{SITE_COPY.categoriesDescription}</p>
         </div>
 
         {categoriesWithTotalCount.length > 0 ? (

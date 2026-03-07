@@ -1,24 +1,18 @@
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { Globe, Search } from 'lucide-react';
+import { SITE_COPY } from '@/lib/site-content';
 
 export function HeroSection() {
   return (
     <section className="w-full relative overflow-hidden min-h-[480px] sm:min-h-[560px] lg:min-h-[650px] flex items-center">
-
       {/* ── Background: native <picture> for responsive image swap ── */}
       <div className="absolute inset-0 z-0">
         <picture className="absolute inset-0 w-full h-full">
           {/* Desktop ≥ 768px → use desktop image, focussed on the top (plantation panorama) */}
-          <source
-            media="(min-width: 768px)"
-            srcSet="/kerala_hero_desktop.webp"
-          />
+          <source media="(min-width: 768px)" srcSet="/kerala_hero_desktop.webp" />
           {/* Mobile < 768px → use the square portrait image, focussed on the bottom (spice sacks) */}
-          <source
-            media="(max-width: 767px)"
-            srcSet="/kerala_hero_bg.webp"
-          />
+          <source media="(max-width: 767px)" srcSet="/kerala_hero_bg.webp" />
           {/* Fallback img — always present, hidden visually but carries the src */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -41,8 +35,7 @@ export function HeroSection() {
         <div
           className="absolute inset-0"
           style={{
-            background:
-              'linear-gradient(to bottom, rgba(201,163,74,0.08) 0%, transparent 35%)',
+            background: 'linear-gradient(to bottom, rgba(201,163,74,0.08) 0%, transparent 35%)',
           }}
         />
       </div>
@@ -56,20 +49,17 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-secondary/20 border-secondary/40 text-secondary text-[10px] sm:text-xs font-bold tracking-wider uppercase backdrop-blur-sm"
             >
               <Globe className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-              Official Trade Portal of Kerala
+              {SITE_COPY.heroBadge}
             </Badge>
 
             <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-              Connecting Global Buyers to{' '}
-              <span className="text-secondary">
-                Kerala&apos;s Finest
-              </span>{' '}
-              Export Products
+              {SITE_COPY.heroTitlePrefix}{' '}
+              <span className="text-secondary">{SITE_COPY.heroTitleHighlight}</span>{' '}
+              {SITE_COPY.heroTitleSuffix}
             </h1>
 
             <p className="text-sm sm:text-lg text-white/80 leading-relaxed max-w-xl">
-              Source premium quality spices, coir, textiles, and more directly from verified
-              manufacturers.
+              {SITE_COPY.heroDescription}
             </p>
           </div>
 
