@@ -33,7 +33,12 @@ export const metadata: Metadata = {
     description: SITE_COPY.metadataDescription,
   },
   icons: {
-    icon: '/epicLandLogo.webp',
+    icon: [
+      { url: '/epicLandLogo.webp?v=20260308', type: 'image/webp' },
+      { url: '/epicLandLogo.webp?v=20260308', rel: 'shortcut icon', type: 'image/webp' },
+    ],
+    shortcut: '/epicLandLogo.webp?v=20260308',
+    apple: '/epicLandLogo.webp?v=20260308',
   },
 };
 

@@ -390,7 +390,9 @@ async function main() {
   const spiceSub = await prisma.category.findFirst({ where: { slug: 'whole-spices' } });
   const textileSub = await prisma.category.findFirst({ where: { slug: 'garments' } });
   const handicraftSub = await prisma.category.findFirst({ where: { slug: 'wooden-handicrafts' } });
-  const organicFoodSub = await prisma.category.findFirst({ where: { slug: 'organic-food-products' } });
+  const organicFoodSub = await prisma.category.findFirst({
+    where: { slug: 'organic-food-products' },
+  });
   const fabricTextilesSub = await prisma.category.findFirst({ where: { slug: 'fabric-textiles' } });
 
   if (spiceSub) {
@@ -462,7 +464,8 @@ async function main() {
         shelfLife: '12 Months',
         verificationStatus: 'PENDING',
         description:
-          'Fiery Kanthari variety red chilli, known for intense heat (50,000-100,000 SHU). Sun-dried to preserve natural color and pungency. Available whole and crushed.',      },
+          'Fiery Kanthari variety red chilli, known for intense heat (50,000-100,000 SHU). Sun-dried to preserve natural color and pungency. Available whole and crushed.',
+      },
     });
   }
 
