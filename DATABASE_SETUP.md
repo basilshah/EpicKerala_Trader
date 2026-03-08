@@ -79,10 +79,10 @@ npx prisma studio
 
 Go to the Category model and add:
 
-- Spices
-- Handicrafts
-- Textiles
-- Coir Products
+- Fruits & Vegetables
+- Spices & Masala
+- Engineering & Industrial
+- Textiles & Apparel
 
 ### 3. Create an Admin User
 

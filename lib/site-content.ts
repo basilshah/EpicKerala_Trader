@@ -24,7 +24,7 @@ export const SITE_COPY = {
   registerDescription:
     'Join EPIC LAND, the Kerala-origin export movement helping genuine manufacturers scale globally through verification, visibility, and community-led demand creation.',
   categoriesDescription:
-    'Browse verified Kerala manufacturers and origin-based product categories on EPIC LAND.',
+    'Browse our comprehensive directory of verified Kerala exporters across major industries.',
 };
 
 export const ABOUT_PAGE_CONTENT = {

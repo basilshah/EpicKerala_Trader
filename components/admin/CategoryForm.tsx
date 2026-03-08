@@ -157,7 +157,7 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
               id="name"
               value={formData.name}
               onChange={(e) => handleNameChange(e.target.value)}
-              placeholder="e.g., Agriculture & Food Products"
+              placeholder="e.g., Fruits & Vegetables"
               required
               disabled={isLoading}
             />
@@ -170,7 +170,7 @@ export default function CategoryForm({ category, mainCategories }: CategoryFormP
               id="slug"
               value={formData.slug}
               onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              placeholder="e.g., agriculture-food"
+              placeholder="e.g., fruits-vegetables"
               required
               disabled={isLoading}
             />

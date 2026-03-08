@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Ship, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Logo from '@/components/layout/Logo';
 import { SITE_CONTACT, SITE_COPY, SITE_NAME } from '@/lib/site-content';
 
@@ -83,10 +83,42 @@ export default function Footer() {
             <ul className="space-y-1.5 sm:space-y-3 text-xs sm:text-sm text-white/80">
               <li>
                 <Link
-                  href="/category/agriculture-food"
+                  href="/category/fruits-vegetables"
                   className="hover:text-secondary transition-colors"
                 >
-                  Spices
+                  Fruits &amp; Vegetables
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/spices-masala"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Spices &amp; Masala
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/ready-to-eat-snacks"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Ready to Eat Snacks
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/rice-grains-pulses"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Rice, Grains &amp; Pulses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/category/coconut-products"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Coconut Products
                 </Link>
               </li>
               <li>
@@ -94,39 +126,7 @@ export default function Footer() {
                   href="/category/textiles-apparel"
                   className="hover:text-secondary transition-colors"
                 >
-                  Textiles
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/handicrafts-decor"
-                  className="hover:text-secondary transition-colors"
-                >
-                  Handicrafts
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/chemicals-allied"
-                  className="hover:text-secondary transition-colors"
-                >
-                  Chemicals
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/engineering-industrial"
-                  className="hover:text-secondary transition-colors"
-                >
-                  Industrial
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/leather-footwear"
-                  className="hover:text-secondary transition-colors"
-                >
-                  Leather
+                  Textiles &amp; Apparel
                 </Link>
               </li>
             </ul>

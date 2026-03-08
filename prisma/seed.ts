@@ -21,82 +21,156 @@ async function main() {
   });
   console.log('✓ Admin user created (email: admin@epickerala.com, password: admin123)');
 
-  // --- 1. Agriculture & Food Products ---
-  const catAgri = await prisma.category.upsert({
-    where: { slug: 'agriculture-food' },
+  // --- 1. Fruits & Vegetables ---
+  await prisma.category.upsert({
+    where: { slug: 'fruits-vegetables' },
     update: {},
     create: {
-      name: 'Agriculture & Food Products',
-      slug: 'agriculture-food',
+      name: 'Fruits & Vegetables',
+      slug: 'fruits-vegetables',
       children: {
         create: [
-          { name: 'Spices & Condiments', slug: 'spices-condiments' },
-          { name: 'Cereals & Grains', slug: 'cereals-grains' },
-          { name: 'Fresh Produce', slug: 'fresh-produce' },
-          { name: 'Processed Foods', slug: 'processed-foods' },
-          { name: 'Tea & Coffee', slug: 'tea-coffee' },
-          { name: 'Oil Seeds & Nuts', slug: 'oil-seeds-nuts' },
+          { name: 'Fresh Fruits', slug: 'fresh-fruits' },
+          { name: 'Fresh Vegetables', slug: 'fresh-vegetables' },
+          { name: 'Frozen Fruits', slug: 'frozen-fruits' },
+          { name: 'Frozen Vegetables', slug: 'frozen-vegetables' },
+          { name: 'Dehydrated Fruits & Veg', slug: 'dehydrated-fruits-veg' },
         ],
       },
     },
   });
 
-  // --- 2. Textiles, Apparel & Fabrics ---
-  const catTextile = await prisma.category.upsert({
-    where: { slug: 'textiles-apparel' },
+  // --- 2. Spices & Masala ---
+  await prisma.category.upsert({
+    where: { slug: 'spices-masala' },
     update: {},
     create: {
-      name: 'Textiles, Apparel & Fabrics',
-      slug: 'textiles-apparel',
+      name: 'Spices & Masala',
+      slug: 'spices-masala',
       children: {
         create: [
-          { name: 'Readymade Garments', slug: 'readymade-garments' },
-          { name: 'Fabrics & Yarns', slug: 'fabrics-yarns' },
-          { name: 'Home Textiles', slug: 'home-textiles' },
-          { name: 'Natural Fibers', slug: 'natural-fibers' },
+          { name: 'Whole Spices', slug: 'whole-spices' },
+          { name: 'Spice Powder', slug: 'spice-powder' },
+          { name: 'Blended Masala', slug: 'blended-masala' },
+          { name: 'Organic Spices', slug: 'organic-spices' },
+          { name: 'Spice Oils & Extracts', slug: 'spice-oils-extracts' },
         ],
       },
     },
   });
 
-  // --- 3. Handicrafts & Decor ---
-  const catCraft = await prisma.category.upsert({
-    where: { slug: 'handicrafts-decor' },
+  // --- 3. Ready to Eat Snacks ---
+  await prisma.category.upsert({
+    where: { slug: 'ready-to-eat-snacks' },
     update: {},
     create: {
-      name: 'Handicrafts & Decor',
-      slug: 'handicrafts-decor',
+      name: 'Ready to Eat Snacks',
+      slug: 'ready-to-eat-snacks',
       children: {
         create: [
-          { name: 'Wooden Handicrafts', slug: 'wooden-handicrafts' },
-          { name: 'Metal Artware', slug: 'metal-artware' },
-          { name: 'Eco-Friendly / Sustainable', slug: 'eco-friendly-sustainable' },
-          { name: 'Fashion Accessories', slug: 'fashion-accessories' },
+          { name: 'Chips & Crisps', slug: 'chips-crisps' },
+          { name: 'Traditional Snacks', slug: 'traditional-snacks' },
+          { name: 'Bakery Snacks', slug: 'bakery-snacks' },
+          { name: 'Ready-to-Eat Meals', slug: 'ready-to-eat-meals' },
+          { name: 'Instant Mix Products', slug: 'instant-mix-products' },
         ],
       },
     },
   });
 
-  // --- 4. Chemicals & Allied Products ---
-  const catChem = await prisma.category.upsert({
+  // --- 4. Rice, Grains & Pulses ---
+  await prisma.category.upsert({
+    where: { slug: 'rice-grains-pulses' },
+    update: {},
+    create: {
+      name: 'Rice, Grains & Pulses',
+      slug: 'rice-grains-pulses',
+      children: {
+        create: [
+          { name: 'Basmati Rice', slug: 'basmati-rice' },
+          { name: 'Non-Basmati Rice', slug: 'non-basmati-rice' },
+          { name: 'Millets', slug: 'millets' },
+          { name: 'Lentils & Pulses', slug: 'lentils-pulses' },
+          { name: 'Flour Products', slug: 'flour-products' },
+        ],
+      },
+    },
+  });
+
+  // --- 5. Pickles, Sauces & Condiments ---
+  await prisma.category.upsert({
+    where: { slug: 'pickles-sauces-condiments' },
+    update: {},
+    create: {
+      name: 'Pickles, Sauces & Condiments',
+      slug: 'pickles-sauces-condiments',
+      children: {
+        create: [
+          { name: 'Pickles', slug: 'pickles' },
+          { name: 'Sauces', slug: 'sauces' },
+          { name: 'Chutneys', slug: 'chutneys' },
+          { name: 'Curry Pastes', slug: 'curry-pastes' },
+        ],
+      },
+    },
+  });
+
+  // --- 6. Coconut Products ---
+  await prisma.category.upsert({
+    where: { slug: 'coconut-products' },
+    update: {},
+    create: {
+      name: 'Coconut Products',
+      slug: 'coconut-products',
+      children: {
+        create: [
+          { name: 'Coconut Oil', slug: 'coconut-oil' },
+          { name: 'Desiccated Coconut', slug: 'desiccated-coconut' },
+          { name: 'Coconut Milk', slug: 'coconut-milk' },
+          { name: 'Coconut Powder', slug: 'coconut-powder' },
+        ],
+      },
+    },
+  });
+
+  // --- 7. Natural & Organic Products ---
+  await prisma.category.upsert({
+    where: { slug: 'natural-organic-products' },
+    update: {},
+    create: {
+      name: 'Natural & Organic Products',
+      slug: 'natural-organic-products',
+      children: {
+        create: [
+          { name: 'Honey', slug: 'honey' },
+          { name: 'Herbal Products', slug: 'herbal-products' },
+          { name: 'Organic Food Products', slug: 'organic-food-products' },
+          { name: 'Natural Sweeteners', slug: 'natural-sweeteners' },
+        ],
+      },
+    },
+  });
+
+  // --- 8. Chemicals & Allied ---
+  await prisma.category.upsert({
     where: { slug: 'chemicals-allied' },
     update: {},
     create: {
-      name: 'Chemicals & Allied Products',
+      name: 'Chemicals & Allied',
       slug: 'chemicals-allied',
       children: {
         create: [
-          { name: 'Pharmaceuticals', slug: 'pharmaceuticals' },
-          { name: 'Dyes & Pigments', slug: 'dyes-pigments' },
-          { name: 'Agro-Chemicals', slug: 'agro-chemicals' },
-          { name: 'Personal Care', slug: 'personal-care' },
+          { name: 'Industrial Chemicals', slug: 'industrial-chemicals' },
+          { name: 'Cleaning Chemicals', slug: 'cleaning-chemicals' },
+          { name: 'Agricultural Chemicals', slug: 'agricultural-chemicals' },
+          { name: 'Cosmetic Chemicals', slug: 'cosmetic-chemicals' },
         ],
       },
     },
   });
 
-  // --- 5. Engineering & Industrial ---
-  const catEng = await prisma.category.upsert({
+  // --- 9. Engineering & Industrial ---
+  await prisma.category.upsert({
     where: { slug: 'engineering-industrial' },
     update: {},
     create: {
@@ -104,17 +178,35 @@ async function main() {
       slug: 'engineering-industrial',
       children: {
         create: [
-          { name: 'Machinery & Parts', slug: 'machinery-parts' },
-          { name: 'Automotive Components', slug: 'automotive-components' },
-          { name: 'Construction Materials', slug: 'construction-materials' },
-          { name: 'Electricals', slug: 'electricals' },
+          { name: 'Machinery', slug: 'machinery' },
+          { name: 'Industrial Equipment', slug: 'industrial-equipment' },
+          { name: 'Tools & Hardware', slug: 'tools-hardware' },
+          { name: 'Spare Parts', slug: 'spare-parts' },
         ],
       },
     },
   });
 
-  // --- 6. Leather & Footwear ---
-  const catLeather = await prisma.category.upsert({
+  // --- 10. Handicrafts & Home Decor ---
+  await prisma.category.upsert({
+    where: { slug: 'handicrafts-home-decor' },
+    update: {},
+    create: {
+      name: 'Handicrafts & Home Decor',
+      slug: 'handicrafts-home-decor',
+      children: {
+        create: [
+          { name: 'Wooden Handicrafts', slug: 'wooden-handicrafts' },
+          { name: 'Metal Crafts', slug: 'metal-crafts' },
+          { name: 'Home Decor Items', slug: 'home-decor-items' },
+          { name: 'Gift Articles', slug: 'gift-articles' },
+        ],
+      },
+    },
+  });
+
+  // --- 11. Leather & Footwear ---
+  await prisma.category.upsert({
     where: { slug: 'leather-footwear' },
     update: {},
     create: {
@@ -122,9 +214,28 @@ async function main() {
       slug: 'leather-footwear',
       children: {
         create: [
-          { name: 'Leather Goods', slug: 'leather-goods' },
-          { name: 'Footwear', slug: 'footwear' },
-          { name: 'Finished Leather', slug: 'finished-leather' },
+          { name: 'Leather Products', slug: 'leather-products' },
+          { name: 'Leather Bags', slug: 'leather-bags' },
+          { name: 'Shoes & Sandals', slug: 'shoes-sandals' },
+          { name: 'Leather Accessories', slug: 'leather-accessories' },
+        ],
+      },
+    },
+  });
+
+  // --- 12. Textiles & Apparel ---
+  await prisma.category.upsert({
+    where: { slug: 'textiles-apparel' },
+    update: {},
+    create: {
+      name: 'Textiles & Apparel',
+      slug: 'textiles-apparel',
+      children: {
+        create: [
+          { name: 'Garments', slug: 'garments' },
+          { name: 'Fabric & Textiles', slug: 'fabric-textiles' },
+          { name: 'Handloom Products', slug: 'handloom-products' },
+          { name: 'Uniforms & Workwear', slug: 'uniforms-workwear' },
         ],
       },
     },
@@ -276,11 +387,11 @@ async function main() {
 
   // --- Create Demo Products with Full Details ---
 
-  const spiceSub = await prisma.category.findFirst({ where: { slug: 'spices-condiments' } });
-  const textileSub = await prisma.category.findFirst({ where: { slug: 'readymade-garments' } });
+  const spiceSub = await prisma.category.findFirst({ where: { slug: 'whole-spices' } });
+  const textileSub = await prisma.category.findFirst({ where: { slug: 'garments' } });
   const handicraftSub = await prisma.category.findFirst({ where: { slug: 'wooden-handicrafts' } });
-  const teaCoffeeSub = await prisma.category.findFirst({ where: { slug: 'tea-coffee' } });
-  const homeTextileSub = await prisma.category.findFirst({ where: { slug: 'home-textiles' } });
+  const organicFoodSub = await prisma.category.findFirst({ where: { slug: 'organic-food-products' } });
+  const fabricTextilesSub = await prisma.category.findFirst({ where: { slug: 'fabric-textiles' } });
 
   if (spiceSub) {
     await prisma.product.upsert({
@@ -355,7 +466,7 @@ async function main() {
     });
   }
 
-  if (teaCoffeeSub) {
+  if (organicFoodSub) {
     await prisma.product.upsert({
       where: { slug: 'nilgiri-orthodox-tea' },
       update: {},
@@ -363,7 +474,7 @@ async function main() {
         name: 'Nilgiri Orthodox Black Tea',
         slug: 'nilgiri-orthodox-tea',
         sellerId: seller1.id,
-        categoryId: teaCoffeeSub.id,
+        categoryId: organicFoodSub.id,
         hsCode: '090240',
         moq: '250 kg',
         origin: 'Nilgiris, Tamil Nadu, India',
@@ -413,7 +524,7 @@ async function main() {
     });
   }
 
-  if (homeTextileSub) {
+  if (fabricTextilesSub) {
     await prisma.product.upsert({
       where: { slug: 'cotton-bed-sheets-set' },
       update: {},
@@ -421,7 +532,7 @@ async function main() {
         name: 'Premium Cotton Bed Sheet Set',
         slug: 'cotton-bed-sheets-set',
         sellerId: seller2.id,
-        categoryId: homeTextileSub.id,
+        categoryId: fabricTextilesSub.id,
         hsCode: '630221',
         moq: '200 sets',
         origin: 'Kerala, India',
@@ -471,7 +582,7 @@ async function main() {
     });
   }
 
-  console.log('✓ Created 11 demo products with full details (10 approved, 1 pending)');
+  console.log('✓ Created 10 demo products with full details (9 approved, 1 pending)');
   console.log('');
   console.log('Demo Login Credentials:');
   console.log('Admin: admin@epickeral.com / admin123');
