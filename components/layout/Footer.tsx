@@ -164,17 +164,6 @@ export default function Footer() {
       <div className="border-t border-white/10 bg-primary/80">
         <div className="container-custom py-4 sm:py-6 flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-4 text-xs sm:text-sm text-white/70">
           <p>© 2026 {SITE_NAME}. All rights reserved.</p>
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
-            <Link href="/privacy" className="hover:text-secondary transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-secondary transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="/disclaimer" className="hover:text-secondary transition-colors">
-              Disclaimer
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
