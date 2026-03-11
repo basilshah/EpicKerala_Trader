@@ -106,12 +106,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {/* Right: Category Image */}
             <div className="relative h-[220px] sm:h-[260px] md:h-[300px] bg-gradient-to-br from-primary/10 to-secondary/10">
               {category.imageUrl ? (
-                <Image
-                  src={category.imageUrl}
-                  alt={category.name}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={category.imageUrl} alt={category.name} fill className="object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <Package className="w-32 h-32 text-slate-300" />
