@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { auth } from '@/lib/auth';
 import prismaClient from '@/lib/prisma';
-import { uploadBufferToR2 } from '@/lib/r2-storage';
+import { uploadFile } from '@/lib/upload/storage';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -98,14 +98,10 @@ export async function POST(request: NextRequest) {
           ? await sharp(inputBuffer).webp({ quality: 85 }).toBuffer()
           : inputBuffer;
 
-        const fileUrl = await uploadBufferToR2({
-          key,
-          body: outputBuffer,
-          contentType: mimeType,
-        });
+        const fileUrl = await uploadFile(key, outputBuffer, mimeType);
         const fileName = key.split('/').pop() || `${uuid}.${isImage ? 'webp' : 'pdf'}`;
 
-        const created = await (prismaClient as any).uploadedFile.create({
+        const created = await prismaClient.uploadedFile.create({
           data: {
             type,
             fileName,

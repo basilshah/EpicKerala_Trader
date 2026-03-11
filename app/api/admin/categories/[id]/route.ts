@@ -3,6 +3,7 @@ import { revalidateTag } from 'next/cache';
 import prismaClient from '@/lib/prisma';
 import { adminAuth } from '@/lib/admin-auth';
 import { CACHE_TAGS } from '@/lib/home/getHomePageData';
+import { deleteFile, urlToKey } from '@/lib/upload/storage';
 
 // GET single category
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -60,6 +61,12 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       }
     }
 
+    // Fetch the current imageUrl so we can delete it from storage if replaced.
+    const existing = await prismaClient.category.findUnique({
+      where: { id },
+      select: { imageUrl: true },
+    });
+
     const category = await prismaClient.category.update({
       where: { id },
       data: {
@@ -74,6 +81,14 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         children: true,
       },
     });
+
+    // Delete the old image from storage when it has been replaced.
+    if (existing?.imageUrl && imageUrl !== undefined && imageUrl !== existing.imageUrl) {
+      const key = urlToKey(existing.imageUrl);
+      if (key) {
+        deleteFile(key).catch((err) => console.error('Failed to delete old category image:', err));
+      }
+    }
 
     revalidateTag(CACHE_TAGS.categories, 'max');
     return NextResponse.json(category);
@@ -128,6 +143,16 @@ export async function DELETE(
     await prismaClient.category.delete({
       where: { id },
     });
+
+    // Remove the category image from storage (best-effort, non-blocking).
+    if (category.imageUrl) {
+      const key = urlToKey(category.imageUrl);
+      if (key) {
+        deleteFile(key).catch((err) =>
+          console.error('Failed to delete category image from storage:', err)
+        );
+      }
+    }
 
     revalidateTag(CACHE_TAGS.categories, 'max');
     return NextResponse.json({ message: 'Category deleted successfully' });

@@ -123,7 +123,9 @@ async function migrateUnknownValue(value: unknown): Promise<{ value: unknown; ch
   return { value, changed: false };
 }
 
-async function migrateJsonString(raw: string | null): Promise<{ value: string | null; changed: boolean }> {
+async function migrateJsonString(
+  raw: string | null
+): Promise<{ value: string | null; changed: boolean }> {
   if (!raw) {
     return { value: raw, changed: false };
   }
@@ -245,7 +247,7 @@ async function run(): Promise<void> {
     }
   }
 
-  const uploadedFiles = await (prisma as any).uploadedFile.findMany({
+  const uploadedFiles = await prisma.uploadedFile.findMany({
     select: { id: true, fileUrl: true },
   });
   for (const file of uploadedFiles) {
@@ -254,7 +256,7 @@ async function run(): Promise<void> {
     try {
       const migrated = await migrateUrl(file.fileUrl);
       if (!migrated) continue;
-      await (prisma as any).uploadedFile.update({
+      await prisma.uploadedFile.update({
         where: { id: file.id },
         data: { fileUrl: migrated },
       });

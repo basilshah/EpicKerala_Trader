@@ -30,6 +30,20 @@ const nextConfig: NextConfig = {
     // Allow R2-hosted assets through your configured public domain.
     remotePatterns,
   },
+  async rewrites() {
+    if (!r2PublicBaseUrl) {
+      return [];
+    }
+
+    const normalizedBase = r2PublicBaseUrl.replace(/\/+$/, '');
+
+    return [
+      {
+        source: '/uploads/:path*',
+        destination: `${normalizedBase}/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

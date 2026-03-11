@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth } from '@/lib/admin-auth';
-import { uploadBufferToR2 } from '@/lib/r2-storage';
+import { uploadFile } from '@/lib/upload/storage';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -46,11 +46,7 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const key = `categories/${filename}`;
-    const url = await uploadBufferToR2({
-      key,
-      body: buffer,
-      contentType: file.type,
-    });
+    const url = await uploadFile(key, buffer, file.type);
     console.log('File uploaded successfully:', url);
 
     return NextResponse.json({ url }, { status: 201 });
